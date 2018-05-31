@@ -155,5 +155,5 @@
 (winner-mode 1)
 
 ;; Save customization from the menu in the following file and load that file.
-(setq custom-file "ajv-customizations.el")
+(setq custom-file (concat ajv/my-init-directory "ajv-customizations.el"))
 (load custom-file)

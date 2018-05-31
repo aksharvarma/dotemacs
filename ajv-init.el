@@ -5,9 +5,10 @@
 ;; Note: Only top level sexps are profiled, so you might want to make sure that what you really want to look at is actually at the top of the list.
 ;; emacs -Q -l ~/.emacs.d/site-lisp/ajv/profile-dotemacs.el -f profile-dotemacs
 
+(setq ajv/my-init-directory "~/.emacs.d/site-lisp/ajv/")
 ;;;This adds site-lisp and its subdirectories to the load path,
 ;;;so that .el files there, are visible while initialization.
-(let ((default-directory "~/.emacs.d/site-lisp/"))
+(let ((default-directory ajv/my-init-directory))
   (normal-top-level-add-to-load-path '("."))
   (normal-top-level-add-subdirs-to-load-path))
 

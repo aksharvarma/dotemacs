@@ -1,5 +1,0 @@
-(split-window-horizontally)
-(other-window 1)
-(switch-buffer-scratch)
-(other-window 1)
-(dired "~/")
