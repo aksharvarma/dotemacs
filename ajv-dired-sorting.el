@@ -15,6 +15,7 @@
 ;; I wanted to have my Downloads folder to be always sorted by time.
 
 
+(provide 'ajv-dired-sorting)
 ;;;This was copied directly from there.
 (require 'dired)
 (defvar dired-sort-map (make-sparse-keymap))

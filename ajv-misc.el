@@ -1,38 +1,31 @@
+(provide 'ajv-misc)
 ;;;;This contains all the miscellenous things. Mainly
 ;;; the single liners and such.
 
+(load-theme 'deeper-blue)
+
 ;;Stop the startup screen from showing
 (setq inhibit-startup-message t)
-(defun ajv-window-config ()
-  "Sets windows according to my liking"
-  (interactive)
-  ;; (delete-other-windows)
-  (split-window-horizontally)
-  (other-window 1)
-  (switch-buffer-scratch)
-  (other-window 1)
-  ;; (ajv-set-theme 'misterioso)
-  (dired "~/")
-  )
   ;; (get-buffer (dired "~/")))
 
-(if (daemonp)
-    (add-hook 'after-make-frame-functions
-              (lambda (frame)
-                (setq initial-buffer-choice "~/")))
-  (setq initial-buffer-choice 'ajv-window-config))
+;; (global-set-key (kbd "C-c w c") 'ajv-window-config)
+;; (if (daemonp)
+;;     (add-hook 'after-make-frame-functions
+;;               (lambda (frame)
+;;                 (setq initial-buffer-choice "~/")))
+;;   (setq initial-buffer-choice 'ajv-window-config))
 
 ;; (setq initial-buffer-choice "~/")
 
-(add-hook 'after-make-frame-functions
-          (lambda (frame)
-            (with-selected-frame frame
-              (ajv-window-config))))
+;; (add-hook 'after-make-frame-functions
+;;           (lambda (frame)
+;;             (with-selected-frame frame
+;;               (ajv-window-config))))
 
 ;;;Since in this ubuntu python is by default python2.7
 ;;;This line sets the default interpreter to use python3
 ;; TODO
-(setq python-shell-interpreter "python")
+;; (setq python-shell-interpreter "python")
 
 ;;;Word wrapping
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
@@ -52,14 +45,17 @@
 (menu-bar-mode 0)
 (tool-bar-mode 0)
 (show-paren-mode t)
+
+;; Misc picked up from customizations:
+(setq LaTeX-command "latex -shell-escape")
+(set-fringe-style '(0 . nil))
+(setq org-todo-keywords (quote ((sequence "TODO(t)" "|" "IN-PROGRESS(i)" "|" "DONE(d)"))))
+
 ;;;Adding new line if marker is at end of buffer.
 (setq next-line-add-newlines t)
 
-;;;default to other dired window for copy and such things
-(setq dired-dwim-target t)
-
-;;; Something. Check.
-(put 'dired-find-alternate-file 'disabled nil)
+;; ;;;default to other dired window for copy and such things
+;; (setq dired-dwim-target t)
 
 ;;;Show matching parenthesis
 (show-paren-mode 1)
@@ -70,23 +66,30 @@
 (delete-selection-mode t)		;Emacs
 
 ;;;Enables copying and cutting into other programs
-(setq x-select-enable-clipboard t)
+(setq select-enable-clipboard t)
 
 ;;;Enables copying and cutting from other programs
-(setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
+(setq interprogram-paste-function 'x-selection-value)
 
-;;;Making directories come first in dired mode
-(setq dired-listing-switches "-a -l -L -h --group-directories-first")
+;; ;;;Making directories come first in dired mode
+;; (setq dired-listing-switches "-a -l -L -h --group-directories-first")
+
 ;;;Use the next lines if using windows
 ;;;(setq ls-list-dir-first t)
 
 ;;;This is what lets 'a' work in the dired mode (was inserted automatically 
 ;;by emacs)
-(put 'dired-find-alternate-file 'disabled nil)
+;; (put 'dired-find-alternate-file 'disabled nil)
 
 
 ;;;This allows auto-complete in all modes.
 (global-auto-complete-mode t)
+
+
+;; Enable upcase and downcase region
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
+
 
 ;;;So that emacs opens previous saved session
 ;;;(desktop-save-mode 1)
@@ -144,17 +147,13 @@
 (setq time-stamp-pattern nil)
 
 ;; This ensures that the details are not visible all the time.
-(add-hook 'dired-mode-hook
-      (lambda ()
-        (dired-hide-details-mode)))
+;; (add-hook 'dired-mode-hook
+;;       (lambda ()
+;;         (dired-hide-details-mode)))
 
-;;For python and stuff [Might be DEPRECATED when using elpy]
-;; (setq
-;;  python-shell-interpreter "ipython"
-;;  python-shell-interpreter-args ""
-;;  python-shell-prompt-regexp "In \\[[0-9]+\\]: "
-;;  python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
-;;  python-shell-completion-setup-code "from IPython.core.completerlib import module_completion"
-;;  python-shell-completion-module-string-code "';'.join(module_completion('''%s'''))\n"
-;;  python-shell-completion-string-code "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
-;;Now Emacs runs ipython which runs python3
+
+(winner-mode 1)
+
+;; Save customization from the menu in the following file and load that file.
+(setq custom-file "ajv-customizations.el")
+(load custom-file)
