@@ -3,7 +3,13 @@
 ;; https://www.emacswiki.org/emacs/ProfileDotEmacs
 ;; Go to the `profile-dotemacs.el` file and modify the file name to what you want. Then run the following to profile it nicely.
 ;; Note: Only top level sexps are profiled, so you might want to make sure that what you really want to look at is actually at the top of the list.
-;; emacs -Q -l ~/.emacs.d/site-lisp/ajv/profile-dotemacs.el -f profile-dotemacs
+;; emacs -Q -l ~/.emacs.d/site-lisp/profile-dotemacs.el -f profile-dotemacs
+
+;; Increase garbage collection threshold during startup and brings it back to reasonable values at the end.
+(setq gc-cons-threshold (* 500 1024 1024) ;500MB
+      gc-cons-percentage 0.8)
+(add-hook 'emacs-startup-hook (lambda () (setq gc-cons-threshold (* 2 1024 1024)
+                                               gc-cons-percentage 0.1)))
 
 (setq ajv/my-init-directory "~/.emacs.d/site-lisp/ajv/")
 ;;;This adds site-lisp and its subdirectories to the load path,
@@ -19,19 +25,13 @@
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
 (package-initialize)
 
-;; Supposed to make loading things faster. These lines need to be here.n
-(setq gc-cons-threshold (* 500 1024 1024) ;500MB
-      gc-cons-percentage 0.8)
-;; Keeping corresponding ending code here as well, so I don't forget.
-(add-hook 'emacs-startup-hook (lambda () (setq gc-cons-threshold (* 2 1024 1024)
-                                               gc-cons-percentage 0.1)))
 
 ;; Get use-package and its dependencies
 (require 'use-package)
 (use-package diminish)
 (use-package bind-key)
 
-;; Start loading up other things that I want
+;; Start loading up other things
 (use-package cl)
 (use-package jrv-mypaths)                  ;Eventually replace with bookmarsk
 (use-package notmuch
@@ -63,11 +63,13 @@
 (use-package pdf-tools
   :defer 2
   :magic ("%PDF" . pdf-view-mode)
+  :pin manual
   :config
-  (pdf-tools-install))
+  (pdf-tools-install)
+  (setq pdf-view-resize-factor 1.05))
 
 (use-package smex
-  :ensure t
+  ;; :demand
   :bind (("M-x" . smex))
   :config (smex-initialize))
 
@@ -86,10 +88,9 @@
                ("s". dired-sort-criteria))
   :hook
   ((dired-mode . ajv/dired-set-default-sorting)
-   (dired-mode . ajv/dired-hide-details-omit-hidden-files)))
+   (dired-mode . ajv/dired-hide-details-omit-hidden-files))
+  )
 
-
-;;;Now defining some functions.
 (use-package ajv-my-functions
   :demand
   :bind
@@ -103,19 +104,21 @@
    ("C-~" . open-home-in-dired)
    ("C-c C-d C-b" . delete-backup-files)
    ("s-b" . ido-switch-buffer)
-   ("C-C w c". ajv-window-config)
+   ("s-B" . ido-switch-buffer-other-window)
+   ("C-C w c". ajv/window-config)
    ("C-c s u" . reopen-file-with-sudo)
+   ("<f5>" . save-buffer)
    :map dired-mode-map
    ("l" . dired-launch-file))
   :config
   (when window-system
     (global-set-key (kbd "C-x C-c") 'ask-before-closing))
-  (add-hook 'prog-mode-hook 'hideshow-setup)
-  (add-hook 'emacs-startup-hook 'measure-loading-time)
   (advice-add 'revert-buffer :around #'yes-or-no-p->-y-or-n-p)
+  :hook
+  ((prog-mode . hideshow-setup)
+   (emacs-startup . measure-loading-time))
   )
 
-;;;Now for the miscellenous stuff.
 (use-package ajv-misc
   :defer 1
   :init
@@ -123,4 +126,3 @@
   )
 
 (use-package ajv-visual)
-

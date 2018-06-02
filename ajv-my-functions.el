@@ -153,7 +153,7 @@ Picked from: http://nileshk.com/2009/06/13/prompt-before-closing-emacs.html"
                     (time-subtract after-init-time before-init-time)))
            gcs-done))
 
-(defun ajv-window-config ()
+(defun ajv/window-config ()
   "Sets windows according to my liking"
   (interactive)
   (delete-other-windows)
@@ -167,7 +167,7 @@ Picked from: http://nileshk.com/2009/06/13/prompt-before-closing-emacs.html"
 (defun reopen-file-with-sudo ()
   "Advises ido-find-file to reopen current buffer with sudo permission"
   (interactive)
-  (async-shell-command (concat "sudo -e " buffer-file-name)))
+  (async-shell-command (concat "sudoedit " buffer-file-name)))
 
 (defun yes-or-no-p->-y-or-n-p (orig-fun &rest r)
   (cl-letf (((symbol-function 'yes-or-no-p) #'y-or-n-p))
