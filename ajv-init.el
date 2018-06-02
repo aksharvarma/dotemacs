@@ -75,27 +75,19 @@
   :commands (magit-status magit-mode)
   :bind (("C-x g" . magit-status)))
 
-(use-package dired
+(use-package ajv-dired
   :demand
+  :init (use-package dired)
   :config
-  ;; default to other dired window for copy and such things
-  (setq dired-dwim-target t)
-  ;; This is what lets 'a' work in the dired mode
-  (put 'dired-find-alternate-file 'disabled nil)
-  ;; Making directories come first in dired mode
+  (setq dired-dwim-target t)                     ;default copy to other window
+  (put 'dired-find-alternate-file 'disabled nil) ;allow 'a' in dired
   (setq dired-listing-switches "-a -l -L -h --group-directories-first")
-  ;; hide-details and omit-mode hooked onto dired-mode
-  (add-hook 'dired-mode-hook (lambda ()
-                               ;; Hiding all the details (`ls -l` things)
-                               (dired-hide-details-mode)
-                               ;; Hiding hidden files in dired mode
-                               (use-package dired-x)
-                               (setq dired-omit-files "^\\...+$")
-                               (dired-omit-mode 1)))
-  ;;The dired sorting thing. Figure out what's different from dired-sort-map
-  (use-package ajv-dired-sorting)
-  (use-package dired-sort-map)               ;Sorting nicely in dired
-  )
+  :bind  (:map dired-mode-map
+               ("s". dired-sort-criteria))
+  :hook
+  ((dired-mode . ajv/dired-set-default-sorting)
+   (dired-mode . ajv/dired-hide-details-omit-hidden-files)))
+
 
 ;;;Now defining some functions.
 (use-package ajv-my-functions
