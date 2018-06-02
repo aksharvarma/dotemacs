@@ -124,5 +124,11 @@
   )
 
 ;;;Now for the miscellenous stuff.
-(use-package ajv-misc)
+(use-package ajv-misc
+  :defer 1
+  :init
+  (setq inhibit-startup-message t)
+  )
+
+(use-package ajv-visual)
 
