@@ -44,6 +44,12 @@
   (ido-mode t)
   (setq ido-enable-flex-matching t))
 
+(use-package company
+  :disabled
+  :bind (("S-<tab>" . company-complete))
+  :config
+  (global-company-mode))
+
 (use-package shell-pop
   :bind (("C-M-1" . shell-pop))
   :config
