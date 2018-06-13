@@ -126,3 +126,5 @@
   )
 
 (use-package ajv-visual)
+
+(use-package ajv-modeline)
