@@ -174,6 +174,12 @@ Picked from: http://nileshk.com/2009/06/13/prompt-before-closing-emacs.html"
     (apply orig-fun r)))
 
 
+(defun pdf-view-move-modeline-to-top ()
+  (interactive)
+  (setq header-line-format mode-line-format)
+  (setq mode-line-format nil)
+  )
+
 ;; ;; The following three functions are currently unused.
 ;; (defun ajv-set-modeline-color-scheme ()
 ;;   "Make active modeline more visible and inactive one less visible, picked up from https://stackoverflow.com/questions/9446673/asking-emacs-to-highlight-more-clearly-which-window-pane-has-the-focus-cursor

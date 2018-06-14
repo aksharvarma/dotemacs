@@ -130,7 +130,8 @@
   (advice-add 'revert-buffer :around #'yes-or-no-p->-y-or-n-p)
   :hook
   ((prog-mode . hideshow-setup)
-   (emacs-startup . measure-loading-time))
+   (emacs-startup . measure-loading-time)
+   (pdf-view-mode . pdf-view-move-modeline-to-top))
   )
 
 (use-package ajv-misc
