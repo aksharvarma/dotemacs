@@ -33,7 +33,11 @@
 
 ;; Start loading up other things
 (use-package cl)
-(use-package jrv-mypaths)                  ;Eventually replace with bookmarsk
+(use-package jrv-mypaths
+  :demand
+  :bind
+  (("C-c o" . mypath)))
+
 (use-package notmuch
   :commands notmuch)                      ;Don't use this yet.
 
