@@ -53,8 +53,8 @@
 (use-package shell-pop
   :bind (("C-M-1" . shell-pop))
   :config
-  (setq shell-pop-shell-type (quote ("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell)))))
-  (setq shell-pop-term-shell "/bin/bash")
+  (setq shell-pop-shell-type (quote ("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell))))
+        shell-pop-term-shell "/bin/bash")
   ;; need to do this manually or not picked up by `shell-pop'
   (shell-pop--set-shell-type 'shell-pop-shell-type shell-pop-shell-type))
 
@@ -65,9 +65,9 @@
   :commands python-mode
   :config
   (elpy-enable)
-  (setq python-shell-interpreter "ipython")
-  (setq python-shell-interpreter-args "--TerminalInteractiveShell.simple_prompt=True")
-  (setq elpy-rpc-backend "jedi")
+  (setq python-shell-interpreter "ipython"
+        python-shell-interpreter-args "--TerminalInteractiveShell.simple_prompt=True"
+        elpy-rpc-backend "jedi")
   (use-package flycheck
     :config
     (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
@@ -95,9 +95,9 @@
   :demand
   :init (use-package dired)
   :config
-  (setq dired-dwim-target t)                     ;default copy to other window
+  (setq dired-dwim-target t                     ;default copy to other window
+        dired-listing-switches "-a -l -L -h --group-directories-first --classify")
   (put 'dired-find-alternate-file 'disabled nil) ;allow 'a' in dired
-  (setq dired-listing-switches "-a -l -L -h --group-directories-first")
   :bind  (:map dired-mode-map
                ("s". dired-sort-criteria))
   :hook
