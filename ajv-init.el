@@ -121,20 +121,21 @@
 (use-package ajv-my-functions
   :demand
   :bind
-  (("C-*" . switch-buffer-scratch)
-   ("C-x c" . close-other-buffer)
-   ("C-x x" . kill-this-buffer)
+  (("s-8" . switch-buffer-scratch)
+   ("s-o" . close-other-buffer)
+   ("s-w" . kill-this-buffer)
    ("C-x z" .  bury-buffer)
-   ("C-<tab>" . other-window)
+   ("s-<tab>" . other-window)
    ("%" . match-paren)
-   ("C-`" . open-home-in-dired)
-   ("C-~" . open-home-in-dired)
-   ("C-c C-d C-b" . delete-backup-files)
+   ("s-`" . open-home-in-dired)
    ("s-b" . ido-switch-buffer)
    ("s-B" . ido-switch-buffer-other-window)
-   ("C-C w c". ajv/window-config)
+   ("s-s" . save-buffer)
+   ("s-f" . ido-find-file)
+   ("s-g" . keyboard-quit)
+   ("C-c w c". ajv/window-config)
    ("C-c s u" . reopen-file-with-sudo)
-   ("<f5>" . save-buffer)
+   ("C-c C-d C-b" . delete-backup-files)
    :map dired-mode-map
    ("l" . dired-launch-file))
   :config
