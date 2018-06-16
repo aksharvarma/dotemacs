@@ -109,6 +109,15 @@
    (dired-mode . ajv/dired-hide-details-omit-hidden-files))
   )
 
+(use-package key-chord
+  :demand
+  :disabled
+  :bind
+  (("C-c C-k C-t" . key-chord-mode))
+  :config
+  (key-chord-mode 1)
+  )
+
 (use-package ajv-my-functions
   :demand
   :bind
