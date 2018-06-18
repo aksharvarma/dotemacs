@@ -93,9 +93,12 @@
   :bind (("M-x" . smex))
   :config (smex-initialize))
 
-(use-package magit
+(use-package ajv-magit
+  :init (use-package magit)
   :commands (magit-status magit-mode)
-  :bind (("C-x g" . magit-status)))
+  :bind (("C-x g" . magit-status)
+         :map magit-status-mode-map
+         ("q" . mu-magit-kill-buffers)))
 
 (use-package ajv-dired
   :demand
