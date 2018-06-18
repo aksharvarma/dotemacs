@@ -78,13 +78,17 @@
     (add-hook 'elpy-mode-hook 'flycheck-mode))
   )
 
-(use-package pdf-tools
-  :defer 2
-  :magic ("%PDF" . pdf-view-mode)
-  :pin manual
-  :config
-  (pdf-tools-install)
-  (setq pdf-view-resize-factor 1.05))
+(use-package ajv-pdf
+  :init
+  (use-package pdf-tools
+    :defer 2
+    :magic ("%PDF" . pdf-view-mode)
+    :pin manual
+    :config (pdf-tools-install))
+  :bind (:map pdf-view-mode-map ("q" . delete-frame))
+  :config (setq pdf-view-resize-factor 1.05)
+  :hook ((pdf-view-mode . pdf-view-move-modeline-to-top))
+  )
 
 (use-package smex
   ;; :demand
@@ -144,8 +148,7 @@
   (advice-add 'revert-buffer :around #'yes-or-no-p->-y-or-n-p)
   :hook
   ((prog-mode . hideshow-setup)
-   (emacs-startup . measure-loading-time)
-   (pdf-view-mode . pdf-view-move-modeline-to-top))
+   (emacs-startup . measure-loading-time))
   )
 
 (use-package ajv-misc

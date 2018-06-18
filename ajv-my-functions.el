@@ -174,11 +174,6 @@ Picked from: http://nileshk.com/2009/06/13/prompt-before-closing-emacs.html"
     (apply orig-fun r)))
 
 
-(defun pdf-view-move-modeline-to-top ()
-  (interactive)
-  (setq header-line-format mode-line-format
-        mode-line-format nil)
-  )
 
 ;; ;; The following three functions are currently unused.
 ;; (defun ajv-set-modeline-color-scheme ()
