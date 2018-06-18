@@ -9,9 +9,8 @@
       interprogram-paste-function 'x-selection-value ;from other progams
       ;; To make AUCTeX read/update on changes to .bib files.
       TeX-parse-self nil ; Enable parse on load. [DISABLED]
-      TeX-auto-save nil) ; Enable parse on save. [DISABLED]
-
-(setq-default indent-tabs-mode nil)     ;Don't use tabs for indenting
+      TeX-auto-save nil ; Enable parse on save. [DISABLED]
+      indent-tabs-mode nil)     ;Don't use tabs for indenting
 
 (add-hook 'before-save-hook 'time-stamp) ;set time-stamp before saving file
 (setq time-stamp-pattern nil)            ;use local variables for time-stamps

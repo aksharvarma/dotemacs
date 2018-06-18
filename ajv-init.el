@@ -35,8 +35,7 @@
 (use-package cl)
 (use-package jrv-mypaths
   :demand
-  :bind
-  (("C-c o" . mypath)))
+  :bind (("C-c o" . mypath)))
 
 (use-package notmuch
   :commands notmuch)                      ;Don't use this yet.
@@ -51,13 +50,13 @@
 (use-package company
   :disabled
   :bind (("S-<tab>" . company-complete))
-  :config
-  (global-company-mode))
+  :config (global-company-mode))
 
 (use-package shell-pop
   :bind (("C-M-1" . shell-pop))
   :config
-  (setq shell-pop-shell-type (quote ("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell))))
+  (setq shell-pop-shell-type (quote ("ansi-term" "*ansi-term*"
+                                     (lambda nil (ansi-term shell-pop-term-shell))))
         shell-pop-term-shell "/bin/bash")
   ;; need to do this manually or not picked up by `shell-pop'
   (shell-pop--set-shell-type 'shell-pop-shell-type shell-pop-shell-type))
@@ -91,7 +90,6 @@
   )
 
 (use-package smex
-  ;; :demand
   :bind (("M-x" . smex))
   :config (smex-initialize))
 
@@ -116,10 +114,8 @@
 (use-package key-chord
   :demand
   :disabled
-  :bind
-  (("C-c C-k C-t" . key-chord-mode))
-  :config
-  (key-chord-mode 1)
+  :bind (("C-c C-k C-t" . key-chord-mode))
+  :config (key-chord-mode 1)
   )
 
 (use-package ajv-my-functions
@@ -153,8 +149,7 @@
 
 (use-package ajv-misc
   :defer 1
-  :init
-  (setq inhibit-startup-message t)
+  :init (setq inhibit-startup-message t)
   )
 
 (use-package ajv-visual)

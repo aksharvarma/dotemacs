@@ -1,11 +1,10 @@
 (provide 'ajv-visual)
 (load-theme 'deeper-blue)
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
-(setq-default fill-column most-positive-fixnum)
-(setq-default visual-line-fringe-indicators '(nil right-curly-arrow))
+(setq-default fill-column most-positive-fixnum
+              visual-line-fringe-indicators '(nil right-curly-arrow))
 (column-number-mode t)
 (scroll-bar-mode 0)
-;; (toggle-menu-bar-mode-from-frame 0)
 (menu-bar-mode 0)
 (tool-bar-mode 0)
 (show-paren-mode t)

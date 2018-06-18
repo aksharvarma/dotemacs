@@ -49,18 +49,6 @@
 ;;   (dired-unmark-all-marks)
 ;; )
 
-;; ;;;}}}
-
-;; ;;;>>>
-;; ;;;This sets the yes-or-no-p thing so that it doesn't ask
-;; ;;;me whether to use a different buffer in case the defaul
-;; ;;;one is already in use.
-;; (defadvice play-mp3-in-vlc (around stfu compile activate)
-;;   (cl-flet ((yes-or-no-p (&rest args) t)
-;; 	 (y-or-n-p (&rest args) t))
-;;     ad-do-it))
-;; ;;;}}}
-
 (defun switch-buffer-scratch ()
   "Switch to the scratch buffer. If the buffer doesn't exist,
 create it and write the initial message into it."
