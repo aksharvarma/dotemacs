@@ -96,9 +96,9 @@
   :config (smex-initialize))
 
 (use-package ajv-magit
-  :init (use-package magit)
+  :init (use-package magit :commands (magit-status magit-mode))
   :commands (magit-status magit-mode)
-  :bind (("C-x g" . magit-status)
+  :bind (("<f3>" . magit-status)
          :map magit-status-mode-map
          ("q" . mu-magit-kill-buffers)))
 
