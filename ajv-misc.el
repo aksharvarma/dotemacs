@@ -19,6 +19,7 @@
 (load custom-file)
 
 (winner-mode 1)
+(auto-compression-mode 1)
 (delete-selection-mode t)
 (global-auto-complete-mode t)
 (put 'upcase-region 'disabled nil)
