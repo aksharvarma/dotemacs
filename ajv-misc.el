@@ -10,7 +10,10 @@
       ;; To make AUCTeX read/update on changes to .bib files.
       TeX-parse-self nil ; Enable parse on load. [DISABLED]
       TeX-auto-save nil ; Enable parse on save. [DISABLED]
-      indent-tabs-mode nil)     ;Don't use tabs for indenting
+      indent-tabs-mode nil     ;Don't use tabs for indenting
+      sentence-end-double-space nil ;sentences don't have 2 spaces after '.'
+      find-file-visit-truename t    ;follow symlinks to true targets
+      vc-follow-symlinks t)    ;follow symlinks that are in git repo
 
 (add-hook 'before-save-hook 'time-stamp) ;set time-stamp before saving file
 (setq time-stamp-pattern nil)            ;use local variables for time-stamps

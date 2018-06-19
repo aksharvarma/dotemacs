@@ -149,7 +149,7 @@ Picked from: http://nileshk.com/2009/06/13/prompt-before-closing-emacs.html"
   (other-window 1)
   (switch-buffer-scratch)
   (other-window 1)
-  (dired "~/")
+  (dired "~/0/")
   )
 
 (defun reopen-file-with-sudo ()
