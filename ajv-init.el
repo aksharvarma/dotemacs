@@ -77,6 +77,8 @@
     (add-hook 'elpy-mode-hook 'flycheck-mode))
   )
 
+(use-package move-text :config (move-text-default-bindings))
+
 (use-package ajv-pdf
   :init
   (use-package pdf-tools
