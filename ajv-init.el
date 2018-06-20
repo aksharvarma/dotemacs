@@ -91,6 +91,8 @@
   :config (key-chord-mode 1)
   )
 
+(use-package powerline :config (powerline-default-theme))
+
 (use-package ajv-pdf
   :init
   (use-package pdf-tools
