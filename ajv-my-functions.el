@@ -1,53 +1,27 @@
 (provide 'ajv-my-functions)
 
-;; ;; TODO: All vlc related need to change to mpv
-;; ;;;>>>
-;; ;;;This ensures that all marked files open in one vlc.
-;; ;;;Emacs 24 has changed the dired-do-shell-command's 
-;; ;;;normal behavior and so this is necessary.
-;; (defun vlc ()
-;;   "Open marked files as single VLC playlist"
-;; (interactive)
-;; (dired-do-shell-command "vlc * &" nil (dired-get-marked-files)))
-;; ;;;}}}
+;; TODO: Make sure these are only callable from within dired.
+(defun ajv/mpv-marked ()
+  "Open marked files as single playlist in mpv"
+  (interactive)
+  (when (eq major-mode 'dired-mode)
+    (dired-do-shell-command "mpv --shuffle --loop-playlist --quiet --force-window 2>&1 1>/dev/null * &" nil (dired-get-marked-files))))
 
-;; ;;;>>>
-;; ;;;This opens all files in the dired in vlc.
-;; ;;;Note: ALL files.
-;; ;;;NOTE: Unmarks everything that has been marked.
-;; (defun play-all-in-vlc()
-;;   "Open ALL files as single VLC playlist"
-;;   (interactive)
-;;   (dired-unmark-all-marks)
-;;   (dired-toggle-marks)
-;;   (dired-do-shell-command "vlc * &" nil (dired-get-marked-files))
-;;   (dired-unmark-all-marks)
-;; )
+(defun ajv/mpv-all ()
+  "Open all files in the dired buffer as single playlist in mpv"
+  (interactive)
+  (when (eq major-mode 'dired-mode)
+    (dired-unmark-all-marks)
+    (dired-toggle-marks)
+    (ajv/mpv-marked)
+    (dired-unmark-all-marks)))
 
-;; ;;;}}}
-
-;; ;;;>>>
-;; ;;;This sets the yes-or-no-p thing so that it doesn't ask
-;; ;;;me whether to use a different buffer in case the defaul
-;; ;;;one is already in use.
-;; (defadvice play-all-in-vlc (around stfu compile activate)
+;; ;; TODO: Change this to a function that can then be added as advice around both mpv functions
+;; (defadvice ajv/mpv-all (around stfu compile activate)
+;;   "Make sure that ajv/mpv-all doesn't ask confirmation before opening new buffer if something is already using the default buffer"
 ;;   (cl-flet ((yes-or-no-p (&rest args) t)
 ;; 	 (y-or-n-p (&rest args) t))
 ;;     ad-do-it))
-;; ;;;}}}
-
-;; ;;;>>>
-;; ;;;This opens all files in the dired in vlc.
-;; ;;;Note: ALL files.
-;; ;;;NOTE: Unmarks everything that has been marked.
-;; (defun play-mp3-in-vlc()
-;;   "Open ALL files as single VLC playlist"
-;;   (interactive)
-;;   (dired-unmark-all-marks)
-;;   (dired-mark-files-regexp "\.mp3$")
-;;   (dired-do-shell-command "vlc * &" nil (dired-get-marked-files))
-;;   (dired-unmark-all-marks)
-;; )
 
 (defun ajv/switch-buffer-scratch ()
   "Switch to the scratch buffer. If the buffer doesn't exist,
