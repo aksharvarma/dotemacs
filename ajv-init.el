@@ -45,6 +45,7 @@
   :demand
   :config
   (ido-mode t)
+  (ido-everywhere t)
   (setq ido-enable-flex-matching t))
 
 (use-package company
@@ -79,6 +80,17 @@
 
 (use-package move-text :config (move-text-default-bindings))
 
+(use-package smex
+  :bind (("M-x" . smex))
+  :config (smex-initialize))
+
+(use-package key-chord
+  :demand
+  :disabled
+  :bind (("C-c C-k C-t" . key-chord-mode))
+  :config (key-chord-mode 1)
+  )
+
 (use-package ajv-pdf
   :init
   (use-package pdf-tools
@@ -90,10 +102,6 @@
   :config (setq pdf-view-resize-factor 1.05)
   :hook ((pdf-view-mode . pdf-view-move-modeline-to-top))
   )
-
-(use-package smex
-  :bind (("M-x" . smex))
-  :config (smex-initialize))
 
 (use-package ajv-magit
   :init (use-package magit :commands (magit-status magit-mode))
@@ -114,13 +122,6 @@
   :hook
   ((dired-mode . ajv/dired-set-default-sorting)
    (dired-mode . ajv/dired-hide-details-omit-hidden-files))
-  )
-
-(use-package key-chord
-  :demand
-  :disabled
-  :bind (("C-c C-k C-t" . key-chord-mode))
-  :config (key-chord-mode 1)
   )
 
 (use-package ajv-my-functions
