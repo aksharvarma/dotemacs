@@ -10,4 +10,4 @@
 (show-paren-mode t)
 (set-fringe-style '(0 . nil))
 (add-to-list 'default-frame-alist '(fullscreen . fullboth)) ;maximize all frames
-(add-to-list 'default-frame-alist '(font . "dejavu sans mono 10"))
+(add-to-list 'default-frame-alist `(font . ,ajv/prefered-font-name))

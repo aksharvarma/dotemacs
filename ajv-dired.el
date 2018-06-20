@@ -1,6 +1,6 @@
 (provide 'ajv-dired)
 
-(defun dired-sort-criteria (criteria)
+(defun ajv/dired-sort-criteria (criteria)
   "sort-dired by different criteria by Robert Gloeckner, 
 later modified by Akshar Varma"
   (interactive 
@@ -13,7 +13,6 @@ later modified by Akshar Varma"
                             (match-string 1 criteria))))
 
 
-;; hide-details and omit-mode hooked onto dired-mode
 (defun ajv/dired-hide-details-omit-hidden-files ()
     "Hide details and omit hidden files in dired mode"
   (interactive)
@@ -24,16 +23,11 @@ later modified by Akshar Varma"
       (dired-omit-mode 1))
   )
 
-
-(setq ajv/dired-default-sorting-alist
-      '(("~/Documents/" . "(X)")
-        ("~/bin/" . "(X)")
-        ("~/Downloads/" . "(t)")))
-
 (defun ajv/dired-set-default-sorting ()
+  "Set default sorting criteria for directories in ajv/dired-default-sorting-alist"
   (interactive)
   (if (assoc-default default-directory ajv/dired-default-sorting-alist)
-      (dired-sort-criteria (assoc-default default-directory ajv/dired-default-sorting-alist))
+      (ajv/dired-sort-criteria (assoc-default default-directory ajv/dired-default-sorting-alist))
     nil))
 
 

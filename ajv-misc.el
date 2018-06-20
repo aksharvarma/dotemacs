@@ -19,7 +19,7 @@
 (add-hook 'before-save-hook 'time-stamp) ;set time-stamp before saving file
 (setq time-stamp-pattern nil)            ;use local variables for time-stamps
 
-(setq custom-file (concat ajv/my-init-directory "ajv-customizations.el"))
+(setq custom-file (concat ajv/my-init-directory ajv/custom-file-name))
 (load custom-file)
 
 (winner-mode 1)

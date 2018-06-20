@@ -49,7 +49,7 @@
 ;;   (dired-unmark-all-marks)
 ;; )
 
-(defun switch-buffer-scratch ()
+(defun ajv/switch-buffer-scratch ()
   "Switch to the scratch buffer. If the buffer doesn't exist,
 create it and write the initial message into it."
   (interactive)
@@ -62,18 +62,16 @@ create it and write the initial message into it."
         (insert initial-scratch-message)))
     (switch-to-buffer scratch-buffer)))
 
-(defun open-home-in-dired ()
+(defun ajv/open-home-in-dired ()
   (interactive)
   (dired "~/"))
 
-;;;>>>
-;;;Hiding hidden files in dired mode.
-;; (require 'dired-x)
-;; (setq dired-omit-files "^\\...+$")
-;; (add-hook 'dired-mode-hook (lambda () (dired-omit-mode 1)))
-;;;}}}
+(defun ajv/open-symlink-folder-in-dired ()
+  (interactive)
+  (dired ajv/symlink-folder))
 
-(defun close-other-buffer ()
+
+(defun ajv/close-other-buffer ()
   "Close the other buffer in other window (whichever is the reached via (other-window 1))"
   (interactive)
   (other-window 1)
@@ -81,7 +79,7 @@ create it and write the initial message into it."
   (other-window 1)
   )
 
-(defun dired-launch-file ()
+(defun ajv/dired-launch-file ()
   "Launch system associated program on current file in dired buffer
 modified from http://omniorthogonal.blogspot.in/2008/05/useful-emacs-dired-launch-hack.html"
   (interactive)
@@ -90,22 +88,14 @@ modified from http://omniorthogonal.blogspot.in/2008/05/useful-emacs-dired-launc
                  (start-process "*launch*" nil "xdg-open" (dired-get-filename))))
     (windows-nt (w32-shell-execute "open"  (dired-get-filename) nil nil))))
 
-(defun match-paren (arg)
+(defun ajv/match-paren (arg)
   "Go to the matching paren if on a paren; otherwise insert %."
   (interactive "p")
   (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
 	((looking-at "\\s\)") (forward-char 1) (backward-list 1))
 	(t (self-insert-command (or arg 1)))))
 
-(defun toggle-fullscreen ()
-  "Toggle full screen on X11. Consider removing, have fullscreen on some frame-alist"
-  (interactive)
-  (when (eq window-system 'x)
-    (set-frame-parameter
-     nil 'fullscreen
-     (when (not (frame-parameter nil 'fullscreen)) 'fullboth))))
-
-(defun ask-before-closing ()
+(defun ajv/ask-before-closing ()
   "Ask whether or not to close, and then close if y was pressed.
 Picked from: http://nileshk.com/2009/06/13/prompt-before-closing-emacs.html"
   (interactive)
@@ -115,7 +105,7 @@ Picked from: http://nileshk.com/2009/06/13/prompt-before-closing-emacs.html"
         (save-buffers-kill-emacs))
     (message "Canceled exit")))
 
-(defun delete-backup-files ()
+(defun ajv/delete-backup-files ()
   "Delete all backup files in the current dired folder"
   (interactive)
   (dired-omit-mode 0)
@@ -123,7 +113,7 @@ Picked from: http://nileshk.com/2009/06/13/prompt-before-closing-emacs.html"
   (dired-flag-backup-files)
   (dired-do-flagged-delete))
 
-(defun hideshow-setup ()
+(defun ajv/hideshow-setup ()
   "Setup hideshow mode for current mode/buffer. Should be hooked to prog-mode-hook."
   (interactive)
   (local-set-key (kbd "C-c C-s") 'hs-show-block)
@@ -132,7 +122,7 @@ Picked from: http://nileshk.com/2009/06/13/prompt-before-closing-emacs.html"
   (local-set-key (kbd "C-c C-M-s") 'hs-show-all)
   (hs-minor-mode 1))
 
-(defun measure-loading-time ()
+(defun ajv/measure-loading-time ()
   "Simply measure and message the loading time."
   (interactive)
   (message "Emacs ready in %s with %d garbage collections."
@@ -147,12 +137,12 @@ Picked from: http://nileshk.com/2009/06/13/prompt-before-closing-emacs.html"
   (delete-other-windows)
   (split-window-horizontally)
   (other-window 1)
-  (switch-buffer-scratch)
+  (ajv/switch-buffer-scratch)
   (other-window 1)
-  (dired "~/0/")
+  (dired ajv/symlink-folder)
   )
 
-(defun reopen-file-with-sudo ()
+(defun ajv/reopen-file-with-sudo ()
   "Advises ido-find-file to reopen current buffer with sudo permission"
   (interactive)
   (async-shell-command (concat "sudoedit " buffer-file-name)))

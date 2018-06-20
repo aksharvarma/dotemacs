@@ -11,7 +11,8 @@
 (add-hook 'emacs-startup-hook (lambda () (setq gc-cons-threshold (* 2 1024 1024)
                                                gc-cons-percentage 0.1)))
 
-(setq ajv/my-init-directory "~/.emacs.d/site-lisp/ajv/")
+(load "~/.emacs.d/site-lisp/ajv/ajv-settings.el")
+;; (setq ajv/my-init-directory "~/.emacs.d/site-lisp/ajv/")
 ;;;This adds site-lisp and its subdirectories to the load path,
 ;;;so that .el files there, are visible while initialization.
 (let ((default-directory ajv/my-init-directory))
@@ -33,9 +34,6 @@
 
 ;; Start loading up other things
 (use-package cl)
-(use-package jrv-mypaths
-  :demand
-  :bind (("C-c o" . mypath)))
 
 (use-package notmuch
   :commands notmuch)                      ;Don't use this yet.
@@ -91,7 +89,7 @@
   :config (key-chord-mode 1)
   )
 
-(use-package powerline :config (powerline-default-theme))
+(use-package powerline :after (ajv-visual ajv-modeline) :config (powerline-default-theme))
 
 (use-package ajv-pdf
   :init
@@ -102,7 +100,7 @@
     :config (pdf-tools-install))
   :bind (:map pdf-view-mode-map ("q" . delete-frame))
   :config (setq pdf-view-resize-factor 1.05)
-  :hook ((pdf-view-mode . pdf-view-move-modeline-to-top))
+  :hook ((pdf-view-mode . ajv/pdf-view-move-modeline-to-top))
   )
 
 (use-package ajv-magit
@@ -110,7 +108,7 @@
   :commands (magit-status magit-mode)
   :bind (("<f3>" . magit-status)
          :map magit-status-mode-map
-         ("q" . mu-magit-kill-buffers)))
+         ("q" . ajv/magit-kill-buffers)))
 
 (use-package ajv-dired
   :demand
@@ -119,47 +117,43 @@
   (setq dired-dwim-target t                     ;default copy to other window
         dired-listing-switches "-a -l -L -h --group-directories-first --classify")
   (put 'dired-find-alternate-file 'disabled nil) ;allow 'a' in dired
-  :bind  (:map dired-mode-map
-               ("s". dired-sort-criteria))
-  :hook
-  ((dired-mode . ajv/dired-set-default-sorting)
-   (dired-mode . ajv/dired-hide-details-omit-hidden-files))
+  :bind  (:map dired-mode-map ("s". ajv/dired-sort-criteria))
+  :hook ((dired-mode . ajv/dired-set-default-sorting)
+	 (dired-mode . ajv/dired-hide-details-omit-hidden-files))
   )
 
 (use-package ajv-my-functions
   :demand
   :bind
-  (("s-8" . switch-buffer-scratch)
-   ("s-o" . close-other-buffer)
+  (("s-8" . ajv/switch-buffer-scratch)
+   ("s-~" . ajv/open-home-in-dired)
+   ("s-`" . ajv/open-symlink-folder-in-dired)
+   ("C-c w c". ajv/window-config)
+   ("C-c s u" . ajv/reopen-file-with-sudo)
+   ("C-c C-d C-b" . ajv/delete-backup-files)
+   ("%" . ajv/match-paren)
+   ("s-o" . ajv/close-other-buffer)
    ("s-w" . kill-this-buffer)
    ("C-x z" .  bury-buffer)
    ("s-<tab>" . other-window)
-   ("%" . match-paren)
-   ("s-`" . open-home-in-dired)
    ("s-b" . ido-switch-buffer)
    ("s-B" . ido-switch-buffer-other-window)
    ("s-s" . save-buffer)
    ("s-f" . ido-find-file)
    ("s-g" . keyboard-quit)
-   ("C-c w c". ajv/window-config)
-   ("C-c s u" . reopen-file-with-sudo)
-   ("C-c C-d C-b" . delete-backup-files)
    :map dired-mode-map
-   ("l" . dired-launch-file))
+   ("l" . ajv/dired-launch-file))
   :config
   (when window-system
-    (global-set-key (kbd "C-x C-c") 'ask-before-closing))
+    (global-set-key (kbd "C-x C-c") 'ajv/ask-before-closing))
   (advice-add 'revert-buffer :around #'yes-or-no-p->-y-or-n-p)
   :hook
-  ((prog-mode . hideshow-setup)
-   (emacs-startup . measure-loading-time))
+  ((prog-mode . ajv/hideshow-setup)
+   (emacs-startup . ajv/measure-loading-time))
   )
 
-(use-package ajv-misc
-  :defer 1
-  :init (setq inhibit-startup-message t)
-  )
+(use-package ajv-misc :defer 1 :init (setq inhibit-startup-message t))
 
 (use-package ajv-visual)
 
-(use-package ajv-modeline)
+(use-package ajv-modeline :defer 1)
