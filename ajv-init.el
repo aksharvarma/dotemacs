@@ -35,12 +35,10 @@
 ;; Start loading up other things
 (use-package cl)
 
-(use-package notmuch
-  :commands notmuch)                      ;Don't use this yet.
+(use-package notmuch :commands notmuch)                      ;Don't use this yet.
 
-(use-package ido
+(use-package ido :demand
   :ensure t
-  :demand
   :config
   (ido-mode t)
   (ido-everywhere t)
@@ -53,8 +51,7 @@
   (fset 'ido-switch-buffer-other-window 'switch-to-buffer-other-window))
 
 
-(use-package company
-  :disabled
+(use-package company :disabled
   :bind (("S-<tab>" . company-complete))
   :config (global-company-mode))
 
@@ -67,10 +64,8 @@
   ;; need to do this manually or not picked up by `shell-pop'
   (shell-pop--set-shell-type 'shell-pop-shell-type shell-pop-shell-type))
 
-(use-package python
-  ;; :disabled
+(use-package python :defer 2
   :mode ("\\.py\\'" . python-mode)
-  :defer 2
   :commands python-mode
   :config
   (elpy-enable)
@@ -89,25 +84,20 @@
   :bind (("M-x" . smex))
   :config (smex-initialize))
 
-(use-package key-chord
-  :demand
-  :disabled
+(use-package key-chord :demand :disabled
   :bind (("C-c C-k C-t" . key-chord-mode))
   :config (key-chord-mode 1)
   )
 
 (use-package powerline :after (ajv-visual ajv-modeline) :config (powerline-default-theme))
 
-(use-package ajv-pdf
-  :init
-  (use-package pdf-tools
-    :defer 2
-    :magic ("%PDF" . pdf-view-mode)
-    :pin manual
-    :config (pdf-tools-install))
-  :bind (:map pdf-view-mode-map ("q" . delete-frame))
-  :config (setq pdf-view-resize-factor 1.05)
-  :hook ((pdf-view-mode . ajv/pdf-view-move-modeline-to-top))
+(use-package pdf-tools :defer 2 :magic ("%PDF" . pdf-view-mode) :pin manual
+  :config
+  (pdf-tools-install)
+  (use-package ajv-pdf :demand
+    :bind (:map pdf-view-mode-map ("q" . delete-frame))
+    :config (setq pdf-view-resize-factor 1.05)
+    :hook ((pdf-view-mode . ajv/pdf-view-move-modeline-to-top)))
   )
 
 (use-package magit
@@ -118,22 +108,21 @@
 		([remap magit-mode-bury-buffer] . ajv/magit-kill-buffers)))
   )
 
-(use-package ajv-dired :demand
-  :init (use-package dired)
+(use-package dired :demand
   :config
   (setq dired-dwim-target t                     ;default copy to other window
         dired-listing-switches "-a -l -L -h --group-directories-first --classify")
   (put 'dired-find-alternate-file 'disabled nil) ;allow 'a' in dired
-  :bind  (:map dired-mode-map
-	       ("s". ajv/dired-sort-criteria)
-	       ("l" . ajv/dired-launch-file)
-	       ("C-c C-d C-b" . ajv/delete-backup-files))
-  :hook ((dired-mode . ajv/dired-set-default-sorting)
-	 (dired-mode . ajv/dired-hide-details-omit-hidden-files))
+  (use-package ajv-dired
+    :bind  (:map dired-mode-map
+		 ("s". ajv/dired-sort-criteria)
+		 ("l" . ajv/dired-launch-file)
+		 ("C-c C-d C-b" . ajv/delete-backup-files))
+    :hook ((dired-mode . ajv/dired-set-default-sorting)
+	   (dired-mode . ajv/dired-hide-details-omit-hidden-files)))
   )
 
-(use-package ajv-my-functions
-  :demand
+(use-package ajv-my-functions :demand
   :bind
   (("s-8" . ajv/switch-buffer-scratch)
    ("s-~" . ajv/open-home-in-dired)
