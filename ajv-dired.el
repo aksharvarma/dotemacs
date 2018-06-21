@@ -1,9 +1,9 @@
 (provide 'ajv-dired)
 
 (defun ajv/dired-sort-criteria (criteria)
-  "sort-dired by different criteria by Robert Gloeckner, 
+  "sort-dired by different criteria by Robert Gloeckner,
 later modified by Akshar Varma"
-  (interactive 
+  (interactive
    (list (or (ido-completing-read "criteria [name]: "
                                   '("size(S)" "extension(X)" "creation-time(ct)"
                                     "access-time(ut)" "time(t)" "name(n)"))
@@ -51,7 +51,7 @@ modified from http://omniorthogonal.blogspot.in/2008/05/useful-emacs-dired-launc
   (interactive)
   (when (eq major-mode 'dired-mode)
     (case system-type
-      (gnu/linux (let ((process-connection-type nil)) 
+      (gnu/linux (let ((process-connection-type nil))
 		   (start-process "*launch*" nil "xdg-open" (dired-get-filename))))
       (windows-nt (w32-shell-execute "open"  (dired-get-filename) nil nil)))))
 

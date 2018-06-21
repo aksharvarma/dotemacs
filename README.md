@@ -47,4 +47,3 @@ Any settings that affects how Emacs looks, goes in here; except for settings spe
 
 ## Modeline: `ajv-modeline.el`
 This is where I setup the modeline to show me the time and the battery status.
-

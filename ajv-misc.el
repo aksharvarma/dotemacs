@@ -23,7 +23,7 @@
 (load custom-file)
 
 (winner-mode 1)
-(subword-mode)				; Allows moving through camelCasedWords 
+(subword-mode)				; Allows moving through camelCasedWords
 (auto-compression-mode 1)
 (delete-selection-mode t)
 (global-auto-complete-mode t)

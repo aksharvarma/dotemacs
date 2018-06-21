@@ -146,7 +146,8 @@
   (advice-add 'revert-buffer :around #'yes-or-no-p->-y-or-n-p)
   :hook
   ((prog-mode . ajv/hideshow-setup)
-   (emacs-startup . ajv/measure-loading-time))
+   (emacs-startup . ajv/measure-loading-time)
+   (before-save . ajv/delete-trailing-whitespace))
   )
 
 (use-package ajv-misc :defer 1 :init (setq inhibit-startup-message t))

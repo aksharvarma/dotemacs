@@ -102,3 +102,10 @@ My prefered theme is a dark theme which doesn't work well in bright light. The E
   (let ((default-directory ajv/symlink-folder))
     (ido-find-file))
   )
+
+(defun ajv/delete-trailing-whitespace ()
+  (interactive)
+  (when (not (or (derived-mode-p 'markdown-mode)
+		 (derived-mode-p 'org-mode)))
+	     (delete-trailing-whitespace))
+  )
