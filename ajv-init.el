@@ -110,15 +110,15 @@
   :hook ((pdf-view-mode . ajv/pdf-view-move-modeline-to-top))
   )
 
-(use-package ajv-magit
-  :init (use-package magit :commands (magit-status magit-mode))
-  :commands (magit-status magit-mode)
-  :bind (("<f3>" . magit-status)
-         :map magit-status-mode-map
-         ("q" . ajv/magit-kill-buffers)))
+(use-package magit
+  :bind (("<f3>" . magit-status))
+  :config
+  (use-package ajv-magit :demand
+    :bind (:map magit-status-mode-map
+		([remap magit-mode-bury-buffer] . ajv/magit-kill-buffers)))
+  )
 
-(use-package ajv-dired
-  :demand
+(use-package ajv-dired :demand
   :init (use-package dired)
   :config
   (setq dired-dwim-target t                     ;default copy to other window
