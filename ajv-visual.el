@@ -1,5 +1,5 @@
 (provide 'ajv-visual)
-(load-theme 'deeper-blue)
+(load-theme ajv/prefered-theme-name)
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 (setq-default fill-column most-positive-fixnum
               visual-line-fringe-indicators '(nil right-curly-arrow))
