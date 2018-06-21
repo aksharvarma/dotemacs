@@ -128,6 +128,7 @@
   (("s-8" . ajv/switch-buffer-scratch)
    ("s-~" . ajv/open-home-in-dired)
    ("s-`" . ajv/open-symlink-folder-in-dired)
+   ("s-p" . ajv/mypaths)
    ("C-c w c". ajv/window-config)
    ("C-c s u" . ajv/reopen-file-with-sudo)
    ("C-c C-d C-b" . ajv/delete-backup-files)
