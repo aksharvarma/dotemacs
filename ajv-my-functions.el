@@ -126,50 +126,11 @@ Picked from: http://nileshk.com/2009/06/13/prompt-before-closing-emacs.html"
     (apply orig-fun r)))
 
 
-
-;; ;; The following three functions are currently unused.
-;; (defun ajv-set-modeline-color-scheme ()
-;;   "Make active modeline more visible and inactive one less visible, picked up from https://stackoverflow.com/questions/9446673/asking-emacs-to-highlight-more-clearly-which-window-pane-has-the-focus-cursor
-;; Call after changing theme."
-;;   (interactive nil)
-;;   (progn
-;;     (set-face-attribute  'mode-line
-;;                          nil 
-;;                          :foreground "black"
-;;                          :background "gray80"
-;;                          :box '(:line-width 1 :style released-button))
-;;     (set-face-attribute  'mode-line-inactive
-;;                          nil 
-;;                          :foreground "gray50"
-;;                          :background "grey20"
-;;                          :box '(:line-width 1 :style released-button))))
-
-
-;; (defun ajv-set-theme (chosen-theme)
-;;   "Set the theme, modeline color scheme and cursor color to what I want."
-;;   (interactive S)
-;;   (progn
-;;     (enable-theme chosen-theme)
-;;     (ajv-set-modeline-color-scheme)
-;;     ;; (set-cursor-color "yellow")
-;;     ))
-
-
-;; (defun ajv-cycle-theme ()
-;;   "Cycle Emacs theme among a preset list.
-;; Code modified from: `http://ergoemacs.org/emacs/elisp_toggle_command.html'
-;; Version 2018-04-25"
-;;   (interactive nil)
-;;   ;; uses a property “state”. Value is a integer.
-;;   (let* ((values [misterioso wombat manoj-dark])
-;;          ;; (values ["wombat" "manoj-dark" "misterioso"])
-;;          (index-before (if (get 'ajv-cycle-theme 'current-theme)
-;;                            (get 'ajv-cycle-theme 'current-theme) 0))
-;;          (index-after (% (+ index-before 1)
-;;                           (length values)))
-;;          (next-value (aref values index-after)))
-
-;;     (progn
-;;       (put 'ajv-cycle-theme 'current-theme index-after)
-;;       (ajv-set-theme next-value)
-;;       (message "Theme changed to %s" next-value))))
+(defun ajv/toggle-theme ()
+  "Toggle between my prefered theme and no theme (Emacs default theme).
+My prefered theme is a dark theme which doesn't work well in bright light. The Emacs default theme is good enough for bright light."
+  (interactive)
+  (if custom-enabled-themes
+      (disable-theme ajv/prefered-theme-name)
+    (load-theme ajv/prefered-theme-name))
+  )
