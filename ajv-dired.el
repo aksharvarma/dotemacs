@@ -29,17 +29,20 @@ later modified by Akshar Varma"
   "Set default sorting criteria for directories in ajv/dired-default-sorting-alist"
   (interactive)
   (when (eq major-mode 'dired-mode)
-    (if (assoc-default (expand-file-name default-directory)
-		       ajv/dired-default-sorting-alist)
-	(ajv/dired-sort-criteria (file-name-as-directory 
-				  (assoc-default default-directory
-						 ajv/dired-default-sorting-alist)))
-      (message "nothing1"))
-    (if (string-equal (expand-file-name default-directory)
-		      (expand-file-name ajv/symlink-folder))
+    ;; If one of the directories in ajv/dired-default-sorting-alist,
+    ;; then sort accordingly
+    (if (assoc-default default-directory
+		       ajv/dired-default-sorting-alist
+		       'file-equal-p)
+	(ajv/dired-sort-criteria
+	 (file-name-as-directory (assoc-default default-directory
+						ajv/dired-default-sorting-alist
+						'file-equal-p)))
+      nil)
+    ;; If symlink-folder, then don't display . and .. in dired
+    (if (file-equal-p default-directory ajv/symlink-folder)
 	(dired-sort-other "-A -l -L -h --group-directories-first --classify")
-      (message "nothing2"))
-    (message "ran")))
+      nil)))
 
 
 (defun ajv/dired-launch-file ()
