@@ -21,8 +21,8 @@ _Note 2: Every variable/function that I have defined is prefixed with `ajv/` to 
 # Other files
 Part of the modularization is done via having my functions/settings distributed across various files categorized roughly by what purpose they serve.
 
-## My settings: `ajv-settings.el`
-This is a symlink to the actual file: `ajv-actual-settings.el`. Since this file may have sensitive information keeping a symlink ensures that it is not unintentionally put up in a public repo. These settings are loaded up before anything else starts.
+## My settings: `ajv-settings.el` and `ajv-sensitive-settings.el`
+Any variable that might be used in multiple places or is a preference that I have or is simply data, then is stored in these files. If it is something sensitive then it goes into the latter file which is gitignored. Otherwise, it goes into the first file.
 
 ## Customizations: `ajv-customizations.el`
 Everything that custom-set-variables does is put into this file. This is (mostly) empty because I have picked customizations from there and moved them into other places. The aim is to always keep this empty and add customizations elsewhere after understanding how they work. A small step towards preventing Emacs bankruptcy down the road when I cannot understand what something does and if I even need it anymore.
