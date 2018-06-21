@@ -44,6 +44,12 @@
   (ido-everywhere t)
   (setq ido-enable-flex-matching t))
 
+(use-package ido-completing-read+ :demand :config (ido-ubiquitous-mode 1))
+
+(use-package ido-yes-or-no :demand :config (ido-yes-or-no-mode 1))
+
+(use-package icomplete :demand :config (icomplete-mode 1))
+
 (when (not (featurep 'ido))
   (fset 'ido-completing-read 'completing-read)
   (fset 'ido-find-file 'find-file)
@@ -106,6 +112,7 @@
   (use-package ajv-magit :demand
     :bind (:map magit-status-mode-map
 		([remap magit-mode-bury-buffer] . ajv/magit-kill-buffers)))
+  (setq magit-completing-read-function 'magit-ido-completing-read)
   )
 
 (use-package dired :demand
