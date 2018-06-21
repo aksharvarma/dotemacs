@@ -1,28 +1,5 @@
 (provide 'ajv-my-functions)
 
-;; TODO: Make sure these are only callable from within dired.
-(defun ajv/mpv-marked ()
-  "Open marked files as single playlist in mpv"
-  (interactive)
-  (when (eq major-mode 'dired-mode)
-    (dired-do-shell-command "mpv --shuffle --loop-playlist --quiet --force-window 2>&1 1>/dev/null * &" nil (dired-get-marked-files))))
-
-(defun ajv/mpv-all ()
-  "Open all files in the dired buffer as single playlist in mpv"
-  (interactive)
-  (when (eq major-mode 'dired-mode)
-    (dired-unmark-all-marks)
-    (dired-toggle-marks)
-    (ajv/mpv-marked)
-    (dired-unmark-all-marks)))
-
-;; ;; TODO: Change this to a function that can then be added as advice around both mpv functions
-;; (defadvice ajv/mpv-all (around stfu compile activate)
-;;   "Make sure that ajv/mpv-all doesn't ask confirmation before opening new buffer if something is already using the default buffer"
-;;   (cl-flet ((yes-or-no-p (&rest args) t)
-;; 	 (y-or-n-p (&rest args) t))
-;;     ad-do-it))
-
 (defun ajv/switch-buffer-scratch ()
   "Switch to the scratch buffer. If the buffer doesn't exist,
 create it and write the initial message into it."
@@ -53,15 +30,6 @@ create it and write the initial message into it."
   (other-window 1)
   )
 
-(defun ajv/dired-launch-file ()
-  "Launch system associated program on current file in dired buffer
-modified from http://omniorthogonal.blogspot.in/2008/05/useful-emacs-dired-launch-hack.html"
-  (interactive)
-  (case system-type
-    (gnu/linux (let ((process-connection-type nil)) 
-                 (start-process "*launch*" nil "xdg-open" (dired-get-filename))))
-    (windows-nt (w32-shell-execute "open"  (dired-get-filename) nil nil))))
-
 (defun ajv/match-paren (arg)
   "Go to the matching paren if on a paren; otherwise insert %."
   (interactive "p")
@@ -79,13 +47,6 @@ Picked from: http://nileshk.com/2009/06/13/prompt-before-closing-emacs.html"
         (save-buffers-kill-emacs))
     (message "Canceled exit")))
 
-(defun ajv/delete-backup-files ()
-  "Delete all backup files in the current dired folder"
-  (interactive)
-  (dired-omit-mode 0)
-  (dired-unmark-all-marks)
-  (dired-flag-backup-files)
-  (dired-do-flagged-delete))
 
 (defun ajv/hideshow-setup ()
   "Setup hideshow mode for current mode/buffer. Should be hooked to prog-mode-hook."

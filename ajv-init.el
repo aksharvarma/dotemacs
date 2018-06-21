@@ -124,7 +124,10 @@
   (setq dired-dwim-target t                     ;default copy to other window
         dired-listing-switches "-a -l -L -h --group-directories-first --classify")
   (put 'dired-find-alternate-file 'disabled nil) ;allow 'a' in dired
-  :bind  (:map dired-mode-map ("s". ajv/dired-sort-criteria))
+  :bind  (:map dired-mode-map
+	       ("s". ajv/dired-sort-criteria)
+	       ("l" . ajv/dired-launch-file)
+	       ("C-c C-d C-b" . ajv/delete-backup-files))
   :hook ((dired-mode . ajv/dired-set-default-sorting)
 	 (dired-mode . ajv/dired-hide-details-omit-hidden-files))
   )
@@ -138,7 +141,6 @@
    ("s-p" . ajv/mypaths)
    ("C-c w c". ajv/window-config)
    ("C-c s u" . ajv/reopen-file-with-sudo)
-   ("C-c C-d C-b" . ajv/delete-backup-files)
    ("%" . ajv/match-paren)
    ("s-o" . ajv/close-other-buffer)
    ("s-w" . kill-this-buffer)
@@ -148,9 +150,7 @@
    ("s-B" . ido-switch-buffer-other-window)
    ("s-s" . save-buffer)
    ("s-f" . ido-find-file)
-   ("s-g" . keyboard-quit)
-   :map dired-mode-map
-   ("l" . ajv/dired-launch-file))
+   ("s-g" . keyboard-quit))
   :config
   (when window-system
     (global-set-key (kbd "C-x C-c") 'ajv/ask-before-closing))
