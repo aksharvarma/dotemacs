@@ -46,6 +46,13 @@
   (ido-everywhere t)
   (setq ido-enable-flex-matching t))
 
+(when (not (featurep 'ido))
+  (fset 'ido-completing-read 'completing-read)
+  (fset 'ido-find-file 'find-file)
+  (fset 'ido-switch-buffer 'switch-to-buffer)
+  (fset 'ido-switch-buffer-other-window 'switch-to-buffer-other-window))
+
+
 (use-package company
   :disabled
   :bind (("S-<tab>" . company-complete))
