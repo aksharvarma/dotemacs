@@ -98,12 +98,15 @@
 (use-package powerline :after (ajv-visual ajv-modeline) :config (powerline-default-theme))
 
 (use-package pdf-tools :defer 2 :magic ("%PDF" . pdf-view-mode) :pin manual
-  :config
-  (pdf-tools-install)
+  :config (pdf-tools-install)
   (use-package ajv-pdf :demand
-    :bind (:map pdf-view-mode-map ("q" . delete-frame))
+    :bind (:map pdf-view-mode-map
+		("q" . delete-frame)
+		("M-m" . ajv/pdf-view-toggle-modeline)
+		("M-i" . pdf-view-midnight-minor-mode))
     :config (setq pdf-view-resize-factor 1.05)
-    :hook ((pdf-view-mode . ajv/pdf-view-move-modeline-to-top)))
+    :hook ((pdf-view-mode . ajv/pdf-view-move-modeline-to-top)
+	   (pdf-view-mode . ajv/pdf-view-disable-linum-mode)))
   )
 
 (use-package magit
