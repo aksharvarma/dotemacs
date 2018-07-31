@@ -42,13 +42,14 @@
   :config
   (ido-mode t)
   (ido-everywhere t)
-  (setq ido-enable-flex-matching t))
+  (setq ido-enable-flex-matching t)
+  (add-to-list 'ido-ignore-buffers "^.*\\.pdf$"))
 
-(use-package ido-completing-read+ :demand :config (ido-ubiquitous-mode 1))
+(use-package ido-completing-read+ :disabled :demand :config (ido-ubiquitous-mode 0))
 
-(use-package ido-yes-or-no :demand :config (ido-yes-or-no-mode 1))
+(use-package ido-yes-or-no :disabled :demand :config (ido-yes-or-no-mode 0))
 
-(use-package icomplete :demand :config (icomplete-mode 1))
+(use-package icomplete :disabled :demand :config (icomplete-mode 0))
 
 (when (not (featurep 'ido))
   (fset 'ido-completing-read 'completing-read)
@@ -121,7 +122,8 @@
 (use-package dired :demand
   :config
   (setq dired-dwim-target t                     ;default copy to other window
-        dired-listing-switches "-a -l -L -h --group-directories-first --classify")
+        dired-listing-switches "-a -l -L -h --group-directories-first --classify"
+	dired-recursive-copies 'always)
   (put 'dired-find-alternate-file 'disabled nil) ;allow 'a' in dired
   (use-package ajv-dired
     :bind  (:map dired-mode-map
