@@ -105,9 +105,12 @@
 		("q" . delete-frame)
 		("M-m" . ajv/pdf-view-toggle-modeline)
 		("M-i" . pdf-view-midnight-minor-mode))
-    :config (setq pdf-view-resize-factor 1.05)
+    :config (setq pdf-view-resize-factor 1.05
+		  auto-revert-interval 0.1
+		  auto-revert-verbose nil)
     :hook ((pdf-view-mode . ajv/pdf-view-move-modeline-to-top)
-	   (pdf-view-mode . ajv/pdf-view-disable-linum-mode)))
+	   (pdf-view-mode . ajv/pdf-view-disable-linum-mode)
+	   (pdf-view-mode . auto-revert-mode)))
   )
 
 (use-package magit
