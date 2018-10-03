@@ -1,8 +1,6 @@
 (provide 'ajv-misc)
 
-(setq org-startup-truncated 'nil
-      LaTeX-command "latex -shell-escape"
-      org-todo-keywords '((sequence "TODO(t)" "|" "IN-PROGRESS(i)" "|" "DONE(d)"))
+(setq LaTeX-command "latex -shell-escape"
       next-line-add-newlines t
       async-shell-command-buffer 'new-buffer         ;always use new buffer
       select-enable-clipboard t        ;copy/paste into other programs

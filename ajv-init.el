@@ -166,6 +166,10 @@
    (before-save . ajv/delete-trailing-whitespace))
   )
 
+(use-package ajv-org
+  :bind
+  (("s-a" . org-agenda)))
+
 (use-package ajv-misc :defer 1 :init (setq inhibit-startup-message t))
 
 (use-package ajv-visual)
