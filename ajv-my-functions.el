@@ -99,8 +99,15 @@ My prefered theme is a dark theme which doesn't work well in bright light. The E
 (defun ajv/mypaths ()
   "Call ido-find-file after setting default-directory to be the symlink folder. Effectively mirrors the mypaths kind of behaviour."
   (interactive)
-  (let ((default-directory ajv/symlink-folder))
+  (let ((default-directory (file-truename ajv/symlink-folder)))
     (ido-find-file))
+  )
+
+(defun ajv/mypaths-other-window ()
+  "Call ido-find-file after setting default-directory to be the symlink folder. Effectively mirrors the mypaths kind of behaviour."
+  (interactive)
+  (other-window 1)
+  (ajv/mypaths)
   )
 
 (defun ajv/delete-trailing-whitespace ()

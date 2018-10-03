@@ -143,6 +143,7 @@
    ("s-~" . ajv/open-home-in-dired)
    ("s-`" . ajv/open-symlink-folder-in-dired)
    ("s-p" . ajv/mypaths)
+   ("s-P" . ajv/mypaths-other-window)
    ("C-c w c". ajv/window-config)
    ("C-c s u" . ajv/reopen-file-with-sudo)
    ("%" . ajv/match-paren)
