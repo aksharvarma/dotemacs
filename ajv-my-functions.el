@@ -21,12 +21,16 @@ create it and write the initial message into it."
   (interactive)
   (dired ajv/symlink-folder))
 
+(defun ajv/kill-this-buffer ()
+  "Reliably kill the current buffer. 'kill-this-buffer' is unreliable unless called from the menu-bar. See: http://pragmaticemacs.com/emacs/dont-kill-buffer-kill-this-buffer-instead/"
+  (interactive)
+  (kill-buffer (current-buffer)))
 
-(defun ajv/close-other-buffer ()
-  "Close the other buffer in other window (whichever is the reached via (other-window 1))"
+(defun ajv/kill-other-buffer ()
+  "Kill the other buffer in other window (whichever is the reached via (other-window 1))"
   (interactive)
   (other-window 1)
-  (kill-this-buffer)
+  (ajv/kill-this-buffer)
   (other-window 1)
   )
 
