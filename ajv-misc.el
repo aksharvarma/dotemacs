@@ -1,6 +1,7 @@
 (provide 'ajv-misc)
 
 (setq LaTeX-command "latex -shell-escape"
+      TeX-save-query nil                ;Don't ask before saving .tex files
       next-line-add-newlines t
       async-shell-command-buffer 'new-buffer         ;always use new buffer
       select-enable-clipboard t        ;copy/paste into other programs

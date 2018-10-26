@@ -157,6 +157,8 @@
    ("s-f" . ido-find-file)
    ("s-g" . keyboard-quit))
   :config
+  (eval-after-load 'latex
+    '(define-key LaTeX-mode-map (kbd "<f5>") 'TeX-command-master))
   (when window-system
     (global-set-key (kbd "C-x C-c") 'ajv/ask-before-closing))
   (advice-add 'revert-buffer :around #'yes-or-no-p->-y-or-n-p)
@@ -170,7 +172,10 @@
   :bind
   (("s-a" . org-agenda)))
 
-(use-package ajv-misc :defer 1 :init (setq inhibit-startup-message t))
+(use-package ajv-misc
+  :defer 1
+  :init (setq inhibit-startup-message t)
+  )
 
 (use-package ajv-visual)
 
