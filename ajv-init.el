@@ -42,7 +42,13 @@
 ;; Start loading up other things
 (use-package cl)
 
-(use-package notmuch :commands notmuch)                      ;Don't use this yet.
+(use-package notmuch
+  :commands notmuch
+  :config
+  (setq notmuch-search-oldest-first nil
+	mm-text-html-renderer 'w3m
+	notmuch-multipart/alternative-discouraged '("text/plain" "text/html"))
+  )
 
 (use-package ido :demand
   :ensure t
