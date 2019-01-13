@@ -11,8 +11,10 @@
 (add-hook 'emacs-startup-hook (lambda () (setq gc-cons-threshold (* 2 1024 1024)
                                                gc-cons-percentage 0.1)))
 
+;; Load basic settings directly.
 (load "~/.emacs.d/site-lisp/ajv/ajv-settings.el")
-;; (setq ajv/my-init-directory "~/.emacs.d/site-lisp/ajv/")
+(load "~/.emacs.d/site-lisp/ajv/ajv-sensitive-settings.el")
+
 ;;;This adds site-lisp and its subdirectories to the load path,
 ;;;so that .el files there, are visible while initialization.
 (let ((default-directory ajv/my-init-directory))
@@ -169,8 +171,27 @@
   )
 
 (use-package ajv-org
+  :demand
   :bind
-  (("s-a" . org-agenda)))
+  (("s-a" . org-agenda))
+  ;; :config
+  ;; (setq org-agenda-custom-commands
+  ;; 	'(("n" "Agenda and all TODOs"
+  ;; 	   ((agenda #1="")
+  ;; 	    (alltodo #1#)))
+  ;; 	  ("l" "Show agenda with log and time report"
+  ;; 	       ((agenda "" (org-agenda-log-mode))))))
+  :hook ((after-init . org-agenda-list))
+  )
+
+(use-package elfeed :hook ((elfeed-search-mode . toggle-truncate-lines)))
+
+;; http://pragmaticemacs.com/emacs/read-your-rss-feeds-in-emacs-with-elfeed
+(use-package elfeed-org
+  :config
+  (elfeed-org)
+  (setq rmh-elfeed-org-files ajv/my-elfeed-org-file)
+  )
 
 (use-package ajv-misc
   :defer 1
