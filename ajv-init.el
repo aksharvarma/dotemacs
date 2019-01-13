@@ -59,10 +59,31 @@
   (fset 'ido-switch-buffer 'switch-to-buffer)
   (fset 'ido-switch-buffer-other-window 'switch-to-buffer-other-window))
 
-
 (use-package company :disabled
   :bind (("S-<tab>" . company-complete))
   :config (global-company-mode))
+
+(use-package god-mode
+  :demand
+  :bind (("<escape>" . god-mode-all)
+	 (:map god-local-mode-map
+	       ("." . repeat)
+	       ("i" . god-mode-all)
+	       ("<escape>" . nil)))
+  :hook ((god-mode-enabled . ajv/god-update-cursor)
+	 (god-mode-disabled . ajv/god-update-cursor))
+  :config
+  (use-package ajv-god)
+  (add-to-list 'god-exempt-major-modes 'org-agenda-mode)
+  (add-to-list 'god-exempt-major-modes 'elfeed-search-mode)
+  (god-mode-all)
+  )
+
+(use-package god-mode-isearch
+  :after (god-mode)
+  :bind ((:map isearch-mode-map ("<escape>" . god-mode-isearch-activate))
+	 (:map god-mode-isearch-map ("<escape>" . god-mode-isearch-disable)))
+  )
 
 (use-package shell-pop
   :bind (("C-M-1" . shell-pop))
