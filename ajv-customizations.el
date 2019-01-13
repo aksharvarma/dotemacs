@@ -5,7 +5,8 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (cheat-sh ido-yes-or-no ido-completing-read+ powerline move-text key-chord shell-pop esup company-jedi diminish bind-key smex use-package pdf-tools magit writegood-mode elpy flycheck yasnippet python-mode python-info markdown-mode+ frame-cmds auto-complete-c-headers auctex ac-c-headers 2048-game))))
+    (w3m notmuch pdf-tools elfeed elfeed-org minions moody smart-mode-line-powerline-theme smart-mode-line god-mode cheat-sh ido-yes-or-no ido-completing-read+ powerline move-text key-chord shell-pop esup company-jedi diminish bind-key smex use-package magit writegood-mode elpy flycheck yasnippet python-mode python-info markdown-mode+ frame-cmds auto-complete-c-headers auctex ac-c-headers 2048-game)))
+ '(safe-local-variable-values (quote ((eval org-shifttab 2)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

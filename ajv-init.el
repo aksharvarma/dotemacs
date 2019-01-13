@@ -25,7 +25,12 @@
 (setq package-enable-at-startup nil   ; To prevent initialising twice
       package--init-file-ensured t     ;Don't add (package-initialize) to .emacs.
       package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+			 ("melpa-stable" . "https://stable.melpa.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/"))
+      package-archive-priorities
+      '(("MELPA Stable" . 10)
+        ("GNU ELPA"     . 5)
+        ("MELPA"        . 0)))
 (package-initialize)
 
 
