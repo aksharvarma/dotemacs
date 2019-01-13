@@ -13,10 +13,8 @@
       enable-recursive-minibuffers 1
       sentence-end-double-space nil ;sentences don't have 2 spaces after '.'
       find-file-visit-truename t    ;follow symlinks to true targets
-      vc-follow-symlinks t)    ;follow symlinks that are in git repo
-
-(add-hook 'before-save-hook 'time-stamp) ;set time-stamp before saving file
-(setq time-stamp-pattern nil)            ;use local variables for time-stamps
+      vc-follow-symlinks t    ;follow symlinks that are in git repo
+      time-stamp-pattern nil)            ;use local variables for time-stamps
 
 (setq custom-file (concat ajv/my-init-directory ajv/custom-file-name))
 (load custom-file)

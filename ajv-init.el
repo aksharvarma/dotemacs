@@ -106,6 +106,8 @@
     :config
     (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
     (add-hook 'elpy-mode-hook 'flycheck-mode))
+  ;; :bind (:map elpy-mode-map
+  ;; 	      ("<f5>" . elpy-shell-region-or-buffer))
   )
 
 (use-package move-text :config (move-text-default-bindings))
@@ -159,7 +161,8 @@
   :config (minions-mode 1))
 
 (use-package pdf-tools :defer 2 :magic ("%PDF" . pdf-view-mode) :pin manual
-  :config (pdf-tools-install)
+  :config
+  (pdf-tools-install)
   (use-package ajv-pdf :demand
     :bind (:map pdf-view-mode-map
 		("q" . delete-frame)
@@ -255,6 +258,7 @@
 (use-package ajv-misc
   :defer 1
   :init (setq inhibit-startup-message t)
+  :hook ((before-save . time-stamp))
   )
 
 (use-package ajv-visual)
