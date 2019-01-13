@@ -131,9 +131,10 @@
     :config (setq pdf-view-resize-factor 1.05
 		  auto-revert-interval 0.1
 		  auto-revert-verbose nil)
-    :hook ((pdf-view-mode . ajv/pdf-view-move-modeline-to-top)
+    :hook ((pdf-view-mode . ajv/pdf-view-save-disable-modeline-format)
 	   (pdf-view-mode . ajv/pdf-view-disable-linum-mode)
-	   (pdf-view-mode . auto-revert-mode)))
+	   (pdf-view-mode . auto-revert-mode)
+	   (pdf-view-mode . pdf-misc-size-indication-minor-mode)))
   )
 
 (use-package magit
