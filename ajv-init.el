@@ -119,7 +119,44 @@
   :config (key-chord-mode 1)
   )
 
-(use-package powerline :after (ajv-visual ajv-modeline) :config (powerline-default-theme))
+(use-package powerline
+  :disabled
+  :after (ajv-visual ajv-modeline) ;; :config (powerline-default-theme)
+  )
+
+(use-package smart-mode-line
+  :disabled
+  :after (ajv-visual ajv-modeline)
+  :config
+  (setq sml/theme 'dark)
+  (setq sml/no-confirm-load-theme t)
+  (sml/setup)
+  )
+
+(use-package smart-mode-line-powerline-theme
+   ;; :ensure t
+  :disabled
+  :after powerline
+  :after smart-mode-line
+  :config
+    (sml/setup)
+    (sml/apply-theme 'powerline)
+    )
+
+(use-package moody
+  :after (ajv-visual smart-mode-line)
+  :disabled
+  :config
+  (setq x-underline-at-descent-line t
+	moody-mode-line-height 14)
+  (moody-replace-mode-line-buffer-identification)
+  (moody-replace-vc-mode)
+  )
+
+(use-package minions
+  :disabled
+  :bind (("M-S-RET" . minions-minor-modes-menu))
+  :config (minions-mode 1))
 
 (use-package pdf-tools :defer 2 :magic ("%PDF" . pdf-view-mode) :pin manual
   :config (pdf-tools-install)
@@ -221,5 +258,16 @@
   )
 
 (use-package ajv-visual)
+  ;; All of the following is for moody
+  ;; :config
+  ;; (let ((line (face-attribute 'mode-line :underline)))
+  ;;   (set-face-attribute 'mode-line          nil :overline   line)
+  ;;   (set-face-attribute 'mode-line-inactive nil :overline   line)
+  ;;   (set-face-attribute 'mode-line-inactive nil :underline  line)
+  ;;   (set-face-attribute 'mode-line          nil :box        nil)
+  ;;   (set-face-attribute 'mode-line-inactive nil :box        nil)
+  ;;   (set-face-attribute 'mode-line-inactive nil :background "#f9f2d9")))
 
-(use-package ajv-modeline :defer 1)
+(use-package ajv-modeline
+  ;; :defer 1
+  )

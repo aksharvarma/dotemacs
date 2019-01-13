@@ -1,7 +1,7 @@
 (provide 'ajv-modeline)
 
 ;; This causes the current time in the mode line to be displayed in
-;; `egoge-display-time-face' to make it stand out visually.
+;; `ajv/display-time-face' to make it stand out visually.
 (setq display-time-string-forms
       '((propertize (concat " " 24-hours ":" minutes " ")
 		    'face 'ajv/display-time-face)))
