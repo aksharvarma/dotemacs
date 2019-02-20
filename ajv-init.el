@@ -94,8 +94,7 @@
 	 (god-mode-disabled . ajv/god-update-cursor))
   :config
   (use-package ajv-god)
-  (add-to-list 'god-exempt-major-modes 'org-agenda-mode)
-  (add-to-list 'god-exempt-major-modes 'elfeed-search-mode)
+  (setq god-exempt-major-modes (append ajv/god-exempt-modes god-exempt-major-modes))
   (god-mode-all)
   )
 
