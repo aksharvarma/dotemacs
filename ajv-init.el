@@ -64,7 +64,8 @@
   :config
   (ido-mode t)
   (ido-everywhere t)
-  (setq ido-enable-flex-matching t)
+  (setq ido-enable-flex-matching t
+	ido-auto-merge-work-directories-length -1)
   (add-to-list 'ido-ignore-buffers "^.*\\.pdf$"))
 
 (use-package ido-completing-read+ :disabled :demand :config (ido-ubiquitous-mode 0))
