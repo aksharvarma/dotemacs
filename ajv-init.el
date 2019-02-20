@@ -255,7 +255,8 @@
   :demand
   :bind
   (("s-a" . org-agenda))
-  ;; :config
+  :config
+  (add-to-list 'org-modules 'org-habit)
   ;; (setq org-agenda-custom-commands
   ;; 	'(("n" "Agenda and all TODOs"
   ;; 	   ((agenda #1="")

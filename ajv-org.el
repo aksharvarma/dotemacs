@@ -1,9 +1,14 @@
 (provide 'ajv-org)
 
 (setq org-startup-truncated 'nil
-      org-todo-keywords '((sequence "TODO(t)" "IN-PROGRESS(i)" "|" "DONE(d)"))
-      org-agenda-skip-scheduled-if-done t
-      org-agenda-files ajv/my-org-agenda-files)
+      org-todo-keywords '((sequence "TODO(t)" "IN-PROGRESS(i)" "|" "DONE(d)")))
+
+(setq org-agenda-skip-scheduled-if-done t
+      org-agenda-files ajv/my-org-agenda-files
+      org-habit-show-habits-only-for-today nil
+      org-agenda-show-future-repeats 'next
+      org-agenda-start-day "-1d"
+      org-agenda-start-on-weekday nil)
 
 (setq org-agenda-time-grid
       (quote
