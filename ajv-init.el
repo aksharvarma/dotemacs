@@ -43,20 +43,15 @@
 (use-package cl)
 
 (use-package notmuch
-  :commands notmuch
+  :commands notmuch notmuch-jump-search
   :config
-  (setq notmuch-search-oldest-first nil
-	mm-text-html-renderer 'w3m
-	notmuch-multipart/alternative-discouraged '("text/plain" "text/html"))
-  (setq notmuch-saved-searches
-	 (quote
-	  ((:name "main-gmail" :query "path:main-gmail/**" :key "m")
-	   (:name "neu-email" :query "path:neu-email/**" :key "n")
-	   (:name "unread" :query "tag:unread" :key "u")
-	   (:name "all mail" :query "*" :key "a")
-	   (:name "sent" :query "tag:sent" :key "t")
-	   (:name "flagged" :query "tag:flagged" :key "f")
-	   (:name "drafts" :query "tag:draft" :key "d"))))
+  (use-package ajv-notmuch :demand
+    :bind ((:map notmuch-show-mode-map
+		 ("u" . ajv/notmuch-show-toggle-unread))
+	   (:map notmuch-search-mode-map
+		 ("u" . ajv/notmuch-search-toggle-unread)
+		 ("g" . notmuch-poll-and-refresh-this-buffer)))
+      )
   )
 
 (use-package ido :demand
