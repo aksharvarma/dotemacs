@@ -136,13 +136,11 @@
   :config (key-chord-mode 1)
   )
 
-(use-package powerline
-  :disabled
+(use-package powerline :disabled
   :after (ajv-visual ajv-modeline) ;; :config (powerline-default-theme)
   )
 
-(use-package smart-mode-line
-  :disabled
+(use-package smart-mode-line :disabled
   :after (ajv-visual ajv-modeline)
   :config
   (setq sml/theme 'dark)
@@ -150,9 +148,7 @@
   (sml/setup)
   )
 
-(use-package smart-mode-line-powerline-theme
-   ;; :ensure t
-  :disabled
+(use-package smart-mode-line-powerline-theme :disabled
   :after powerline
   :after smart-mode-line
   :config
@@ -160,9 +156,8 @@
     (sml/apply-theme 'powerline)
     )
 
-(use-package moody
+(use-package moody :disabled
   :after (ajv-visual smart-mode-line)
-  :disabled
   :config
   (setq x-underline-at-descent-line t
 	moody-mode-line-height 14)
@@ -170,8 +165,7 @@
   (moody-replace-vc-mode)
   )
 
-(use-package minions
-  :disabled
+(use-package minions :disabled
   :bind (("M-S-RET" . minions-minor-modes-menu))
   :config (minions-mode 1))
 

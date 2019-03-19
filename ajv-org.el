@@ -8,7 +8,8 @@
       org-habit-show-habits-only-for-today nil
       org-agenda-show-future-repeats 'next
       org-agenda-start-day "-1d"
-      org-agenda-start-on-weekday nil)
+      org-agenda-start-on-weekday nil
+      org-agenda-span 6)
 
 (setq org-agenda-time-grid
       (quote

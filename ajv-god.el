@@ -6,4 +6,4 @@
     (set-cursor-color "lime green"))
   )
 
-(setq ajv/god-exempt-modes '(org-agenda-mode elfeed-search-mode notmuch-hello-mode notmuch-search-mode))
+(setq ajv/god-exempt-modes '(org-agenda-mode elfeed-search-mode notmuch-hello-mode notmuch-search-mode notmuch-show-mode))
