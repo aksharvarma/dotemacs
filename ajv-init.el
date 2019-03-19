@@ -246,13 +246,9 @@
   :bind
   (("s-a" . org-agenda))
   :config
-  (add-to-list 'org-modules 'org-habit)
-  ;; (setq org-agenda-custom-commands
-  ;; 	'(("n" "Agenda and all TODOs"
-  ;; 	   ((agenda #1="")
-  ;; 	    (alltodo #1#)))
-  ;; 	  ("l" "Show agenda with log and time report"
-  ;; 	       ((agenda "" (org-agenda-log-mode))))))
+  (setq org-modules (quote
+		     (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
+  ;; (add-to-list 'org-modules 'org-habit)
   :hook ((after-init . org-agenda-list))
   )
 
