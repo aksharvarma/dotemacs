@@ -252,13 +252,17 @@
   :hook ((after-init . org-agenda-list))
   )
 
-(use-package elfeed :hook ((elfeed-search-mode . toggle-truncate-lines)))
-
-;; http://pragmaticemacs.com/emacs/read-your-rss-feeds-in-emacs-with-elfeed
-(use-package elfeed-org
+(use-package ajv-elfeed
+  :init (use-package elfeed
+	  :hook ((elfeed-search-mode . toggle-truncate-lines)))
   :config
-  (elfeed-org)
-  (setq rmh-elfeed-org-files ajv/my-elfeed-org-file)
+  (use-package elfeed-org
+    ;; http://pragmaticemacs.com/emacs/read-your-rss-feeds-in-emacs-with-elfeed
+    :config
+    (elfeed-org)
+    (setq rmh-elfeed-org-files ajv/my-elfeed-org-file)
+    )
+  :hook ((after-init . ajv/kill-elfeed-log-buffer))
   )
 
 (use-package ajv-misc
