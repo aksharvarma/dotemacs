@@ -63,11 +63,6 @@
 	ido-auto-merge-work-directories-length -1)
   (add-to-list 'ido-ignore-buffers "^.*\\.pdf$"))
 
-(use-package ido-completing-read+ :disabled :demand :config (ido-ubiquitous-mode 0))
-
-(use-package ido-yes-or-no :disabled :demand :config (ido-yes-or-no-mode 0))
-
-(use-package icomplete :disabled :demand :config (icomplete-mode 0))
 
 (when (not (featurep 'ido))
   (fset 'ido-completing-read 'completing-read)
@@ -131,43 +126,6 @@
   :bind (("M-x" . smex))
   :config (smex-initialize))
 
-(use-package key-chord :demand :disabled
-  :bind (("C-c C-k C-t" . key-chord-mode))
-  :config (key-chord-mode 1)
-  )
-
-(use-package powerline :disabled
-  :after (ajv-visual ajv-modeline) ;; :config (powerline-default-theme)
-  )
-
-(use-package smart-mode-line :disabled
-  :after (ajv-visual ajv-modeline)
-  :config
-  (setq sml/theme 'dark)
-  (setq sml/no-confirm-load-theme t)
-  (sml/setup)
-  )
-
-(use-package smart-mode-line-powerline-theme :disabled
-  :after powerline
-  :after smart-mode-line
-  :config
-    (sml/setup)
-    (sml/apply-theme 'powerline)
-    )
-
-(use-package moody :disabled
-  :after (ajv-visual smart-mode-line)
-  :config
-  (setq x-underline-at-descent-line t
-	moody-mode-line-height 14)
-  (moody-replace-mode-line-buffer-identification)
-  (moody-replace-vc-mode)
-  )
-
-(use-package minions :disabled
-  :bind (("M-S-RET" . minions-minor-modes-menu))
-  :config (minions-mode 1))
 
 (use-package pdf-tools :defer 2 :magic ("%PDF" . pdf-view-mode) :pin manual
   :config
