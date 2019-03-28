@@ -34,7 +34,7 @@ Any general purpose function that I use get defined in here. If I can categorize
 I make some changes to the basic dired in Emacs, particularly for sorting certain directories by time/extension. I also make dired hide details and omit hidden files by default. The functions to do these are defined in this file, which is loaded using use-package where keybindings and other settings are done.
 
 ## Magit: `ajv-magit.el`
-The only thing present in this file is a functioon used to kill off all magit buffers. Again, the keybinding is defined in the use-package call from inside the main init file.
+The only thing present in this file is a functioon used to kill off all magit buffers. Again, the keybinding is defined in the use-package call from inside the main init file. Note that Magit uses ido-completing-read+ to allow it to use ido like features.
 
 ## PDF: `ajv-pdf.el`
 Settings for moving the modeline to the top when I use pdf-tools for viewing PDFs inside Emacs.
