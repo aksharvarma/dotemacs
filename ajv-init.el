@@ -188,8 +188,6 @@
    ("s-f" . ido-find-file)
    ("s-g" . keyboard-quit))
   :config
-  (eval-after-load 'latex
-    '(define-key LaTeX-mode-map (kbd "<f5>") 'TeX-command-master))
   (when window-system
     (global-set-key (kbd "C-x C-c") 'ajv/ask-before-closing))
   (advice-add 'revert-buffer :around #'yes-or-no-p->-y-or-n-p)
@@ -221,6 +219,15 @@
     (setq rmh-elfeed-org-files ajv/my-elfeed-org-file)
     )
   :hook ((after-init . ajv/kill-elfeed-log-buffer))
+  )
+
+(use-package ajv-latex
+  :demand t
+  :mode ("\\.tex" . LaTeX-mode)
+  :config
+  (eval-after-load 'latex
+    '(define-key LaTeX-mode-map (kbd "<f5>") 'TeX-command-master))
+  :hook (LaTeX-mode . turn-on-reftex)
   )
 
 (use-package ajv-misc

@@ -1,11 +1,6 @@
 (provide 'ajv-misc)
 
-(setq LaTeX-command "latex -shell-escape"
-      TeX-save-query nil                ;Don't ask before saving .tex files
-      ;; To make AUCTeX read/update on changes to .bib files.
-      TeX-parse-self nil ; Enable parse on load. [DISABLED]
-      TeX-auto-save nil ; Enable parse on save. [DISABLED]
-      ;; Copy-pasting to-from other programs
+(setq ;; Copy-pasting to-from other programs
       select-enable-clipboard t        ;copy/paste into other programs
       interprogram-paste-function 'x-selection-value ;from other progams
       next-line-add-newlines t
