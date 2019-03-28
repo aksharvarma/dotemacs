@@ -115,8 +115,84 @@ My prefered theme is a dark theme which doesn't work well in bright light. The E
   )
 
 (defun ajv/delete-trailing-whitespace ()
+  "Delete trailing whitespace in files. Ideally would be hooked onto before-save-hook."
   (interactive)
   (when (not (or (derived-mode-p 'markdown-mode)
 		 (derived-mode-p 'org-mode)))
 	     (delete-trailing-whitespace))
   )
+
+(defun ajv/shell-command-on-buffer (command)
+  "Execute a shell command on the buffer and replace contents with output of command."
+  (interactive "sShell command on buffer: ")
+  (shell-command-on-region (point-min) (point-max) command t)
+  )
+
+
+(defun xah/title-case-region-or-line (@begin @end)
+  "Title case text between nearest brackets, or current line, or text selection.
+Capitalize first letter of each word, except words like {to, of, the, a, in, or, and, …}. If a word already contains cap letters such as HTTP, URL, they are left as is.
+
+When called in a elisp program, *begin *end are region boundaries.
+URL `http://ergoemacs.org/emacs/elisp_title_case_text.html'
+Version 2017-01-11"
+  (interactive
+   (if (use-region-p)
+       (list (region-beginning) (region-end))
+     (let (
+           $p1
+           $p2
+           ($skipChars "^\"<>(){}[]“”‘’‹›«»「」『』【】〖〗《》〈〉〔〕"))
+       (progn
+         (skip-chars-backward $skipChars (line-beginning-position))
+         (setq $p1 (point))
+         (skip-chars-forward $skipChars (line-end-position))
+         (setq $p2 (point)))
+       (list $p1 $p2))))
+  (let* (
+         ($strPairs [
+                     [" A " " a "]
+                     [" And " " and "]
+                     [" At " " at "]
+                     [" As " " as "]
+                     [" By " " by "]
+                     [" Be " " be "]
+                     [" Into " " into "]
+                     [" In " " in "]
+                     [" Is " " is "]
+                     [" It " " it "]
+                     [" For " " for "]
+                     [" Of " " of "]
+                     [" Or " " or "]
+                     [" On " " on "]
+                     [" Via " " via "]
+                     [" The " " the "]
+                     [" That " " that "]
+                     [" To " " to "]
+                     [" Vs " " vs "]
+                     [" With " " with "]
+                     [" From " " from "]
+                     ["'S " "'s "]
+                     ["'T " "'t "]
+                     ]))
+    (save-excursion
+      (save-restriction
+        (narrow-to-region @begin @end)
+        (upcase-initials-region (point-min) (point-max))
+        (let ((case-fold-search nil))
+          (mapc
+           (lambda ($x)
+             (goto-char (point-min))
+             (while
+                 (search-forward (aref $x 0) nil t)
+               (replace-match (aref $x 1) "FIXEDCASE" "LITERAL")))
+           $strPairs))))))
+
+(defun xah/title-case-string (s)
+  (with-temp-buffer
+    (erase-buffer)
+    (insert s)
+    (xah/title-case-region-or-line (point-min)
+                          (point-max))
+    (buffer-substring-no-properties (point-min)
+                                    (point-max))))
