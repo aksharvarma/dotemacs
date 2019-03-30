@@ -95,6 +95,13 @@
 	 (:map god-mode-isearch-map ("<escape>" . god-mode-isearch-disable)))
   )
 
+(use-package aggressive-indent
+  :config
+  (add-to-list 'aggressive-indent-excluded-modes 'Messages)
+  (global-aggressive-indent-mode 1)
+  )
+
+
 (use-package shell-pop
   :bind (("C-M-1" . shell-pop))
   :config
