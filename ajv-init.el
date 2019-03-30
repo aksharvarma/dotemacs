@@ -192,6 +192,7 @@
 (use-package ajv-my-functions :demand
   :bind
   (("s-8" . ajv/switch-buffer-scratch)
+   ("s-*" . ajv/switch-buffer-scratch-other-window)
    ("s-~" . ajv/open-home-in-dired)
    ("s-`" . ajv/open-symlink-folder-in-dired)
    ("s-p" . ajv/mypaths)
@@ -207,6 +208,7 @@
    ("s-B" . ido-switch-buffer-other-window)
    ("s-s" . save-buffer)
    ("s-f" . ido-find-file)
+   ("s-f" . ido-find-file-other-window)
    ("s-g" . keyboard-quit))
   :config
   (when window-system

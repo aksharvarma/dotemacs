@@ -13,6 +13,15 @@ create it and write the initial message into it."
         (insert initial-scratch-message)))
     (switch-to-buffer scratch-buffer)))
 
+(defun ajv/switch-buffer-scratch-other-window ()
+  "Switch to the scratch buffer. If the buffer doesn't exist,
+create it and write the initial message into it."
+  (interactive)
+  (other-window 1)
+  (ajv/switch-buffer-scratch)
+  (other-window 1)
+  )
+
 (defun ajv/open-home-in-dired ()
   (interactive)
   (dired "~/"))
