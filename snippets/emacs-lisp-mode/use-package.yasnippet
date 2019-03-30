@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# key : use
+# name : (use-package package keywords ...)
+# --
+(use-package ${1:package-name}
+  :bind
+  (("C-c " . `(yas-field-value 1)`))
+  :config
+  (setq $0)
+  :hook
+  ((`(yas-field-value 1)`-mode . "change this"))
+  )

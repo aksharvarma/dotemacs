@@ -1,0 +1,66 @@
+# -*- mode: snippet -*-
+# contributor: Claudio Marforio <marforio@gmail.com>
+# key: beamer
+# group: skeleton
+# name: \documentclass{beamer} ...
+# --
+\documentclass{beamer}
+
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{graphicx,url}
+\usepackage[dvipsnames]{xcolor}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows, fit, shapes, backgrounds, calc, positioning, snakes}
+
+% \usetheme{}
+% \usecolortheme{}
+% \usecolortheme{}
+
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+
+
+% References
+\usepackage[backend=bibtex,sorting=none]{biblatex}
+\addbibresource{`(file-name-sans-extension (file-name-base (buffer-file-name)))`.bib}
+
+% put page numbers
+\setbeamertemplate{footline}[frame number]{}
+% remove navigation symbols
+\setbeamertemplate{navigation symbols}{}
+
+
+\title{${1:Presentation Title$(xah/title-case-string yas-text)}}
+\subtitle{${2:Subtitle}}
+\author{${3:Author Name}}
+\institute{${4:Institute}}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+  % \centering
+  % This should be the title page I guess.
+\end{frame}
+
+\begin{frame}[plain]{Outline}
+	\tableofcontents
+\end{frame}
+
+\begin{frame}
+{${5:Frame Title}}
+$0
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+  \frametitle{References}
+  % \bibliographystyle{unsrt}
+  % \tiny{\bibliography{`(file-name-sans-extension (file-name-base (buffer-file-name)))`}}
+  \tiny{\printbibliography}
+\end{frame}
+
+\end{document}

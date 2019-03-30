@@ -70,6 +70,19 @@
   (fset 'ido-switch-buffer 'switch-to-buffer)
   (fset 'ido-switch-buffer-other-window 'switch-to-buffer-other-window))
 
+
+
+(use-package yasnippet
+  :init (setq yas-snippet-dirs '(ajv/yasnippets-directory))
+  :config
+  (yas-global-mode 1)
+  (yas-reload-all)
+  (setq yas-prompt-functions
+	(yas-maybe-ido-prompt yas-completing-prompt yas-dropdown-prompt yas-no-prompt))
+  :bind ((:map yas-minor-mode-map
+	       ("C-c y" . #'yas-expand)))
+  )
+
 (use-package ajv-ibuffer
   :bind
   (("C-x C-b" . ibuffer)

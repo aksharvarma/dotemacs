@@ -1,0 +1,54 @@
+# -*- mode: snippet -*-
+# contributor: Mads D. Kristensen <madsdk@gmail.com>
+# contributor : Song Qiang <tsiangsung@gmail.com>
+# key: article
+# group: skeleton
+# name: \documentclass{article} ...
+# --
+\documentclass[11pt]{article}
+\usepackage{latexsym}
+
+% Math related
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% tikz related
+\usepackage{tikz}
+\usetikzlibrary{positioning,chains,fit,shapes,calc}
+
+% For algorithm pseudocode
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+% floats/images/etc.
+\usepackage{epstopdf}
+\usepackage{float}
+\usepackage{graphicx}
+
+%misc
+\usepackage{enumerate}
+\usepackage{url}
+
+% References
+\usepackage[backend=bibtex,sorting=none]{biblatex}
+\addbibresource{`(file-name-sans-extension (file-name-base (buffer-file-name)))`.bib}
+
+
+\title{${1:title$(xah/title-case-string yas-text)}}
+
+\author{${2:Author Name}}
+
+\date{\today}
+
+\begin{document}
+\maketitle
+\section{${3:Introduction$(xah/title-case-string yas-text)}}
+$0
+\section{${4:Background/Motivation$(xah/title-case-string yas-text)}}
+\section{${5:Main stuff here$(xah/title-case-string yas-text)}}
+\section{${6:Results$(xah/title-case-string yas-text)}}
+\section{${7:Conclusions$(xah/title-case-string yas-text)}}
+
+\printbibliography
+\end{document}
