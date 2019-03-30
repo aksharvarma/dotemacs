@@ -70,9 +70,6 @@
   (fset 'ido-switch-buffer 'switch-to-buffer)
   (fset 'ido-switch-buffer-other-window 'switch-to-buffer-other-window))
 
-(use-package company :disabled
-  :bind (("S-<tab>" . company-complete))
-  :config (global-company-mode))
 (use-package ajv-ibuffer
   :bind
   (("C-x C-b" . ibuffer)
@@ -87,6 +84,15 @@
    (ibuffer-mode . ajv/ibuffer-use-default-filter))
   )
 
+(use-package company
+  ;; :bind (("S-<tab>" . company-complete))
+  :config (global-company-mode)
+  (setq company-idle-delay 0.1
+	company-minimum-prefix-length 2
+	company-selection-wrap-around t))
+
+(use-package company-auctex
+  :config (company-auctex-init))
 
 (use-package god-mode
   :demand

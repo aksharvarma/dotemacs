@@ -20,6 +20,6 @@
 (subword-mode)				; Allows moving through camelCasedWords
 (auto-compression-mode 1)
 (delete-selection-mode t)
-(global-auto-complete-mode t)
+(global-auto-complete-mode 0)		;Do not auto-complete. Use company.
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
