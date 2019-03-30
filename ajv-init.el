@@ -73,6 +73,20 @@
 (use-package company :disabled
   :bind (("S-<tab>" . company-complete))
   :config (global-company-mode))
+(use-package ajv-ibuffer
+  :bind
+  (("C-x C-b" . ibuffer)
+   ("C-x C-S-b" . ibuffer-other-window)
+   (:map ibuffer-mode-map
+	 ("<up>" . ibuffer-previous-line)
+	 ("<down>" . ibuffer-next-line)))
+  :config
+  (use-package ibuffer-vc :demand)
+  :hook
+  (;; (ibuffer-mode . ajv/group-ibuffer-by-vc)
+   (ibuffer-mode . ajv/ibuffer-use-default-filter))
+  )
+
 
 (use-package god-mode
   :demand
