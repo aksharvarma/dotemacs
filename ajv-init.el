@@ -272,6 +272,17 @@
   :hook (LaTeX-mode . turn-on-reftex)
   )
 
+(use-package ajv-play-music
+  :commands ajv/play-this-music
+  :bind
+  (("<XF86AudioPlay>" . ajv/play-pause-music)
+   ("<XF86AudioPause>" . ajv/stop-music)
+   ("<XF86AudioNext>" . ajv/play-next-music)
+   ("<XF86AudioPrev>" . ajv/play-previous-music)
+   ("<XF86Search>" . ajv/play-this-music))
+  )
+
+
 (use-package ajv-misc
   :defer 1
   :init (setq inhibit-startup-message t)

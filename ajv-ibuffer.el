@@ -9,6 +9,8 @@
 		(or
                  (name . "^\\*scratch\\*$")
                  (name . "^\\*Messages\\*$")))
+	       ("Music"
+		(name . "^\\*ajv-mpv-buffer\\*$"))
 	       ("Org" ;; all org-related buffers
 		(or
 		 (mode . org-mode)
