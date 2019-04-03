@@ -124,6 +124,15 @@
 (use-package ialign :demand)
 
 
+(use-package smartparens-config
+  :ensure smartparens
+  :config (show-smartparens-global-mode)
+  :hook
+  (((prog-mode markdown-mode) . smartparens-mode)
+   ((prog-mode markdown-mode) . show-smartparens-mode))
+  )
+
+
 (use-package god-mode
   :demand
   :bind (("<escape>" . god-mode-all)
