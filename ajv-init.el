@@ -116,6 +116,14 @@
 (use-package company-auctex
   :config (company-auctex-init))
 
+
+(use-package expand-region
+  :bind ("C-=" . er/expand-region))
+
+
+(use-package ialign :demand)
+
+
 (use-package god-mode
   :demand
   :bind (("<escape>" . god-mode-all)
