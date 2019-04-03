@@ -289,6 +289,8 @@
   :hook (LaTeX-mode . turn-on-reftex)
   )
 
+(use-package markdown-toc :demand)
+
 (use-package ajv-play-music
   :commands ajv/play-this-music
   :bind
