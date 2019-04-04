@@ -63,26 +63,3 @@ modified from http://omniorthogonal.blogspot.in/2008/05/useful-emacs-dired-launc
     (dired-unmark-all-marks)
     (dired-flag-backup-files)
     (dired-do-flagged-delete)))
-
-;; TODO: Make sure these are only callable from within dired.
-(defun ajv/mpv-marked ()
-  "Open marked files as single playlist in mpv"
-  (interactive)
-  (when (eq major-mode 'dired-mode)
-    (dired-do-shell-command "mpv --shuffle --loop-playlist --quiet --force-window 2>&1 1>/dev/null * &" nil (dired-get-marked-files))))
-
-(defun ajv/mpv-all ()
-  "Open all files in the dired buffer as single playlist in mpv"
-  (interactive)
-  (when (eq major-mode 'dired-mode)
-    (dired-unmark-all-marks)
-    (dired-toggle-marks)
-    (ajv/mpv-marked)
-    (dired-unmark-all-marks)))
-
-;; ;; TODO: Change this to a function that can then be added as advice around both mpv functions
-;; (defadvice ajv/mpv-all (around stfu compile activate)
-;;   "Make sure that ajv/mpv-all doesn't ask confirmation before opening new buffer if something is already using the default buffer"
-;;   (cl-flet ((yes-or-no-p (&rest args) t)
-;; 	 (y-or-n-p (&rest args) t))
-;;     ad-do-it))
