@@ -29,3 +29,17 @@
     (setq mode-line-format ajv/pdf-mode-modeline-format))
   (force-mode-line-update 1)		;Needed to actually see the change
   )
+
+(defun ajv/kill-pdf-buffer-and-delete-frame ()
+  "Kill the PDF buffer and then delete the frame."
+  (interactive)
+  (kill-buffer (current-buffer))
+  (delete-frame))
+
+(defun ajv/advise-find-file-to-open-pdf-in-new-frame (returned-buffer)
+  "Put an advice after find-file so that all PDFs are opened in a new dedicated frame rather than in a window in same frame."
+  (when (with-current-buffer returned-buffer (derived-mode-p 'pdf-view-mode))
+    (execute-kbd-macro (read-kbd-macro "C-x z"))
+    (switch-to-buffer-other-frame returned-buffer t)
+    (revert-buffer t t t))
+  )
