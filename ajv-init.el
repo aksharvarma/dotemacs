@@ -43,15 +43,14 @@
 (use-package cl)
 
 (use-package notmuch
-  :commands notmuch notmuch-jump-search
+  :commands notmuch notmuch-jump-search notmuch-search
   :config
   (use-package ajv-notmuch :demand
     :bind ((:map notmuch-show-mode-map
 		 ("u" . ajv/notmuch-show-toggle-unread))
 	   (:map notmuch-search-mode-map
 		 ("u" . ajv/notmuch-search-toggle-unread)
-		 ("g" . notmuch-poll-and-refresh-this-buffer)))
-      )
+		 ("g" . notmuch-poll-and-refresh-this-buffer))))
   )
 
 (use-package ido :demand
