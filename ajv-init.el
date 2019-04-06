@@ -57,7 +57,7 @@
   :ensure t
   :config
   (ido-mode t)
-  (ido-everywhere t)
+  (ido-everywhere)
   (setq ido-enable-flex-matching t
 	ido-auto-merge-work-directories-length -1)
   (use-package flx-ido
@@ -86,7 +86,7 @@
   (yas-global-mode 1)
   (yas-reload-all)
   (setq yas-prompt-functions
-	(yas-maybe-ido-prompt yas-completing-prompt yas-dropdown-prompt yas-no-prompt))
+	'(yas-maybe-ido-prompt yas-completing-prompt yas-dropdown-prompt yas-no-prompt))
   :bind ((:map yas-minor-mode-map
 	       ("C-c y" . #'yas-expand)))
   )
@@ -138,14 +138,16 @@
 	 (:map god-local-mode-map
 	       ("." . repeat)
 	       ("i" . god-mode-all)
-	       ("<escape>" . nil)))
+	       ("<escape>" . (lambda () (interactive) (god-mode-activate)))))
   :hook ((god-mode-enabled . ajv/god-update-cursor)
-	 (god-mode-disabled . ajv/god-update-cursor))
+  	 (god-mode-disabled . ajv/god-update-cursor))
   :config
   (use-package ajv-god
+    :demand
     :bind ((:map god-local-mode-map
-		 ("q" . ajv/insert-string-from-god-mode))))
-  (setq god-exempt-major-modes (append ajv/god-exempt-modes god-exempt-major-modes))
+    		 ("q" . ajv/insert-string-from-god-mode)))
+    :config (setq god-exempt-major-modes
+		  (append ajv/god-exempt-modes god-exempt-major-modes)))
   (god-mode-all)
   )
 
