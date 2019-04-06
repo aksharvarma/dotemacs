@@ -84,10 +84,10 @@ Picked from: http://nileshk.com/2009/06/13/prompt-before-closing-emacs.html"
   (interactive)
   (delete-other-windows)
   (split-window-horizontally)
+  (ibuffer)
   (other-window 1)
-  (ajv/switch-buffer-scratch)
+  (org-agenda-list)
   (other-window 1)
-  (dired ajv/symlink-folder)
   )
 
 (defun ajv/reopen-file-with-sudo ()
