@@ -142,7 +142,9 @@
   :hook ((god-mode-enabled . ajv/god-update-cursor)
 	 (god-mode-disabled . ajv/god-update-cursor))
   :config
-  (use-package ajv-god)
+  (use-package ajv-god
+    :bind ((:map god-local-mode-map
+		 ("q" . ajv/insert-string-from-god-mode))))
   (setq god-exempt-major-modes (append ajv/god-exempt-modes god-exempt-major-modes))
   (god-mode-all)
   )
