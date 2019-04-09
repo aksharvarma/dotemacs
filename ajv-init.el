@@ -94,7 +94,9 @@
 (use-package ajv-ibuffer
   :bind
   (("C-x C-b" . ibuffer)
+   ("<f2>" . ibuffer)
    ("C-x C-S-b" . ibuffer-other-window)
+   ("<f12>" . ibuffer-other-window)
    (:map ibuffer-mode-map
 	 ("<up>" . ibuffer-previous-line)
 	 ("<down>" . ibuffer-next-line)))
@@ -274,7 +276,8 @@
 (use-package ajv-org
   :demand
   :bind
-  (("s-a" . org-agenda))
+  (("s-a" . org-agenda)
+   ("<f4>" . (lambda () (interactive) (switch-to-buffer "*Org Agenda*"))))
   :config
   (setq org-modules (quote
 		     (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
