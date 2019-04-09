@@ -87,7 +87,7 @@ This requires adhering to the syntax that edmacro uses, i.e. handling spaces usi
   (interactive)
   (if (not (ajv/check-if-created-music-buffer)) (ajv/play-this-music) nil)
   (ajv/go-to-folder-in-music-buffer foldername)
-  (execute-kbd-macro (read-kbd-macro "mpv SPC --force-window=no SPC --player-operation-mode=cplayer SPC --shuffle SPC --loop-playlist SPC --quiet SPC * RET C-x z"))
+  (execute-kbd-macro (read-kbd-macro "mpv SPC --force-window=no SPC --player-operation-mode=cplayer SPC --no-audio-display SPC --shuffle SPC --loop-playlist SPC --quiet SPC * RET C-x z"))
   )
 
 (defun ajv/play-this-music ()
