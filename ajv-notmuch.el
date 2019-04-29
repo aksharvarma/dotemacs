@@ -30,3 +30,12 @@
     (notmuch-search-tag (list "+unread")))
   (forward-line)
   )
+
+(defun ajv/notmuch-set-initial-cursor-position ()
+  (if (and (eq (point) (point-min))
+           (search-forward "Saved searches:" nil t))
+      (progn
+        (forward-line)
+        (widget-forward 1))
+    (if (eq (widget-type (widget-at)) 'editable-field)
+        (beginning-of-line))))

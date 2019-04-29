@@ -50,7 +50,8 @@
 		 ("u" . ajv/notmuch-show-toggle-unread))
 	   (:map notmuch-search-mode-map
 		 ("u" . ajv/notmuch-search-toggle-unread)
-		 ("g" . notmuch-poll-and-refresh-this-buffer))))
+		 ("g" . notmuch-poll-and-refresh-this-buffer)))
+    :hook (notmuch-hello-refresh . ajv/notmuch-set-initial-cursor-position))
   )
 
 (use-package ido :demand
