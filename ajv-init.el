@@ -165,6 +165,10 @@
   (global-aggressive-indent-mode 1)
   )
 
+(use-package keyfreq
+  :config
+  (keyfreq-mode 1)
+  (keyfreq-autosave-mode 1))
 
 (use-package shell-pop
   :bind (("C-M-1" . shell-pop))
