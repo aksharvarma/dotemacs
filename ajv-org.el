@@ -7,9 +7,12 @@
       org-agenda-files ajv/my-org-agenda-files
       org-habit-show-habits-only-for-today nil
       org-agenda-show-future-repeats 'next
-      org-agenda-start-day "-1d"
       org-agenda-start-on-weekday nil
-      org-agenda-span 6)
+      org-agenda-start-day "-1d"
+      ;; org-agenda-span 6
+      )
+
+(setq org-agenda-window-setup 'current-window)
 
 (setq org-agenda-time-grid
       (quote
