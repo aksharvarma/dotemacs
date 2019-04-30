@@ -11,6 +11,7 @@
        indent-tabs-mode nil     ;Don't use tabs for indenting
        async-shell-command-buffer 'new-buffer         ;always use new buffer
        enable-recursive-minibuffers 1
+       help-window-select t
        ;; max-specpdl-size 13000
        find-file-visit-truename t    ;follow symlinks to true targets
        vc-follow-symlinks t    ;follow symlinks that are in git repo
