@@ -266,7 +266,7 @@
    ("s-B" . ido-switch-buffer-other-window)
    ("s-s" . save-buffer)
    ("s-f" . ido-find-file)
-   ("s-f" . ido-find-file-other-window)
+   ("s-F" . ido-find-file-other-window)
    ("s-g" . keyboard-quit))
   :config
   (when window-system
