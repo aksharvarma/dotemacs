@@ -50,6 +50,8 @@
 		 ("u" . ajv/notmuch-show-toggle-unread))
 	   (:map notmuch-search-mode-map
 		 ("u" . ajv/notmuch-search-toggle-unread)
+		 ("g" . notmuch-poll-and-refresh-this-buffer))
+	   (:map notmuch-hello-mode-map
 		 ("g" . notmuch-poll-and-refresh-this-buffer)))
     :hook (notmuch-hello-refresh . ajv/notmuch-set-initial-cursor-position))
   )
@@ -104,7 +106,9 @@
   (use-package ibuffer-vc :demand)
   :hook
   (;; (ibuffer-mode . ajv/group-ibuffer-by-vc)
-   (ibuffer-mode . ajv/ibuffer-use-default-filter))
+   (ibuffer-mode . ajv/ibuffer-use-default-filter)
+   (ibuffer-mode . ibuffer-auto-mode)
+   )
   )
 
 (use-package company
@@ -228,7 +232,8 @@
   (use-package ajv-magit :demand
     :bind (:map magit-status-mode-map
 		([remap magit-mode-bury-buffer] . ajv/magit-kill-buffers)))
-  (setq magit-completing-read-function 'magit-ido-completing-read)
+  (setq magit-completing-read-function 'magit-ido-completing-read
+	magit-diff-refine-hunk t)
   )
 
 (use-package dired :demand
