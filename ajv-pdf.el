@@ -30,16 +30,30 @@
   (force-mode-line-update 1)		;Needed to actually see the change
   )
 
-(defun ajv/kill-pdf-buffer-and-delete-frame ()
-  "Kill the PDF buffer and then delete the frame."
-  (interactive)
-  (kill-buffer (current-buffer))
-  (delete-frame))
+;; (defun ajv/kill-pdf-buffer-and-delete-frame ()
+;;   "Kill the PDF buffer and then delete the frame."
+;;   (interactive)
+;;   ;; (kill-buffer (current-buffer))
+;;   (delete-frame)
+;;   ;; (let (pdf-buffer (current-buffer))
+;;   ;;   (delete-frame)
+;;   ;;   (when ((member pdf-buffer (buffer-list)))
+;;   ;;     (kill-buffer pdf-buffer)))
+;;   )
 
-(defun ajv/advise-find-file-to-open-pdf-in-new-frame (returned-buffer)
-  "Put an advice after find-file so that all PDFs are opened in a new dedicated frame rather than in a window in same frame."
+;; (defun ajv/advise-find-file-to-open-pdf-in-new-frame (returned-buffer)
+;;   "Put an advice after find-file so that all PDFs are opened in a new dedicated frame rather than in a window in same frame."
+;;   (when (with-current-buffer returned-buffer (derived-mode-p 'pdf-view-mode))
+;;     (execute-kbd-macro (read-kbd-macro "C-x z"))
+;;     (switch-to-buffer-other-frame returned-buffer t)
+;;     (revert-buffer t t t))
+;;   )
+
+(defun ajv/pdf-launch-file (returned-buffer)
+  "Put an advice after find-file so that all PDFs are opened as a separate emacsclient (xdg-open) call."
   (when (with-current-buffer returned-buffer (derived-mode-p 'pdf-view-mode))
-    (execute-kbd-macro (read-kbd-macro "C-x z"))
-    (switch-to-buffer-other-frame returned-buffer t)
-    (revert-buffer t t t))
+    (kill-buffer returned-buffer)
+    (let ((process-connection-type nil))
+      (start-process "*launch*" nil "xdg-open" (buffer-file-name returned-buffer))))
   )
+;; (start-process-shell-command "pdf-test" "pdf-test-output" (concat "emacsclient -a '' -c " "/home/akshar/aksharfiles/Files/Books/Inheritance Series/1)Eragon.pdf"))
