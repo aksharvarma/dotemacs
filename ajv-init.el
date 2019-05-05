@@ -322,6 +322,8 @@
   :hook ((after-init . org-agenda-list))
   )
 
+(use-package org-bullets :hook ((org-mode . (lambda () (org-bullets-mode 1)))))
+
 (use-package ajv-elfeed
   :init (use-package elfeed
 	  :hook ((elfeed-search-mode . toggle-truncate-lines)))
