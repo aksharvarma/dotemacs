@@ -163,6 +163,12 @@
 	 (:map god-mode-isearch-map ("<escape>" . god-mode-isearch-disable)))
   )
 
+(use-package which-key
+  :config
+  (which-key-mode)
+  (which-key-enable-god-mode-support)
+  )
+
 (use-package aggressive-indent
   :config
   (add-to-list 'aggressive-indent-excluded-modes 'Messages)
