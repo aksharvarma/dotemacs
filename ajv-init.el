@@ -250,6 +250,9 @@
 	magit-diff-refine-hunk t)
   )
 
+(use-package github-explorer :commands github-explorer)
+
+
 (use-package dired :demand
   :config
   (setq dired-dwim-target t                     ;default copy to other window
