@@ -233,6 +233,13 @@
 	   (pdf-view-mode . pdf-misc-size-indication-minor-mode)))
   )
 
+(use-package pdf-view-restore
+  :after pdf-tools
+  :config (setq pdf-view-restore-filename "~/.emacs.d/.pdf-view-restore")
+  :hook (pdf-view-mode . pdf-view-restore-mode)
+  )
+
+
 (use-package magit
   :bind (("<f2>" . magit-status))
   :config
