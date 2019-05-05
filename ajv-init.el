@@ -250,6 +250,8 @@
 	magit-diff-refine-hunk t)
   )
 
+(use-package keychain-environment :demand :config (keychain-refresh-environment))
+
 (use-package github-explorer :commands github-explorer)
 
 
