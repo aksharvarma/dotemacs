@@ -250,6 +250,13 @@
 	magit-diff-refine-hunk t)
   )
 
+(use-package ajv-git-gutter-fringe-settings
+  :init (use-package git-gutter-fringe)
+  :config
+  (global-git-gutter-mode t)
+  (fringe-mode '(0 . nil))
+  )
+
 (use-package keychain-environment :demand :config (keychain-refresh-environment))
 
 (use-package github-explorer :commands github-explorer)
