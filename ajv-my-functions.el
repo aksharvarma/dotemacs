@@ -30,10 +30,18 @@ create it and write the initial message into it."
   (interactive)
   (dired ajv/symlink-folder))
 
+(setq ajv/never-kill-buffer-list '("*scratch*" "*Messages*"))
+
 (defun ajv/kill-this-buffer ()
-  "Reliably kill the current buffer. 'kill-this-buffer' is unreliable unless called from the menu-bar. See: http://pragmaticemacs.com/emacs/dont-kill-buffer-kill-this-buffer-instead/"
+  "Reliably kill the current buffer. 'kill-this-buffer' is unreliable unless called from the menu-bar. See: http://pragmaticemacs.com/emacs/dont-kill-buffer-kill-this-buffer-instead/
+
+Also ensure that buffers ajv/never-kill-buffer-list are not killed, only buried.
+Taken from: https://www.reddit.com/r/emacs/comments/25xmji/bury_buffers_instead_of_killing_them/chlr8b2
+"
   (interactive)
-  (kill-buffer (current-buffer)))
+  (if (member (buffer-name (current-buffer)) ajv/never-kill-buffer-list)
+      (call-interactively 'bury-buffer)
+    (kill-buffer (current-buffer))))
 
 (defun ajv/kill-other-buffer ()
   "Kill the other buffer in other window (whichever is the reached via (other-window 1))"
@@ -202,6 +210,6 @@ Version 2017-01-11"
     (erase-buffer)
     (insert s)
     (xah/title-case-region-or-line (point-min)
-                          (point-max))
+				   (point-max))
     (buffer-substring-no-properties (point-min)
                                     (point-max))))
