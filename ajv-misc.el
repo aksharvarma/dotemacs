@@ -12,6 +12,7 @@
        async-shell-command-buffer 'new-buffer         ;always use new buffer
        enable-recursive-minibuffers 1
        help-window-select t
+       apropos-do-all t
        ;; max-specpdl-size 13000
        find-file-visit-truename t    ;follow symlinks to true targets
        vc-follow-symlinks t    ;follow symlinks that are in git repo
