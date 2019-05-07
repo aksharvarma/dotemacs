@@ -1,6 +1,9 @@
 (provide 'ajv-org)
 
 (setq org-startup-truncated 'nil
+      ;; consider changing to 'note so that you add a note when finishing a task
+      ;; See org-log-note-headings for more ideas
+      org-log-done 'time
       org-todo-keywords '((sequence "TODO(t)" "IN-PROGRESS(i)" "|" "DONE(d)")))
 
 (setq org-agenda-skip-scheduled-if-done t
