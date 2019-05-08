@@ -213,3 +213,25 @@ Version 2017-01-11"
 				   (point-max))
     (buffer-substring-no-properties (point-min)
                                     (point-max))))
+
+
+(defun xah/create-empty-buffer ()
+  "Create a new empty buffer.
+New buffer will be named “untitled” or “untitled<2>”, “untitled<3>”, etc.
+
+It returns the buffer (for elisp programing).
+
+URL `http://ergoemacs.org/emacs/emacs_new_empty_buffer.html'
+Version 2017-11-01"
+  (interactive)
+  (let ((buf (generate-new-buffer (concat "empty-buffer-"
+					  (number-to-string (random 123456))))))
+    (switch-to-buffer buf)
+    (write-file (concat "~/" (buffer-name)))
+    (funcall (intern
+	      (ido-completing-read
+	       "Choose initial mode: "
+	       (list "python-mode" "lisp-interaction-mode" "LaTex-mode" "text-mode" "org-mode")
+	       nil nil nil nil "lisp-interaction-mode")))
+    (setq buffer-offer-save t)
+    buf))
