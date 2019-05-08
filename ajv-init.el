@@ -132,7 +132,9 @@
 
 (use-package smartparens-config
   :ensure smartparens
-  :config (show-smartparens-global-mode)
+  :config
+  (show-smartparens-global-mode)
+  (sp-local-pair '(emacs-lisp-mode lisp-interaction-mode) "'" "'" :actions nil)
   :hook
   (((prog-mode markdown-mode) . smartparens-mode)
    ((prog-mode markdown-mode) . show-smartparens-mode))
