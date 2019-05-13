@@ -21,6 +21,11 @@
 (setq custom-file (concat ajv/my-init-directory ajv/custom-file-name))
 (load custom-file)
 
+;; Make Emacs remember the place in the buffer in previously opened files.
+(save-place-mode 1)
+(setq save-place-file (concat user-emacs-directory ".emacs-places")
+      save-place-forget-unreadable-files nil)
+
 (winner-mode 1)
 (subword-mode)				; Allows moving through camelCasedWords
 (auto-compression-mode 1)
