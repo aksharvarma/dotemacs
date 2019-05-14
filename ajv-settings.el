@@ -33,21 +33,64 @@
         ("~/Downloads/" . "(t)")))
 
 (defface ajv/display-time-face
-   '((((type x w32 mac))
-      ;; #060525 is the background colour of my default face.
-      (:foreground "#99FF00" :background "#121212" :inherit bold))
-     (((type tty))
-      (:foreground "#99FF00" :background "#121212")))
-   "Face used to display the time in the mode line. This particular face is used for better visibility")
+  '((((type x w32 mac))
+     ;; #060525 is the background colour of my default face.
+     (:foreground "#99FF00" :background "#121212" :inherit bold))
+    (((type tty))
+     (:foreground "#99FF00" :background "#121212")))
+  "Face used to display the time in the mode line. This particular face is used for better visibility")
 
-(defvar ajv/my-org-agenda-files nil
-  "The list of files to consider when creating the Agenda view.
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Variables defined in ajv-sensitive-settings.el
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defvar ajv/my-org-agenda-daily-file nil
+  "The org agenda file for \"daily\" things.
+ Set in ajv-sensitive-settings.el")
+
+(defvar ajv/my-org-agenda-admin-file nil
+  "The org agenda file for \"admin\" things.
+ Set in ajv-sensitive-settings.el")
+
+(defvar ajv/my-org-agenda-work-file nil
+  "The org agenda file for \"work\" things.
+ Set in ajv-sensitive-settings.el")
+
+(defvar ajv/my-org-agenda-research-file nil
+  "The org agenda file for \"daily\" things.
+ Set in ajv-sensitive-settings.el")
+
+(defvar ajv/my-org-agenda-personal-file nil
+  "The org agenda file for \"personal\" things.
  Set in ajv-sensitive-settings.el")
 
 (defvar ajv/my-elfeed-org-file nil
   "The file from which my blog list is taken for elfeed
  Set in ajv-sensitive-settings.el")
 
-(defvar ajv/my-quotes-filename nil
-  "The file that contains the quotes that ajv/quotes uses.
+(defvar ajv/oeuvre-filename nil
+  "The file that contains the oeuvre list.
  Set in ajv-sensitive-settings.el")
+
+;; (defvar ajv/my-quotes-filename nil
+;;   "The file that contains the quotes that ajv/quotes uses.
+;;  Set in ajv-sensitive-settings.el")
+
+;;;;;;;;;;
+;; defvars for ajv-sensitive-settings.el end here
+;;;;;;;;;;
+
+;;;;;;;;;;
+;; Now to use them (after loading them.)
+;;;;;;;;;;
+
+(load "~/.emacs.d/site-lisp/ajv/ajv-sensitive-settings.el")
+
+(setq ajv/my-org-agenda-files (list ajv/my-org-agenda-admin-file ajv/my-org-agenda-daily-file
+				    ajv/my-org-agenda-work-file ajv/my-org-agenda-personal-file
+				    ajv/my-org-agenda-research-file))
+
+(setq ajv/my-elfeed-org-file-list (list ajv/my-elfeed-org-file))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

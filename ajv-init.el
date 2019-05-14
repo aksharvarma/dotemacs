@@ -13,7 +13,6 @@
 
 ;; Load basic settings directly.
 (load "~/.emacs.d/site-lisp/ajv/ajv-settings.el")
-(load "~/.emacs.d/site-lisp/ajv/ajv-sensitive-settings.el")
 
 ;;;This adds site-lisp and its subdirectories to the load path,
 ;;;so that .el files there, are visible while initialization.
@@ -335,7 +334,7 @@
     ;; http://pragmaticemacs.com/emacs/read-your-rss-feeds-in-emacs-with-elfeed
     :config
     (elfeed-org)
-    (setq rmh-elfeed-org-files ajv/my-elfeed-org-file)
+    (setq rmh-elfeed-org-files ajv/my-elfeed-org-file-list)
     )
   :hook ((after-init . ajv/kill-elfeed-log-buffer))
   )
