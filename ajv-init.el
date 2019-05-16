@@ -301,7 +301,11 @@
    ("s-s" . save-buffer)
    ("s-f" . ido-find-file)
    ("s-F" . ido-find-file-other-window)
-   ("s-g" . keyboard-quit))
+   ("s-g" . keyboard-quit)
+   ("C-s" . isearch-forward-regexp)
+   ("C-r" . isearch-backward-regexp)
+   ("C-M-s" . isearch-forward)
+   ("C-M-r" . isearch-backward))
   :config
   (when window-system
     (global-set-key (kbd "C-x C-c") 'ajv/ask-before-closing))
