@@ -45,24 +45,24 @@
 ;; Variables defined in ajv-sensitive-settings.el
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defvar ajv/my-org-agenda-daily-file nil
-  "The org agenda file for \"daily\" things.
+(defvar ajv/my-org-agenda-self-file nil
+  "The org agenda file for \"self\"
  Set in ajv-sensitive-settings.el")
 
 (defvar ajv/my-org-agenda-admin-file nil
-  "The org agenda file for \"admin\" things.
+  "The org agenda file for various administrative things.
  Set in ajv-sensitive-settings.el")
 
 (defvar ajv/my-org-agenda-work-file nil
-  "The org agenda file for \"work\" things.
+  "The org agenda file for work related things.
  Set in ajv-sensitive-settings.el")
 
 (defvar ajv/my-org-agenda-research-file nil
-  "The org agenda file for \"daily\" things.
+  "The org agenda file for research projects
  Set in ajv-sensitive-settings.el")
 
 (defvar ajv/my-org-agenda-personal-file nil
-  "The org agenda file for \"personal\" things.
+  "The org agenda file for personal projects.
  Set in ajv-sensitive-settings.el")
 
 (defvar ajv/my-elfeed-org-file nil
@@ -87,9 +87,13 @@
 
 (load "~/.emacs.d/site-lisp/ajv/ajv-sensitive-settings.el")
 
-(setq ajv/my-org-agenda-files (list ajv/my-org-agenda-admin-file ajv/my-org-agenda-daily-file
-				    ajv/my-org-agenda-work-file ajv/my-org-agenda-personal-file
-				    ajv/my-org-agenda-research-file))
+(setq ajv/my-org-agenda-files (list ajv/my-org-agenda-files-dir))
+
+;; (setq ajv/my-org-agenda-files (list ajv/my-org-agenda-admin-file
+;; 				    ajv/my-org-agenda-self-file
+;; 				    ajv/my-org-agenda-work-file
+;; 				    ajv/my-org-agenda-personal-file
+;; 				    ajv/my-org-agenda-research-file))
 
 (setq ajv/my-elfeed-org-file-list (list ajv/my-elfeed-org-file))
 
