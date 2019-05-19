@@ -125,3 +125,13 @@ The hardcoded 3 may need to change if IBuffer config changes"
 	(mark " "
 	      (name 16 -1)
 	      " " filename)))
+
+
+(defun ajv/ibuffer-collapse-all-filter-groups ()
+  "Collapse all filter groups at once
+
+Taken from: https://acidwords.com/posts/2016-06-18-collapsing-all-filter-groups-in-ibuffer.html"
+  (interactive)
+  (setq ibuffer-hidden-filter-groups
+        (mapcar #'car (ibuffer-current-filter-groups-with-position)))
+  (ibuffer-update nil t))
