@@ -12,7 +12,8 @@
                                                gc-cons-percentage 0.1)))
 
 ;; Load basic settings directly.
-(load "~/.emacs.d/site-lisp/ajv/ajv-settings.el")
+(load (concat user-emacs-directory "site-lisp/ajv/ajv-settings.el"))
+;; (load "~/.emacs.d/site-lisp/ajv/ajv-settings.el")
 
 ;;;This adds site-lisp and its subdirectories to the load path,
 ;;;so that .el files there, are visible while initialization.
@@ -179,6 +180,7 @@
 
 (use-package keyfreq
   :config
+  (setq keyfreq-file (concat user-emacs-directory ".emacs.keyfreq"))
   (keyfreq-mode 1)
   (keyfreq-autosave-mode 1))
 
@@ -237,7 +239,8 @@
 
 (use-package pdf-view-restore
   :after pdf-tools
-  :config (setq pdf-view-restore-filename "~/.emacs.d/.pdf-view-restore")
+  :config (setq pdf-view-restore-filename (concat user-emacs-directory ".pdf-view-restore"))
+  ;; :config (setq pdf-view-restore-filename "~/.emacs.d/.pdf-view-restore")
   :hook (pdf-view-mode . pdf-view-restore-mode)
   )
 

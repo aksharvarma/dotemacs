@@ -13,7 +13,7 @@
 (defvar ajv/prefered-theme-name nil
   "The preferred theme.")
 
-(setq ajv/my-init-directory "~/.emacs.d/site-lisp/ajv/"
+(setq ajv/my-init-directory (concat user-emacs-directory "site-lisp/ajv/")
       ajv/symlink-folder "~/0/"
       ajv/custom-file-name "ajv-customizations.el"
       ajv/prefered-font-name "dejavu sans mono 10"
@@ -22,7 +22,7 @@
 (defvar ajv/yasnippets-directory nil
   "The folder which contains all my yasnippet snippets.")
 
-(setq ajv/yasnippets-directory "~/.emacs.d/site-lisp/ajv/snippets")
+(setq ajv/yasnippets-directory (concat user-emacs-directory "site-lisp/ajv/snippets"))
 
 (defvar ajv/dired-default-sorting-alist nil
   "The default sorting of various directories for dired.")
@@ -85,7 +85,7 @@
 ;; Now to use them (after loading them.)
 ;;;;;;;;;;
 
-(load "~/.emacs.d/site-lisp/ajv/ajv-sensitive-settings.el")
+(load (concat user-emacs-directory "site-lisp/ajv/ajv-sensitive-settings.el"))
 
 (setq ajv/my-org-agenda-files (list ajv/my-org-agenda-files-dir))
 
