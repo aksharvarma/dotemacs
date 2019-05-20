@@ -229,8 +229,8 @@
     (setq pdf-view-resize-factor 1.05
 	  auto-revert-interval 0.1
 	  auto-revert-verbose nil)
-    (advice-add #'ido-find-file :filter-return #'ajv/pdf-launch-file)
-    (advice-add #'find-file :filter-return #'ajv/pdf-launch-file)
+    (when (featurep 'ido)
+      (advice-add #'ido-find-file :filter-return #'ajv/pdf-launch-file))
     :hook ((pdf-view-mode . ajv/pdf-view-save-disable-modeline-format)
 	   (pdf-view-mode . ajv/pdf-view-disable-linum-mode)
 	   (pdf-view-mode . auto-revert-mode)
