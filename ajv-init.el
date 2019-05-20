@@ -273,6 +273,7 @@
         dired-listing-switches "-a -l -L -h --group-directories-first --classify"
 	dired-recursive-copies 'always)
   (put 'dired-find-alternate-file 'disabled nil) ;allow 'a' in dired
+  (load "dired-x")
   (use-package ajv-dired
     :bind  (:map dired-mode-map
 		 ("s". ajv/dired-sort-criteria)
