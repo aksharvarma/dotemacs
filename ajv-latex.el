@@ -1,16 +1,19 @@
 (provide 'ajv-latex)
 
+(setq-default TeX-engine 'xetex)
+
 (setq LaTeX-command "latex -shell-escape"
       TeX-save-query nil                ;Don't ask before saving .tex files
       ;; To make AUCTeX read/update on changes to .bib files.
       TeX-parse-self nil ; Enable parse on load. [DISABLED]
       TeX-auto-save nil ; Enable parse on save. [DISABLED]
-      TeX-engine 'xetex
+      ;; TeX-force-default-mode t
       reftex-plug-into-AUCTeX t
       reftex-ref-macro-prompt nil)
 
 (defun texcount ()
   "Counts the number of words in the .tex file using the texcount command.
+
 Taken from jrv-auctex-config.el in the repo: https://github.com/jrvarma/dot-emacs/"
   (interactive)
   (let* ((this-file (buffer-file-name))

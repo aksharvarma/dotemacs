@@ -352,7 +352,8 @@
   :config
   (eval-after-load 'latex
     '(define-key LaTeX-mode-map (kbd "<f5>") 'TeX-command-master))
-  :hook (LaTeX-mode . turn-on-reftex)
+  :hook ((LaTeX-mode . turn-on-reftex)
+  	 (LaTeX-mode . TeX-source-correlate-mode))
   )
 
 (use-package markdown-toc :demand)
