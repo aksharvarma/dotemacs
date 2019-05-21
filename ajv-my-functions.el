@@ -107,16 +107,6 @@ Picked from: http://nileshk.com/2009/06/13/prompt-before-closing-emacs.html"
   (cl-letf (((symbol-function 'yes-or-no-p) #'y-or-n-p))
     (apply orig-fun r)))
 
-
-(defun ajv/toggle-theme ()
-  "Toggle between my prefered theme and no theme (Emacs default theme).
-My prefered theme is a dark theme which doesn't work well in bright light. The Emacs default theme is good enough for bright light."
-  (interactive)
-  (if custom-enabled-themes
-      (disable-theme ajv/prefered-theme-name)
-    (load-theme ajv/prefered-theme-name))
-  )
-
 (defun ajv/mypaths ()
   "Call ido-find-file after setting default-directory to be the symlink folder. Effectively mirrors the mypaths kind of behaviour."
   (interactive)

@@ -10,14 +10,18 @@
 (defvar ajv/prefered-font-name nil
   "The preferred font.")
 
-(defvar ajv/prefered-theme-name nil
-  "The preferred theme.")
+(defvar ajv/prefered-dark-theme-name nil
+  "The preferred dark theme.")
+
+(defvar ajv/prefered-light-theme-name nil
+  "The preferred light theme.")
 
 (setq ajv/my-init-directory (concat user-emacs-directory "site-lisp/ajv/")
       ajv/symlink-folder "~/0/"
       ajv/custom-file-name "ajv-customizations.el"
       ajv/prefered-font-name "dejavu sans mono 10"
-      ajv/prefered-theme-name 'deeper-blue)
+      ajv/prefered-dark-theme-name 'deeper-blue
+      ajv/prefered-light-theme-name 'dichromacy)
 
 (defvar ajv/yasnippets-directory nil
   "The folder which contains all my yasnippet snippets.")
