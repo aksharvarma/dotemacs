@@ -235,3 +235,9 @@ Version 2017-11-01"
 	       nil nil nil nil "lisp-interaction-mode")))
     (setq buffer-offer-save t)
     buf))
+
+
+(defun ajv/alsamixer ()
+  "Runs the alsamixer program in an ansi-term"
+  (interactive)
+  (ansi-term "alsamixer"))
