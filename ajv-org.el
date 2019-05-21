@@ -9,6 +9,10 @@
       org-log-done 'time
       org-todo-keywords '((sequence "TODO(t)" "IN-PROGRESS(i)" "|" "DONE(d)")))
 
+(setq org-enforce-todo-dependencies t
+      org-enforce-todo-checkbox-dependencies t
+      org-agenda-dim-blocked-tasks t)
+
 (setq org-agenda-skip-scheduled-if-done t
       org-agenda-files ajv/my-org-agenda-files
       org-habit-show-habits-only-for-today nil
