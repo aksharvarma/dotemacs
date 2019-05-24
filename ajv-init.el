@@ -374,7 +374,7 @@
 
 (use-package ajv-misc
   :defer 1
-  :init (setq inhibit-startup-message t)
+  :init (setq inhibit-startup-screen t)
   :hook ((before-save . time-stamp)
 	 (after-save . executable-make-buffer-file-executable-if-script-p))
   )
