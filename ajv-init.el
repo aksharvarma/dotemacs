@@ -313,7 +313,9 @@
    ("C-s" . isearch-forward-regexp)
    ("C-r" . isearch-backward-regexp)
    ("C-M-s" . isearch-forward)
-   ("C-M-r" . isearch-backward))
+   ("C-M-r" . isearch-backward)
+   (:map help-mode-map
+	 ("q" . (lambda () (interactive) (ajv/kill-this-buffer) (other-window 1)))))
   :config
   (when window-system
     (global-set-key (kbd "C-x C-c") 'ajv/ask-before-closing))
