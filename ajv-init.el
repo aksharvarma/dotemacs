@@ -59,6 +59,8 @@
 
 (use-package ido :demand
   :ensure t
+  :bind (:map ido-common-completion-map
+  	      ("<C-return>" . ido-magic-delete-char))
   :config
   (ido-mode t)
   (ido-everywhere)
