@@ -322,6 +322,7 @@
   (advice-add 'revert-buffer :around #'yes-or-no-p->-y-or-n-p)
   :hook
   ((prog-mode . ajv/hideshow-setup)
+   (find-file . ajv/rename-symlink-buffer-with-truename)
    (emacs-startup . ajv/measure-loading-time)
    (before-save . ajv/delete-trailing-whitespace))
   )

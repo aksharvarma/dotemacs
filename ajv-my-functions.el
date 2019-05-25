@@ -231,3 +231,7 @@ Version 2017-11-01"
   "Runs the alsamixer program in an ansi-term"
   (interactive)
   (ansi-term "alsamixer"))
+
+
+(defun ajv/rename-symlink-buffer-with-truename ()
+  (interactive) (rename-buffer (file-name-nondirectory (file-truename (buffer-file-name))) t))
