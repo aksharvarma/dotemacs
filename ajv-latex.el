@@ -2,11 +2,11 @@
 
 (setq-default TeX-engine 'xetex)
 
-(setq LaTeX-command "latex -shell-escape"
+(setq LaTeX-command "latex -shell-escape --synctex=1"
       TeX-save-query nil                ;Don't ask before saving .tex files
       ;; To make AUCTeX read/update on changes to .bib files.
-      TeX-parse-self nil ; Enable parse on load. [DISABLED]
-      TeX-auto-save nil ; Enable parse on save. [DISABLED]
+      TeX-parse-self t ; Enable parse on load. [DISABLED]
+      TeX-auto-save t ; Enable parse on save. [DISABLED]
       ;; TeX-force-default-mode t
       reftex-plug-into-AUCTeX t
       reftex-ref-macro-prompt nil)

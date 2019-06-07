@@ -354,14 +354,23 @@
   :hook ((after-init . ajv/kill-elfeed-log-buffer))
   )
 
-(use-package ajv-latex
+
+;; (defvar LaTeX-mode-map)			;TODO: fix issue with :bind/:map
+(use-package tex :ensure auctex
   :demand t
-  :mode ("\\.tex" . LaTeX-mode)
+  ;; :mode ("\\.tex" . LaTeX-mode)
   :config
   (eval-after-load 'latex
-    '(define-key LaTeX-mode-map (kbd "<f5>") 'TeX-command-master))
+    '(progn (define-key LaTeX-mode-map (kbd "<f5>") 'TeX-command-master)
+	    (define-key LaTeX-mode-map (kbd "<f6>") 'TeX-next-error)))
+  (use-package ajv-latex
+    :demand t
+    )
+  ;; :bind (:map LaTeX-mode-map
+  ;; 	      ("<f5>" . TeX-command-master)
+  ;; 	      ("<f6>" . TeX-next-error))
   :hook ((LaTeX-mode . turn-on-reftex)
-  	 (LaTeX-mode . TeX-source-correlate-mode))
+	 (LaTeX-mode . TeX-source-correlate-mode))
   )
 
 (use-package markdown-toc :demand)
