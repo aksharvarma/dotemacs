@@ -66,15 +66,6 @@
   (ido-everywhere)
   (setq ido-enable-flex-matching t
 	ido-auto-merge-work-directories-length -1)
-  (use-package flx-ido
-    :demand
-    :config
-    (flx-ido-mode 1)
-    ;; Set ido-use-faces to nil if you want to see flx colors instead of ido
-    (setq ido-use-faces t)
-    ;; Uncomment line below if the faces don't gel nicely
-    ;; (setq flx-ido-use-faces nil)
-    )
   (add-to-list 'ido-ignore-buffers "^.*\\.pdf$"))
 
 
