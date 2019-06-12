@@ -21,7 +21,7 @@
       ajv/custom-file-name "ajv-customizations.el"
       ajv/prefered-font-name "dejavu sans mono 10"
       ajv/prefered-dark-theme-name 'deeper-blue
-      ajv/prefered-light-theme-name 'dichromacy)
+      ajv/prefered-light-theme-name 'tsdh-light)
 
 (defvar ajv/yasnippets-directory nil
   "The folder which contains all my yasnippet snippets.")
