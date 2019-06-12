@@ -8,6 +8,7 @@
 
 (setq  next-line-add-newlines t
        sentence-end-double-space nil ;sentences don't have 2 spaces after '.'
+       next-screen-context-lines 10   ;affects C-v and M-v
        indent-tabs-mode nil     ;Don't use tabs for indenting
        async-shell-command-buffer 'new-buffer         ;always use new buffer
        enable-recursive-minibuffers 1
