@@ -38,6 +38,7 @@
 ;; Get use-package and its dependencies
 (require 'use-package)
 (use-package diminish)
+(use-package delight)
 (use-package bind-key)
 
 ;; Start loading up other things
@@ -125,6 +126,7 @@
 
 (use-package smartparens-config
   :ensure smartparens
+  :delight smartparens-mode " (SP)" "smartparens"
   :config
   (show-smartparens-global-mode)
   (sp-local-pair '(emacs-lisp-mode lisp-interaction-mode) "'" "'" :actions nil)
@@ -160,12 +162,14 @@
   )
 
 (use-package which-key
+  :diminish
   :config
   (which-key-mode)
   (which-key-enable-god-mode-support)
   )
 
 (use-package aggressive-indent
+  :diminish
   :config
   (add-to-list 'aggressive-indent-excluded-modes 'Messages)
   (global-aggressive-indent-mode 1)
@@ -251,7 +255,7 @@
   )
 
 (use-package ajv-git-gutter-fringe-settings
-  :init (use-package git-gutter-fringe)
+  :init (use-package git-gutter-fringe :delight git-gutter-mode " GGutt" "git-gutter")
   :config
   (global-git-gutter-mode t)
   (fringe-mode '(0 . nil))

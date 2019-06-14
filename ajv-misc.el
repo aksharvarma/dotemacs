@@ -35,3 +35,7 @@
 (global-auto-complete-mode 0)		;Do not auto-complete. Use company.
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
+
+;; Misc diminish and delight settings
+(diminish 'auto-revert-mode)
+(delight 'emacs-lisp-mode "ELisp" :major)
