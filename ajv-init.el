@@ -136,6 +136,9 @@
   ;;  ((prog-mode markdown-mode) . show-smartparens-mode))
   )
 
+(use-package idle-highlight-mode
+  :hook
+  (prog-mode . (idle-highlight-mode t)))
 
 (use-package god-mode
   :demand
