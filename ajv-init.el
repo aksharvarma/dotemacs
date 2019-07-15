@@ -305,7 +305,6 @@
    ("%" . ajv/match-paren)
    ("s-w" . ajv/kill-this-buffer)
    ("s-o" . ajv/kill-other-buffer)
-   ("C-x z" . suspend-frame)
    ("C-z" . bury-buffer)
    ("s-<tab>" . other-window)
    ("s-b" . ido-switch-buffer)
