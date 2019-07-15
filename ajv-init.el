@@ -117,6 +117,12 @@
   :config (company-auctex-init))
 
 
+(use-package flyspell :diminish ""
+  :config (setq flyspell-issue-welcome-flag nil
+		flyspell-issue-message-flag nil
+		ispell-program-name "aspell")    ; use aspell instead of ispell
+  :hook ((markdown-mode text-mode LaTeX-mode org-mode) . flyspell-mode))
+
 (use-package expand-region
   :bind ("C-=" . er/expand-region))
 
