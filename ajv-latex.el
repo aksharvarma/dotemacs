@@ -35,3 +35,10 @@ Taken from jrv-auctex-config.el in the repo: https://github.com/jrvarma/dot-emac
 	(output-pdf "PDF Tools")
 	(output-html "xdg-open"))
        ))
+
+(defun ajv/latex/toggle-reftex-cite-natbib-format ()
+  "Toggles the reftex-cite-format variable between default and natbib"
+  (interactive)
+  (if (eq reftex-cite-format 'natbib)
+      (setq reftex-cite-format 'default)
+    (setq reftex-cite-format 'natbib)))
