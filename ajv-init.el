@@ -37,6 +37,8 @@
 
 ;; Get use-package and its dependencies
 (require 'use-package)
+(setq use-package-verbose t
+      use-package-compute-statistics t)
 (use-package diminish)
 (use-package delight)
 (use-package bind-key)
