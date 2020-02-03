@@ -29,7 +29,6 @@
       save-place-forget-unreadable-files nil)
 
 (winner-mode 1)
-(subword-mode)				; Allows moving through camelCasedWords
 (auto-compression-mode 1)
 (delete-selection-mode t)
 (global-auto-complete-mode 0)		;Do not auto-complete. Use company.
@@ -38,5 +37,14 @@
 (put 'narrow-to-region 'disabled nil)
 
 ;; Misc diminish and delight settings
-(diminish 'auto-revert-mode)
+(diminish 'auto-revert-mode "")
+(diminish 'auto-fill-mode "")
+(diminish 'subword-mode "")
+(diminish 'highlight-indentation-mode "")
+
+(delight 'TeX-latex-mode "LaTeX" :major)
+(diminish 'TeX-latex-mode "LaTeX")
+(delight 'tex-mode "LaTeX" :major)
+(diminish 'tex-mode "LaTeX")
+
 (delight 'emacs-lisp-mode "ELisp" :major)

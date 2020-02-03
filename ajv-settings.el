@@ -19,7 +19,7 @@
 (setq ajv/my-init-directory (concat user-emacs-directory "site-lisp/ajv/")
       ajv/symlink-folder "~/0/"
       ajv/custom-file-name "ajv-customizations.el"
-      ajv/prefered-font-name "dejavu sans mono 10"
+      ajv/prefered-font-name "dejavu sans mono 11"
       ajv/prefered-dark-theme-name 'deeper-blue
       ajv/prefered-light-theme-name 'tsdh-light)
 
@@ -75,6 +75,10 @@
 
 (defvar ajv/oeuvre-filename nil
   "The file that contains the oeuvre list.
+ Set in ajv-sensitive-settings.el")
+
+(defvar ajv/my-birthdate nil
+  "My birthdate in YYYY-MM-DD format for the memento-mori package.
  Set in ajv-sensitive-settings.el")
 
 ;; (defvar ajv/my-quotes-filename nil

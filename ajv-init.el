@@ -132,7 +132,7 @@
 
 (use-package smartparens-config
   :ensure smartparens
-  :delight smartparens-mode " (SP)" "smartparens"
+  :delight smartparens-mode "()" "smartparens"
   :config
   (show-smartparens-global-mode)
   (smartparens-global-mode)
@@ -143,6 +143,7 @@
   )
 
 (use-package volatile-highlights
+  :diminish
   :config (volatile-highlights-mode t))
 
 (use-package god-mode
@@ -202,6 +203,7 @@
 (use-package python :defer 2
   :mode ("\\.py\\'" . python-mode)
   :commands python-mode
+  :diminish "Py"
   :config
   (elpy-enable)
   (setq python-shell-interpreter "ipython"
@@ -264,7 +266,7 @@
   )
 
 (use-package ajv-git-gutter-fringe-settings
-  :init (use-package git-gutter-fringe :delight git-gutter-mode " GGutt" "git-gutter")
+  :init (use-package git-gutter-fringe :delight git-gutter-mode)
   :config
   (global-git-gutter-mode t)
   (fringe-mode '(0 . nil))
