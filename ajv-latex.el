@@ -3,6 +3,7 @@
 (setq-default TeX-engine 'xetex)
 
 (setq LaTeX-command "latex -shell-escape --synctex=1"
+      LaTeX-command-style '(("" "%(PDF)%(latex) -shell-escape %(file-line-error) %(extraopts) %S%(PDFout)"))
       TeX-save-query nil                ;Don't ask before saving .tex files
       ;; To make AUCTeX read/update on changes to .bib files.
       TeX-parse-self t ; Enable parse on load. [DISABLED]

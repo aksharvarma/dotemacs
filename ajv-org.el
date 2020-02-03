@@ -5,6 +5,8 @@
       org-log-into-drawer t
       org-special-ctrl-a/e t
       org-link-search-must-match-exact-headline nil
+      org-goto-interface 'outline-path-completion
+      org-outline-path-complete-in-steps nil
       org-hide-emphasis-markers t
       ;; consider changing to 'note so that you add a note when finishing a task
       ;; See org-log-note-headings for more ideas
@@ -35,6 +37,8 @@
 
 (setq safe-local-variable-values '((eval org-shifttab 2)))
 
+;; Allow executing Lisp and Python in org-mode src blocks
+;; (org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp . t) (python 3 . t)))
 
 ;; (add-to-list 'org-agenda-custom-commands
 ;;              '("l" "Show agenda with log and time report"

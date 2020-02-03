@@ -157,12 +157,12 @@
 	       ("i" . god-mode-all)
 	       ("<escape>" . (lambda () (interactive) (god-mode-activate)))))
   :hook ((god-mode-enabled . ajv/god-update-cursor)
-  	 (god-mode-disabled . ajv/god-update-cursor))
+	 (god-mode-disabled . ajv/god-update-cursor))
   :config
   (use-package ajv-god
     :demand
     :bind ((:map god-local-mode-map
-    		 ("q" . ajv/insert-string-from-god-mode)))
+		 ("q" . ajv/insert-string-from-god-mode)))
     :config (setq god-exempt-major-modes
 		  (append ajv/god-exempt-modes god-exempt-major-modes)))
   (god-mode-all)
@@ -211,8 +211,9 @@
   (elpy-enable)
   (setq python-shell-interpreter "ipython"
         python-shell-interpreter-args "--TerminalInteractiveShell.simple_prompt=True"
-        elpy-rpc-backend "jedi")
-  (use-package flycheck
+	elpy-syntax-check-command "pyflakes"
+	elpy-rpc-backend "jedi")
+  (use-package flycheck :demand
     :config
     (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
     (add-hook 'elpy-mode-hook 'flycheck-mode))
@@ -250,7 +251,8 @@
 
 (use-package pdf-view-restore
   :after pdf-tools
-  :config (setq pdf-view-restore-filename (concat user-emacs-directory ".pdf-view-restore"))
+  :config (setq pdf-view-restore-filename (concat user-emacs-directory ".pdf-view-restore")
+		use-file-base-name-flag nil)
   ;; :config (setq pdf-view-restore-filename "~/.emacs.d/.pdf-view-restore")
   :hook (pdf-view-mode . pdf-view-restore-mode)
   )
@@ -398,7 +400,8 @@
   :defer 1
   :init (setq inhibit-startup-screen t)
   :hook ((before-save . time-stamp)
-	 (after-save . executable-make-buffer-file-executable-if-script-p))
+	 (after-save . executable-make-buffer-file-executable-if-script-p)
+	 (prog-mode . subword-mode))	;Allows moving through camelCasedWords
   )
 
 (use-package buffer-move
