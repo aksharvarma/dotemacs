@@ -412,3 +412,25 @@
 (use-package ajv-visual)
 
 (use-package ajv-modeline)
+
+(use-package memento-mori
+  :config
+  (setq memento-mori-birth-date ajv/my-birthdate)
+  (memento-mori-mode))
+
+;; To get org mode to latex for DnD5e LaTeX Template
+(let ((default-directory (concat user-emacs-directory "site-lisp/emacs-org-dnd")))
+  (normal-top-level-add-to-load-path '("."))
+  (normal-top-level-add-subdirs-to-load-path))
+(setq org-dnd-use-package t)
+(require 'ox-dnd)
+
+(use-package org-lookup-dnd
+  :demand t
+  :config
+  (setq org-lookup-dnd-chose 'org-lookup-dnd-chose-ido
+	org-lookup-dnd-sources (list '("~/0/DnD/Books/Dungeons-and-Dragons-5e/DnD5e-Player's-Handbook.pdf" 0 314 317)))
+  (org-lookup-dnd-parse)
+  )
+
+(use-package-report)

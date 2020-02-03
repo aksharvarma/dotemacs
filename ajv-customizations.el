@@ -5,7 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (volatile-highlights delight speed-type lua-mode define-word command-log-mode org-bullets git-gutter-fringe keychain-environment github-explorer pdf-view-restore which-key keyfreq buffer-move markdown-toc smartparens ialign expand-region aggressive-indent ibuffer-vc ido-completing-read+ company-auctex diminish sudoku w3m notmuch pdf-tools elfeed elfeed-org god-mode cheat-sh move-text shell-pop esup company-jedi bind-key smex use-package magit writegood-mode elpy flycheck yasnippet python-mode python-info markdown-mode+ frame-cmds auctex ac-c-headers))))
+    (org-lookup-dnd pdf-view-restore memento-mori volatile-highlights delight speed-type lua-mode define-word command-log-mode org-bullets git-gutter-fringe keychain-environment github-explorer which-key keyfreq buffer-move markdown-toc smartparens ialign expand-region aggressive-indent ibuffer-vc ido-completing-read+ company-auctex diminish sudoku w3m notmuch pdf-tools elfeed elfeed-org god-mode cheat-sh move-text shell-pop esup company-jedi bind-key smex use-package magit writegood-mode elpy flycheck yasnippet python-mode python-info markdown-mode+ frame-cmds auctex ac-c-headers))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
