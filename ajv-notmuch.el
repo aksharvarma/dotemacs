@@ -8,13 +8,17 @@
 
 (setq notmuch-saved-searches
       (quote
-       ((:name "unread" :query "tag:unread" :key "u")
-	(:name "main-gmail" :query "path:main-gmail/**" :key "m")
-	(:name "neu-email" :query "path:neu-email/**" :key "n")
-	(:name "all mail" :query "*" :key "a")
-	(:name "sent" :query "tag:sent" :key "t")
-	(:name "flagged" :query "tag:flagged" :key "f")
-	(:name "drafts" :query "tag:draft" :key "d"))))
+       ((:name "unread" :query "tag:unread" :key "u" :search-type tree)
+	(:name "main-gmail" :query "path:main-gmail/**" :key "m" :search-type tree)
+	(:name "neu-email" :query "path:neu-email/**" :key "n" :search-type tree)
+	(:name "all mail" :query "*" :key "a" :search-type tree)
+	(:name "1 days" :query "date:1D.." :key "1" :search-type tree)
+        (:name "2 days" :query "date:2D.." :key "2" :search-type tree)
+        (:name "5 days" :query "date:5D.." :key "5" :search-type tree)
+	(:name "1 week" :query "date:1W.." :key "w" :search-type tree)
+	(:name "sent" :query "tag:sent" :key "s" :search-type tree)
+	(:name "flagged" :query "tag:flagged" :key "f" :search-type tree)
+	(:name "drafts" :query "tag:draft" :key "d" :search-type tree))))
 
 (defun ajv/notmuch-show-toggle-unread ()
   "While in notmuch-show-mode, toggle unread tag"
