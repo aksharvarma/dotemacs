@@ -58,7 +58,6 @@
 	   (:map notmuch-hello-mode-map
 		 ("g" . notmuch-poll-and-refresh-this-buffer)))
     :hook (notmuch-hello-refresh . ajv/notmuch-set-initial-cursor-position))
-  (setq mm-default-directory "~/Downloads/")
   )
 
 (use-package ido :demand

@@ -2,6 +2,7 @@
 
 (setq notmuch-search-oldest-first nil
       mm-text-html-renderer 'w3m
+      mm-default-directory "~/Downloads/"
       notmuch-multipart/alternative-discouraged '("text/plain" "text/html"))
 
 (setq notmuch-saved-searches
