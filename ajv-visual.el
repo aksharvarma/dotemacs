@@ -13,6 +13,7 @@
 (set-fringe-style '(0 . nil))
 (add-to-list 'default-frame-alist '(fullscreen . fullboth)) ;maximize all frames
 (add-to-list 'default-frame-alist `(font . ,ajv/prefered-font-name))
+(setq-default frame-title-format '("%b [%m]"))
 
 (defun ajv/using-dark-theme-p ()
   "Returns t if currently using prefered dark theme found in ajv/prefered-dark-theme-name"
