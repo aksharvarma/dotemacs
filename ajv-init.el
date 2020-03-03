@@ -51,9 +51,11 @@
   :config
   (use-package ajv-notmuch :demand
     :bind ((:map notmuch-show-mode-map
-		 ("u" . ajv/notmuch-show-toggle-unread))
+		 ("u" . ajv/notmuch-show-toggle-unread)
+		 ("U" . ajv/notmuch-show-toggle-unread))
 	   (:map notmuch-search-mode-map
 		 ("u" . ajv/notmuch-search-toggle-unread)
+		 ("U" . ajv/notmuch-show-toggle-unread)
 		 ("g" . notmuch-poll-and-refresh-this-buffer))
 	   (:map notmuch-hello-mode-map
 		 ("g" . notmuch-poll-and-refresh-this-buffer)))
