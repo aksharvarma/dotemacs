@@ -45,3 +45,9 @@
         (widget-forward 1))
     (if (eq (widget-type (widget-at)) 'editable-field)
         (beginning-of-line))))
+
+
+(defun ajv/notmuch/clear-searches ()
+  (interactive)
+  (setq notmuch-search-history nil)
+  (notmuch-hello-update))

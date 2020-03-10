@@ -58,7 +58,8 @@
 		 ("U" . ajv/notmuch-show-toggle-unread)
 		 ("g" . notmuch-poll-and-refresh-this-buffer))
 	   (:map notmuch-hello-mode-map
-		 ("g" . notmuch-poll-and-refresh-this-buffer)))
+		 ("g" . notmuch-poll-and-refresh-this-buffer)
+		 ("k" . ajv/notmuch/clear-searches)))
     :hook (notmuch-hello-refresh . ajv/notmuch-set-initial-cursor-position))
   )
 
