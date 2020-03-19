@@ -20,6 +20,14 @@
 	(:name "flagged" :query "tag:flagged" :key "f" :search-type tree)
 	(:name "drafts" :query "tag:draft" :key "d" :search-type tree))))
 
+(defun ajv/notmuch-tree-toggle-unread ()
+  "While in notmuch-tree-mode, toggle unread tag"
+  (interactive)
+  (if (member "unread" (notmuch-tree-get-tags))
+      (notmuch-tree-tag (list "-unread"))
+    (notmuch-tree-tag (list "+unread")))
+  )
+
 (defun ajv/notmuch-show-toggle-unread ()
   "While in notmuch-show-mode, toggle unread tag"
   (interactive)
