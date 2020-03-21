@@ -12,6 +12,7 @@
 	(:name "main-gmail" :query "path:main-gmail/**" :key "m" :search-type tree)
 	(:name "neu-email" :query "path:neu-email/**" :key "n" :search-type tree)
 	(:name "all mail" :query "*" :key "a" :search-type tree)
+	(:name "replied" :query "tag:replied" :key "r" :search-type tree)
 	(:name "1 days" :query "date:1D.." :key "1" :search-type tree)
         (:name "2 days" :query "date:2D.." :key "2" :search-type tree)
         (:name "5 days" :query "date:5D.." :key "5" :search-type tree)
