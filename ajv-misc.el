@@ -14,7 +14,7 @@
        enable-recursive-minibuffers 1
        help-window-select t
        apropos-do-all t
-       large-file-warning-threshold 50000000 ;Set to 50 MB.
+       large-file-warning-threshold (* 100 1000000) ;Set to 100 MB.
        ;; max-specpdl-size 13000
        find-file-visit-truename t    ;follow symlinks to true targets
        vc-follow-symlinks t    ;follow symlinks that are in git repo
