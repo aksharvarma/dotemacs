@@ -27,6 +27,7 @@
   (if (member "unread" (notmuch-tree-get-tags))
       (notmuch-tree-tag (list "-unread"))
     (notmuch-tree-tag (list "+unread")))
+  (forward-line)
   )
 
 (defun ajv/notmuch-show-toggle-unread ()
@@ -35,6 +36,7 @@
   (if (member "unread" (notmuch-show-get-tags))
       (notmuch-show-tag (list "-unread"))
     (notmuch-show-tag (list "+unread")))
+  (forward-line)
   )
 
 (defun ajv/notmuch-search-toggle-unread ()
