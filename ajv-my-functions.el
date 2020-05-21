@@ -126,7 +126,7 @@ Picked from: http://nileshk.com/2009/06/13/prompt-before-closing-emacs.html"
   (interactive)
   (when (not (or (derived-mode-p 'markdown-mode)
 		 (derived-mode-p 'org-mode)))
-	     (delete-trailing-whitespace))
+    (delete-trailing-whitespace))
   )
 
 (defun ajv/shell-command-on-buffer (command)
@@ -235,3 +235,8 @@ Version 2017-11-01"
 
 (defun ajv/rename-symlink-buffer-with-truename ()
   (interactive) (rename-buffer (file-name-nondirectory (file-truename (buffer-file-name))) t))
+
+
+(defun ajv/bashmount ()
+  (interactive)
+  (term "/bin/bashmount"))
