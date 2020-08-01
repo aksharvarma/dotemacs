@@ -440,4 +440,5 @@
   (org-lookup-dnd-parse)
   )
 
+(use-package sdcv-mode)
 (use-package-report)
