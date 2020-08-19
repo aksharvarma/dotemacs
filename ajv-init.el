@@ -217,7 +217,8 @@
   (setq python-shell-interpreter "ipython"
         python-shell-interpreter-args "--TerminalInteractiveShell.simple_prompt=True"
 	elpy-syntax-check-command "pyflakes"
-	elpy-rpc-backend "jedi")
+	elpy-rpc-backend "jedi"
+	elpy-rpc-virtualenv-path 'current)
   (use-package flycheck :demand
     :config
     (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
