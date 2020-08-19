@@ -26,7 +26,7 @@
       package--init-file-ensured t     ;Don't add (package-initialize) to .emacs.
       package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
 			 ("melpa-stable" . "https://stable.melpa.org/packages/")
-                         ("melpa" . "http://melpa.milkbox.net/packages/"))
+                         ("melpa" . "http://melpa.org/packages/"))
       package-menu-hide-low-priority t
       package-archive-priorities
       '(("MELPA Stable" . 10)
