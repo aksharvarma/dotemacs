@@ -380,7 +380,10 @@
   :config
   (eval-after-load 'latex
     '(progn (define-key LaTeX-mode-map (kbd "<f5>") 'TeX-command-master)
-	    (define-key LaTeX-mode-map (kbd "<f6>") 'TeX-next-error)))
+	    (define-key LaTeX-mode-map (kbd "<f6>") 'TeX-next-error)
+	    (define-key LaTeX-mode-map (kbd "$") 'self-insert-command)))
+  ;; The dollar to self-insert-command is to ensure that smartparens works.
+  ;; As suggested here: https://github.com/Fuco1/smartparens/issues/834
   (use-package ajv-latex
     :demand t
     )
