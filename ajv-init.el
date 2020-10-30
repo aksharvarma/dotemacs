@@ -145,9 +145,8 @@
   (show-smartparens-global-mode)
   (smartparens-global-mode)
   (sp-local-pair '(emacs-lisp-mode lisp-interaction-mode) "'" "'" :actions nil)
-  ;; :hook
-  ;; (((prog-mode markdown-mode) . smartparens-mode)
-  ;;  ((prog-mode markdown-mode) . show-smartparens-mode))
+  :bind (("M-[" . sp-backward-unwrap-sexp)
+	 ("M-]" . sp-unwrap-sexp))
   )
 
 (use-package volatile-highlights
