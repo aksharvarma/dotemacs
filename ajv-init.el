@@ -447,13 +447,5 @@
 (setq org-dnd-use-package t)
 (require 'ox-dnd)
 
-(use-package org-lookup-dnd
-  :demand t
-  :config
-  (setq org-lookup-dnd-chose 'org-lookup-dnd-chose-ido
-	org-lookup-dnd-sources (list '("~/0/DnD/Books/Dungeons-and-Dragons-5e/DnD5e-Player's-Handbook.pdf" 0 314 317)))
-  (org-lookup-dnd-parse)
-  )
-
 (use-package sdcv-mode)
 (use-package-report)
