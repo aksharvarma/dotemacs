@@ -37,6 +37,15 @@
         ("MELPA"        . 0)))
 (package-initialize)
 
+;; fetch the list of packages available
+(unless package-archive-contents
+  (package-refresh-contents))
+
+;; install the missing packages
+(dolist (package package-selected-packages)
+  (unless (package-installed-p package)
+    (package-install package)))
+
 
 ;; Get use-package and its dependencies
 (require 'use-package)
