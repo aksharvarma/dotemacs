@@ -134,6 +134,7 @@
 	company-selection-wrap-around t))
 
 (use-package company-auctex
+  :mode ("\\.tex\\'" . LaTeX-mode)
   :config (company-auctex-init))
 
 
@@ -384,10 +385,8 @@
   )
 
 
-;; (defvar LaTeX-mode-map)			;TODO: fix issue with :bind/:map
 (use-package tex :ensure auctex
-  :demand t
-  ;; :mode ("\\.tex" . LaTeX-mode)
+  :mode ("\\.tex\\'" . LaTeX-mode)
   :config
   (eval-after-load 'latex
     '(progn (define-key LaTeX-mode-map (kbd "<f5>") 'TeX-command-master)
