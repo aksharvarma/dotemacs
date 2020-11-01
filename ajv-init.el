@@ -446,5 +446,11 @@
 (setq org-dnd-use-package t)
 (require 'ox-dnd)
 
+;; The article: You’re probably using the wrong dictionary
+;; Link: http://jsomers.net/blog/dictionary
+;; Getting this to work in Emacs via sdcv and sdcv-mode
+;; http://mbork.pl/2017-01-14_I'm_now_using_the_right_dictionary
+;; Source for some other dictionaries in the stardict format
+;; http://download.huzheng.org/bigdict/
 (use-package sdcv-mode)
 (use-package-report)
