@@ -20,9 +20,6 @@
        vc-follow-symlinks t    ;follow symlinks that are in git repo
        time-stamp-pattern nil)            ;use local variables for time-stamps
 
-(setq custom-file (concat ajv/my-init-directory ajv/custom-file-name))
-(load custom-file)
-
 ;; Make Emacs remember the place in the buffer in previously opened files.
 (save-place-mode 1)
 (setq save-place-file (concat user-emacs-directory ".emacs-places")

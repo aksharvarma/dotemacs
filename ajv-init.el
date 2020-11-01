@@ -13,7 +13,10 @@
 
 ;; Load basic settings directly.
 (load (concat user-emacs-directory "site-lisp/ajv/ajv-settings.el"))
-;; (load "~/.emacs.d/site-lisp/ajv/ajv-settings.el")
+;; Load the custom-file which only has package-selected-packages
+;; This will later be used to ensure that all of those have been installed.
+(setq custom-file (concat ajv/my-init-directory ajv/custom-file-name))
+(load custom-file)
 
 ;;;This adds site-lisp and its subdirectories to the load path,
 ;;;so that .el files there, are visible while initialization.
