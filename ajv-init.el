@@ -56,7 +56,7 @@
 (use-package bind-key)
 
 ;; Start loading up other things
-(use-package cl)
+;; (use-package cl)
 
 (use-package notmuch
   :commands notmuch notmuch-jump-search notmuch-search
