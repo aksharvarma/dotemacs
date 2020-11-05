@@ -388,7 +388,7 @@
   )
 
 
-(use-package tex :ensure auctex
+(use-package latex :ensure auctex
   :mode ("\\.tex\\'" . LaTeX-mode)
   :config
   ;; The default enging to use to compile
@@ -414,16 +414,14 @@
   ;; Load some helpful functions
   (use-package ajv-latex :demand t)
 
-  ;; These couldn't be added to a :bind because LaTeX-mode-map wouldn't exist
-  ;; early enough to get it to work. There may be a way around.
-  (eval-after-load 'latex
-    '(progn (bind-key "<f5>" #'TeX-command-run-all 'LaTeX-mode-map)
-	    (bind-key "<f6>" #'TeX-next-error 'LaTeX-mode-map)
-	    (bind-key "C-<f5>" #'TeX-command-run-all 'LaTeX-mode-map)
-	    (bind-key "C-<f6>" #'TeX-next-error 'LaTeX-mode-map)
-	    ;; The dollar to self-insert-command is to ensure that smartparens works.
-	    ;; As suggested here: https://github.com/Fuco1/smartparens/issues/834
-	    (bind-key "$" #'self-insert-command 'LaTeX-mode-map)))
+  :bind (:map LaTeX-mode-map
+	      ("<f5>" . TeX-command-run-all)
+	      ("<f6>" . TeX-next-error)
+	      ("C-<f5>" . TeX-command-run-all)
+	      ("C-<f6>" . TeX-next-error)
+	      ;; Map dollar to self-insert-command to ensure that smartparens works.
+	      ;; As suggested here: https://github.com/Fuco1/smartparens/issues/834
+	      ("$" . self-insert-command))
   :hook ((LaTeX-mode . turn-on-reftex)
 	 (LaTeX-mode . TeX-source-correlate-mode))
   )
