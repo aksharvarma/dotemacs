@@ -50,10 +50,8 @@ later modified by Akshar Varma"
 modified from http://omniorthogonal.blogspot.in/2008/05/useful-emacs-dired-launch-hack.html"
   (interactive)
   (when (eq major-mode 'dired-mode)
-    (case system-type
-      (gnu/linux (let ((process-connection-type nil))
-		   (start-process "*launch*" nil "xdg-open" (dired-get-filename))))
-      (windows-nt (w32-shell-execute "open"  (dired-get-filename) nil nil)))))
+    (let ((process-connection-type nil))
+      (start-process "*launch*" nil "xdg-open" (dired-get-filename)))))
 
 (defun ajv/delete-backup-files ()
   "Delete all backup files in the current dired folder"
