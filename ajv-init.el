@@ -356,7 +356,8 @@
   ((prog-mode . ajv/hideshow-setup)
    (find-file . ajv/rename-symlink-buffer-with-truename)
    (emacs-startup . ajv/measure-loading-time)
-   (before-save . ajv/delete-trailing-whitespace))
+   (before-save . ajv/delete-trailing-whitespace)
+   (after-init . ajv/window-config))
   )
 
 (use-package ajv-org
@@ -368,8 +369,6 @@
   :config
   (setq org-modules (quote
 		     (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
-  ;; (add-to-list 'org-modules 'org-habit)
-  :hook ((after-init . org-agenda-list))
   )
 
 (use-package org-bullets :hook ((org-mode . (lambda () (org-bullets-mode 1)))))
