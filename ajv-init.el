@@ -113,6 +113,7 @@
   :bind
   (("C-x C-b" . ibuffer)
    ("<f9>" . ibuffer)
+   ("C-<f9>" . ibuffer)
    ("C-x C-S-b" . ibuffer-other-window)
    (:map ibuffer-mode-map
 	 ("<up>" . ibuffer-previous-line)
@@ -278,7 +279,8 @@
 
 
 (use-package magit
-  :bind (("<f2>" . magit-status))
+  :bind (("<f2>" . magit-status)
+	 ("C-<f2>" . magit-status))
   :config
   (use-package ajv-magit :demand
     :bind (:map magit-status-mode-map
@@ -329,6 +331,7 @@
    ("s-P" . ajv/mypaths-other-window)
    ("C-c w c". ajv/window-config)
    ("<f8>". ajv/window-config)
+   ("C-<f8>". ajv/window-config)
    ("C-c s u" . ajv/reopen-file-with-sudo)
    ("%" . ajv/match-paren)
    ("s-w" . ajv/kill-this-buffer)
@@ -362,7 +365,8 @@
   :demand
   :bind
   (("s-a" . org-agenda)
-   ("<f10>" . (lambda () (interactive) (switch-to-buffer "*Org Agenda*"))))
+   ("<f10>" . (lambda () (interactive) (switch-to-buffer "*Org Agenda*")))
+   ("C-<f10>" . (lambda () (interactive) (switch-to-buffer "*Org Agenda*"))))
   :config
   (setq org-modules (quote
 		     (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
@@ -392,6 +396,8 @@
   (eval-after-load 'latex
     '(progn (define-key LaTeX-mode-map (kbd "<f5>") 'TeX-command-master)
 	    (define-key LaTeX-mode-map (kbd "<f6>") 'TeX-next-error)
+	    (define-key LaTeX-mode-map (kbd "C-<f5>") 'TeX-command-master)
+	    (define-key LaTeX-mode-map (kbd "C-<f6>") 'TeX-next-error)
 	    (define-key LaTeX-mode-map (kbd "$") 'self-insert-command)))
   ;; The dollar to self-insert-command is to ensure that smartparens works.
   ;; As suggested here: https://github.com/Fuco1/smartparens/issues/834
@@ -429,7 +435,9 @@
 (use-package buffer-move
   :bind
   (("<f11>" . buf-move-left)
-   ("<f12>" . buf-move-right)))
+   ("<f12>" . buf-move-right)
+   ("C-<f11>" . buf-move-left)
+   ("C-<f12>" . buf-move-right)))
 
 (use-package ajv-visual)
 
