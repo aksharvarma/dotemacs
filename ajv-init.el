@@ -477,3 +477,8 @@
 ;; http://download.huzheng.org/bigdict/
 (use-package sdcv-mode)
 (use-package-report)
+;; To sort the use-package statistics buffer by loading time
+(with-current-buffer "*use-package statistics*"
+  (progn (tabulated-list-sort 3)
+	 (tabulated-list-sort 3)
+	 (beginning-of-buffer)))
