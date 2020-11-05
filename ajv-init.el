@@ -113,7 +113,6 @@
   :bind
   (("C-x C-b" . ibuffer)
    ("<f9>" . ibuffer)
-   ("C-<f9>" . ibuffer)
    ("C-x C-S-b" . ibuffer-other-window)
    (:map ibuffer-mode-map
 	 ("<up>" . ibuffer-previous-line)
@@ -169,6 +168,8 @@
   :config (volatile-highlights-mode t))
 
 (use-package god-mode
+  :init
+  (setq god-mode-enable-function-key-translation nil)
   :demand
   :bind (("<escape>" . god-mode-all)
 	 (:map god-local-mode-map
@@ -277,8 +278,7 @@
 
 
 (use-package magit
-  :bind (("<f2>" . magit-status)
-	 ("C-<f2>" . magit-status))
+  :bind (("<f2>" . magit-status))
   :config
   (use-package ajv-magit :demand
     :bind (:map magit-status-mode-map
@@ -329,7 +329,6 @@
    ("s-P" . ajv/mypaths-other-window)
    ("C-c w c". ajv/window-config)
    ("<f8>". ajv/window-config)
-   ("C-<f8>". ajv/window-config)
    ("C-c s u" . ajv/reopen-file-with-sudo)
    ("%" . ajv/match-paren)
    ("s-w" . ajv/kill-this-buffer)
@@ -364,8 +363,7 @@
   :demand
   :bind
   (("s-a" . org-agenda)
-   ("<f10>" . (lambda () (interactive) (switch-to-buffer "*Org Agenda*")))
-   ("C-<f10>" . (lambda () (interactive) (switch-to-buffer "*Org Agenda*"))))
+   ("<f10>" . (lambda () (interactive) (switch-to-buffer "*Org Agenda*"))))
   :config
   (setq org-modules (quote
 		     (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
@@ -416,8 +414,6 @@
   :bind (:map LaTeX-mode-map
 	      ("<f5>" . TeX-command-run-all)
 	      ("<f6>" . TeX-next-error)
-	      ("C-<f5>" . TeX-command-run-all)
-	      ("C-<f6>" . TeX-next-error)
 	      ;; Map dollar to self-insert-command to ensure that smartparens works.
 	      ;; As suggested here: https://github.com/Fuco1/smartparens/issues/834
 	      ("$" . self-insert-command))
@@ -446,12 +442,8 @@
 	 (prog-mode . subword-mode))	;Allows moving through camelCasedWords
   )
 
-(use-package buffer-move
-  :bind
-  (("<f11>" . buf-move-left)
-   ("<f12>" . buf-move-right)
-   ("C-<f11>" . buf-move-left)
-   ("C-<f12>" . buf-move-right)))
+(use-package buffer-move :bind (("<f11>" . buf-move-left)
+				("<f12>" . buf-move-right)))
 
 (use-package ajv-visual)
 
