@@ -154,6 +154,7 @@
 (use-package smartparens-config
   :ensure smartparens
   :delight smartparens-mode "()" "smartparens"
+  :demand
   :config
   (show-smartparens-global-mode)
   (smartparens-global-mode)
