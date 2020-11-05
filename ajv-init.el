@@ -183,9 +183,7 @@
     :bind ((:map god-local-mode-map
 		 ("q" . ajv/insert-string-from-god-mode)))
     :config (setq god-exempt-major-modes
-		  (append ajv/god-exempt-modes god-exempt-major-modes)))
-  (god-mode-all)
-  )
+		  (append ajv/god-exempt-modes god-exempt-major-modes))))
 
 (use-package god-mode-isearch
   :after (god-mode)
