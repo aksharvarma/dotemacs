@@ -391,20 +391,39 @@
 (use-package tex :ensure auctex
   :mode ("\\.tex\\'" . LaTeX-mode)
   :config
+  ;; The default enging to use to compile
+  (setq-default TeX-engine 'xetex)
+  ;; Various other default settings
+  (setq LaTeX-command "latex -shell-escape --synctex=1"
+	LaTeX-command-style '(("" "%(PDF)%(latex) -shell-escape %(file-line-error) %(extraopts) %S%(PDFout)"))
+	TeX-save-query nil                ;Don't ask before saving .tex files
+	;; To make AUCTeX read/update on changes to .bib files.
+	TeX-parse-self t ; Enable parse on load. [DISABLED]
+	TeX-auto-save t ; Enable parse on save. [DISABLED]
+	;; TeX-force-default-mode t
+	reftex-plug-into-AUCTeX t
+	reftex-ref-macro-prompt nil)
+
+  ;; What program to select when viewing output.
+  (setq TeX-view-program-selection '(((output-dvi has-no-display-manager) "dvi2tty")
+				     ((output-dvi style-pstricks) "xdg-open")
+				     (output-dvi "xdvi")
+				     (output-pdf "PDF Tools")
+				     (output-html "xdg-open")))
+
+  ;; Load some helpful functions
+  (use-package ajv-latex :demand t)
+
+  ;; These couldn't be added to a :bind because LaTeX-mode-map wouldn't exist
+  ;; early enough to get it to work. There may be a way around.
   (eval-after-load 'latex
-    '(progn (define-key LaTeX-mode-map (kbd "<f5>") 'TeX-command-master)
-	    (define-key LaTeX-mode-map (kbd "<f6>") 'TeX-next-error)
-	    (define-key LaTeX-mode-map (kbd "C-<f5>") 'TeX-command-master)
-	    (define-key LaTeX-mode-map (kbd "C-<f6>") 'TeX-next-error)
-	    (define-key LaTeX-mode-map (kbd "$") 'self-insert-command)))
-  ;; The dollar to self-insert-command is to ensure that smartparens works.
-  ;; As suggested here: https://github.com/Fuco1/smartparens/issues/834
-  (use-package ajv-latex
-    :demand t
-    )
-  ;; :bind (:map LaTeX-mode-map
-  ;; 	      ("<f5>" . TeX-command-master)
-  ;; 	      ("<f6>" . TeX-next-error))
+    '(progn (bind-key "<f5>" #'TeX-command-run-all 'LaTeX-mode-map)
+	    (bind-key "<f6>" #'TeX-next-error 'LaTeX-mode-map)
+	    (bind-key "C-<f5>" #'TeX-command-run-all 'LaTeX-mode-map)
+	    (bind-key "C-<f6>" #'TeX-next-error 'LaTeX-mode-map)
+	    ;; The dollar to self-insert-command is to ensure that smartparens works.
+	    ;; As suggested here: https://github.com/Fuco1/smartparens/issues/834
+	    (bind-key "$" #'self-insert-command 'LaTeX-mode-map)))
   :hook ((LaTeX-mode . turn-on-reftex)
 	 (LaTeX-mode . TeX-source-correlate-mode))
   )
