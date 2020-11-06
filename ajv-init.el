@@ -245,6 +245,12 @@
 (use-package move-text :config (move-text-default-bindings))
 
 (use-package iedit)
+
+(use-package rg
+  :config
+  (rg-enable-menu)
+  (setq rg-command-line-flags '("--pcre2")))
+
 (use-package smex
   :bind (("M-x" . smex))
   :config (smex-initialize))
