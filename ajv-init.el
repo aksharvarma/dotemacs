@@ -359,7 +359,7 @@
    (find-file . ajv/rename-symlink-buffer-with-truename)
    (emacs-startup . ajv/measure-loading-time)
    (before-save . ajv/delete-trailing-whitespace)
-   (after-init . ajv/window-config))
+   (emacs-startup . ajv/window-config))
   )
 
 (use-package ajv-org
