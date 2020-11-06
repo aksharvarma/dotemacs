@@ -340,7 +340,6 @@
    ("s-P" . ajv/mypaths-other-window)
    ("C-c w c". ajv/window-config)
    ("<f8>". ajv/window-config)
-   ("C-c s u" . ajv/reopen-file-with-sudo)
    ("%" . ajv/match-paren)
    ("s-w" . ajv/kill-this-buffer)
    ("s-o" . ajv/kill-other-buffer)
