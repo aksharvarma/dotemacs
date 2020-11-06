@@ -93,15 +93,21 @@
 ;; Now to use them (after loading them.)
 ;;;;;;;;;;
 
-(load (concat user-emacs-directory "site-lisp/ajv/ajv-sensitive-settings.el"))
+(setq ajv/my-org-agenda-files-dir user-emacs-directory)
+
+(setq ajv/my-elfeed-org-file "")
+(setq ajv/oeuvre-filename "")
+(setq ajv/my-quotes-filename "")
+(setq ajv/my-birthdate "1970-01-01")	;Defaults to this.
+
+
+(setq ajv/my-sensitive-settings-file-name (concat user-emacs-directory "site-lisp/ajv/ajv-sensitive-settings.el"))
+;; Load the sensitive settings if they exist
+(if (file-exists-p ajv/my-sensitive-settings-file-name)
+    (load ajv/my-sensitive-settings-file-name)
+  nil)
 
 (setq ajv/my-org-agenda-files (list ajv/my-org-agenda-files-dir))
-
-;; (setq ajv/my-org-agenda-files (list ajv/my-org-agenda-admin-file
-;; 				    ajv/my-org-agenda-self-file
-;; 				    ajv/my-org-agenda-work-file
-;; 				    ajv/my-org-agenda-personal-file
-;; 				    ajv/my-org-agenda-research-file))
 
 (setq ajv/my-elfeed-org-file-list (list ajv/my-elfeed-org-file))
 

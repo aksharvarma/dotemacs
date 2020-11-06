@@ -12,7 +12,8 @@
                                                gc-cons-percentage 0.1)))
 
 ;; Load basic settings directly.
-(load (concat user-emacs-directory "site-lisp/ajv/ajv-settings.el"))
+(setq ajv/my-settings-file-name (concat user-emacs-directory "site-lisp/ajv/ajv-settings.el"))
+(load ajv/my-settings-file-name)
 ;; Load the custom-file which only has package-selected-packages
 ;; This will later be used to ensure that all of those have been installed.
 (setq custom-file (concat ajv/my-init-directory ajv/custom-file-name))
@@ -373,6 +374,7 @@
 (use-package org-bullets :hook ((org-mode . org-bullets-mode)))
 
 (use-package ajv-elfeed
+  :if (not (string-empty-p ajv/my-elfeed-org-file))
   :init (use-package elfeed
 	  :hook ((elfeed-search-mode . toggle-truncate-lines)))
   :config
