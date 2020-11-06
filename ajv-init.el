@@ -308,7 +308,8 @@
   :config
   (setq dired-dwim-target t                     ;default copy to other window
         dired-listing-switches "-a -l -L -h --group-directories-first --classify"
-	dired-recursive-copies 'always)
+	dired-recursive-copies 'always
+	wdired-use-dired-vertical-movement 'sometimes)
   (put 'dired-find-alternate-file 'disabled nil) ;allow 'a' in dired
   (load "dired-x")
   (use-package ajv-dired
