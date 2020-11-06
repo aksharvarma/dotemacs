@@ -446,7 +446,24 @@
 (use-package buffer-move :bind (("<f11>" . buf-move-left)
 				("<f12>" . buf-move-right)))
 
-(use-package ajv-visual)
+(use-package ajv-visual
+  :demand
+  :config
+  (load-theme ajv/prefered-light-theme-name t t)
+  (load-theme ajv/prefered-dark-theme-name)
+
+  (setq-default fill-column most-positive-fixnum
+		visual-line-fringe-indicators '(nil right-curly-arrow)
+		frame-title-format '("%b [%m]"))
+  (column-number-mode t)
+  (scroll-bar-mode 0)
+  (menu-bar-mode 0)
+  (tool-bar-mode 0)
+  (set-fringe-style '(0 . nil))
+  (add-to-list 'default-frame-alist '(fullscreen . fullboth)) ;maximize all frames
+  (add-to-list 'default-frame-alist `(font . ,ajv/prefered-font-name))
+  :hook ((text-mode . turn-on-auto-fill))
+  )
 
 (use-package ajv-modeline)
 
