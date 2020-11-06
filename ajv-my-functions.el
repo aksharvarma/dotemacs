@@ -69,15 +69,6 @@ Picked from: http://nileshk.com/2009/06/13/prompt-before-closing-emacs.html"
     (message "Canceled exit")))
 
 
-(defun ajv/hideshow-setup ()
-  "Setup hideshow mode for current mode/buffer. Should be hooked to prog-mode-hook."
-  (interactive)
-  (local-set-key (kbd "C-c C-s") 'hs-show-block)
-  (local-set-key (kbd "C-c C-h") 'hs-hide-block)
-  (local-set-key (kbd "C-c C-M-h") 'hs-hide-all)
-  (local-set-key (kbd "C-c C-M-s") 'hs-show-all)
-  (hs-minor-mode 1))
-
 (defun ajv/measure-loading-time ()
   "Simply measure and message the loading time."
   (interactive)

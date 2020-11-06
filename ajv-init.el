@@ -357,8 +357,7 @@
     (global-set-key (kbd "C-x C-c") 'ajv/ask-before-closing))
   (advice-add 'revert-buffer :around #'yes-or-no-p->-y-or-n-p)
   :hook
-  ((prog-mode . ajv/hideshow-setup)
-   (find-file . ajv/rename-symlink-buffer-with-truename)
+  ((find-file . ajv/rename-symlink-buffer-with-truename)
    (emacs-startup . ajv/measure-loading-time)
    (before-save . ajv/delete-trailing-whitespace)
    (emacs-startup . ajv/window-config))
@@ -444,6 +443,7 @@
   :init (setq inhibit-startup-screen t)
   :hook ((before-save . time-stamp)
 	 (after-save . executable-make-buffer-file-executable-if-script-p)
+	 (prog-mode . hs-minor-mode)	;Enable hideshow-minor-mode
 	 (prog-mode . subword-mode))	;Allows moving through camelCasedWords
   )
 
