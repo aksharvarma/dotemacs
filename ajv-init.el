@@ -370,7 +370,7 @@
   (setq org-modules '(ol-bbdb ol-bibtex ol-docview ol-gnus org-habit ol-info ol-irc ol-mhe ol-rmail ol-w3m))
   )
 
-(use-package org-bullets :hook ((org-mode . (lambda () (org-bullets-mode 1)))))
+(use-package org-bullets :hook ((org-mode . org-bullets-mode)))
 
 (use-package ajv-elfeed
   :init (use-package elfeed
