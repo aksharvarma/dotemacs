@@ -367,8 +367,7 @@
   (("s-a" . org-agenda)
    ("<f10>" . (lambda () (interactive) (switch-to-buffer "*Org Agenda*"))))
   :config
-  (setq org-modules (quote
-		     (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
+  (setq org-modules '(ol-bbdb ol-bibtex ol-docview ol-gnus org-habit ol-info ol-irc ol-mhe ol-rmail ol-w3m))
   )
 
 (use-package org-bullets :hook ((org-mode . (lambda () (org-bullets-mode 1)))))
