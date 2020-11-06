@@ -176,7 +176,8 @@
 	       ("." . repeat)
 	       ("i" . god-mode-all)
 	       ("<escape>" . (lambda () (interactive) (god-mode-activate)))))
-  :hook ((god-mode-enabled . ajv/god-update-cursor)
+  :hook ((god-mode-enabled . ajv/god-has-priority)
+	 (god-mode-enabled . ajv/god-update-cursor)
 	 (god-mode-disabled . ajv/god-update-cursor))
   :config
   (use-package ajv-god

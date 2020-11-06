@@ -18,3 +18,19 @@
     (delete-region (region-beginning) (region-end)))
   ;; Insert the text read in from the minibuffer
   (insert string))
+
+
+;; NOTE: I haven't started using this yet.
+;; This is supposed to go on god-mode-enabled-hook
+(defun ajv/god-has-priority ()
+  "
+Try to ensure that god mode keybindings retain priority over other minor modes.
+
+Taken from: https://github.com/emacsorphanage/god-mode/issues/49
+which itself is inspired by: https://stackoverflow.com/a/5340797
+"
+  (unless (and (consp (car minor-mode-map-alist))
+               (eq (caar minor-mode-map-alist) 'god-local-mode-map))
+    (let ((godkeys (assq 'god-local-mode minor-mode-map-alist)))
+      (assq-delete-all 'god-local-mode minor-mode-map-alist)
+      (add-to-list 'minor-mode-map-alist godkeys))))
