@@ -153,7 +153,7 @@
 
 (use-package smartparens-config
   :ensure smartparens
-  :delight smartparens-mode "()" "smartparens"
+  :delight smartparens-mode " ()" "smartparens"
   :demand
   :config
   (show-smartparens-global-mode)
@@ -303,6 +303,7 @@
 
 
 (use-package dired :demand
+  :delight dired-mode "Dired"
   :config
   (setq dired-dwim-target t                     ;default copy to other window
         dired-listing-switches "-a -l -L -h --group-directories-first --classify"

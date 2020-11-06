@@ -44,4 +44,4 @@
 (delight 'tex-mode "LaTeX" :major)
 (diminish 'tex-mode "LaTeX")
 
-(delight 'emacs-lisp-mode "ELisp" :major)
+(delight 'emacs-lisp-mode ".el" :major)
