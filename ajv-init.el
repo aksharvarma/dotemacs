@@ -5,49 +5,11 @@
 ;; Note: Only top level sexps are profiled, so you might want to make sure that what you really want to look at is actually at the top of the list.
 ;; emacs -Q -l ~/.emacs.d/site-lisp/profile-dotemacs.el -f profile-dotemacs
 
-;; Increase garbage collection threshold during startup and brings it back to reasonable values at the end.
-(setq gc-cons-threshold (* 500 1024 1024) ;500MB
-      gc-cons-percentage 0.8)
-(add-hook 'emacs-startup-hook (lambda () (setq gc-cons-threshold (* 100 1024 1024)
-                                               gc-cons-percentage 0.1)))
+;; Increase garbage collection, prevent some visual elements early on
+;; Then setup package archives, initialize and install uninstalled packages
+(load (concat user-emacs-directory "site-lisp/ajv/ajv-pre-setup.el"))
 
-;; Load basic settings directly.
-(setq ajv/my-settings-file-name (concat user-emacs-directory "site-lisp/ajv/ajv-settings.el"))
-(load ajv/my-settings-file-name)
-;; Load the custom-file which only has package-selected-packages
-;; This will later be used to ensure that all of those have been installed.
-(setq custom-file (concat ajv/my-init-directory ajv/custom-file-name))
-(load custom-file)
-
-;;;This adds site-lisp and its subdirectories to the load path,
-;;;so that .el files there, are visible while initialization.
-(let ((default-directory ajv/my-init-directory))
-  (normal-top-level-add-to-load-path '("."))
-  (normal-top-level-add-subdirs-to-load-path))
-
-(require 'package)
-(setq package-enable-at-startup nil   ; To prevent initialising twice
-      package--init-file-ensured t     ;Don't add (package-initialize) to .emacs.
-      package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-			 ("melpa-stable" . "https://stable.melpa.org/packages/")
-                         ("melpa" . "http://melpa.org/packages/"))
-      package-menu-hide-low-priority t
-      package-archive-priorities
-      '(("MELPA Stable" . 10)
-        ("GNU ELPA"     . 5)
-        ("MELPA"        . 0)))
-(package-initialize)
-
-;; fetch the list of packages available
-(unless package-archive-contents
-  (package-refresh-contents))
-
-;; install the missing packages
-(dolist (package package-selected-packages)
-  (unless (package-installed-p package)
-    (package-install package)))
-
-
+;; Everything after this point will be via use-package
 ;; Get use-package and its dependencies
 (require 'use-package)
 (setq use-package-verbose t
@@ -453,7 +415,6 @@
 
 (use-package ajv-misc
   :defer 1
-  :init (setq inhibit-startup-screen t)
   :hook ((before-save . time-stamp)
 	 (after-save . executable-make-buffer-file-executable-if-script-p)
 	 (prog-mode . hs-minor-mode)	;Enable hideshow-minor-mode
@@ -473,9 +434,6 @@
 		visual-line-fringe-indicators '(nil right-curly-arrow)
 		frame-title-format '("%b [%m]"))
   (column-number-mode t)
-  (scroll-bar-mode 0)
-  (menu-bar-mode 0)
-  (tool-bar-mode 0)
   (set-fringe-style '(0 . nil))
   (add-to-list 'default-frame-alist '(fullscreen . fullboth)) ;maximize all frames
   (add-to-list 'default-frame-alist `(font . ,ajv/prefered-font-name))
