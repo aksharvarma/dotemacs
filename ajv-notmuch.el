@@ -21,7 +21,7 @@
 	(:name "flagged" :query "tag:flagged" :key "f" :search-type tree)
 	(:name "drafts" :query "tag:draft" :key "d" :search-type tree))))
 
-(defun ajv/notmuch-tree-toggle-unread ()
+(defun ajv/notmuch/tree-toggle-unread ()
   "While in notmuch-tree-mode, toggle unread tag"
   (interactive)
   (if (member "unread" (notmuch-tree-get-tags))
@@ -30,7 +30,7 @@
   (forward-line)
   )
 
-(defun ajv/notmuch-show-toggle-unread ()
+(defun ajv/notmuch/show-toggle-unread ()
   "While in notmuch-show-mode, toggle unread tag"
   (interactive)
   (if (member "unread" (notmuch-show-get-tags))
@@ -39,7 +39,7 @@
   (forward-line)
   )
 
-(defun ajv/notmuch-search-toggle-unread ()
+(defun ajv/notmuch/search-toggle-unread ()
   "While in notmuch-search-mode, toggle unread tag"
   (interactive)
   (if (member "unread" (notmuch-search-get-tags))
@@ -48,7 +48,7 @@
   (forward-line)
   )
 
-(defun ajv/notmuch-set-initial-cursor-position ()
+(defun ajv/notmuch/set-initial-cursor-position ()
   (if (and (eq (point) (point-min))
            (search-forward "Saved searches:" nil t))
       (progn

@@ -64,19 +64,19 @@
   :config
   (use-package ajv-notmuch :demand
     :bind ((:map notmuch-show-mode-map
-		 ("u" . ajv/notmuch-show-toggle-unread)
-		 ("U" . ajv/notmuch-show-toggle-unread))
+		 ("u" . ajv/notmuch/show-toggle-unread)
+		 ("U" . ajv/notmuch/show-toggle-unread))
 	   (:map notmuch-tree-mode-map
-		 ("u" . ajv/notmuch-tree-toggle-unread)
-		 ("U" . ajv/notmuch-tree-toggle-unread))
+		 ("u" . ajv/notmuch/tree-toggle-unread)
+		 ("U" . ajv/notmuch/tree-toggle-unread))
 	   (:map notmuch-search-mode-map
-		 ("u" . ajv/notmuch-search-toggle-unread)
-		 ("U" . ajv/notmuch-show-toggle-unread)
+		 ("u" . ajv/notmuch/search-toggle-unread)
+		 ("U" . ajv/notmuch/show-toggle-unread)
 		 ("g" . notmuch-poll-and-refresh-this-buffer))
 	   (:map notmuch-hello-mode-map
 		 ("g" . notmuch-poll-and-refresh-this-buffer)
 		 ("k" . ajv/notmuch/clear-searches)))
-    :hook (notmuch-hello-refresh . ajv/notmuch-set-initial-cursor-position))
+    :hook (notmuch-hello-refresh . ajv/notmuch/set-initial-cursor-position))
   )
 
 (use-package ido :demand
