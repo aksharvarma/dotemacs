@@ -247,6 +247,9 @@
 (use-package iedit)
 
 (use-package rg
+  :bind
+  (:map rg-mode-map
+	("C-c C-s" . wgrep-save-all-buffers))
   :config
   (rg-enable-menu)
   (setq rg-command-line-flags '("--pcre2")))
