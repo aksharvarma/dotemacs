@@ -294,7 +294,7 @@
   :config
   (use-package ajv-magit :demand
     :bind (:map magit-status-mode-map
-		([remap magit-mode-bury-buffer] . ajv/magit-kill-buffers))
+		([remap magit-mode-bury-buffer] . ajv/magit/kill-buffers))
     (:map ido-common-completion-map
 	  ("<f2>" . ido-enter-magit-status)))
   (setq magit-completing-read-function 'magit-ido-completing-read

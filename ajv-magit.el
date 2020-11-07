@@ -1,6 +1,6 @@
 (provide 'ajv-magit)
 
-(defun ajv/magit-kill-buffers ()
+(defun ajv/magit/kill-buffers ()
   "Restore window configuration and kill all Magit buffers.
 Taken from: http://manuel-uberti.github.io/emacs/2018/02/17/magit-bury-buffer/"
   (interactive)
