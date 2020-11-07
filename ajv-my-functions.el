@@ -242,3 +242,17 @@ Taken from: http://whattheemacsd.com/key-bindings.el-01.html"
         (linum-mode 1)
         (goto-line (read-number "Goto line: ")))
     (linum-mode -1)))
+
+(defun ajv/join-to-next-line ()
+  "Join the next line into this one.
+
+Taken: http://whattheemacsd.com/key-bindings.el-03.html"
+  (interactive)
+  (join-line -1))
+
+(defun ajv/join-to-previous-line ()
+  "Collapse this line into the previous one.
+
+Taken: http://whattheemacsd.com/key-bindings.el-03.html"
+  (interactive)
+  (join-line))

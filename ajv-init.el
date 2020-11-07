@@ -360,6 +360,8 @@
    ("C-r" . isearch-backward-regexp)
    ("C-M-s" . isearch-forward)
    ("C-M-r" . isearch-backward)
+   ("C-M-j". ajv/join-to-next-line)
+   ("M-j". ajv/join-to-previous-line)
    (:map help-mode-map
 	 ("q" . (lambda () (interactive) (ajv/kill-this-buffer) (other-window 1)))))
   :config
