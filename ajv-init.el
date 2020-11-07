@@ -121,8 +121,8 @@
   :config
   (use-package ibuffer-vc :demand)
   :hook
-  (;; (ibuffer-mode . ajv/group-ibuffer-by-vc)
-   (ibuffer-mode . ajv/ibuffer-use-default-filter)
+  (;; (ibuffer-mode . ajv/ibuffer/group-by-vc)
+   (ibuffer-mode . ajv/ibuffer/use-default-filter)
    (ibuffer-mode . ibuffer-auto-mode)
    )
   )

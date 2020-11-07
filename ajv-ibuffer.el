@@ -40,13 +40,13 @@
 		(name . "^\\*.*\\*$"))
 	       ))))
 
-(defun ajv/group-ibuffer-by-vc ()
+(defun ajv/ibuffer/group-by-vc ()
   (interactive)
   (ibuffer-vc-set-filter-groups-by-vc-root)
   (unless (eq ibuffer-sorting-mode 'alphabetic)
     (ibuffer-do-sort-by-alphabetic)))
 
-(defun ajv/ibuffer-use-default-filter ()
+(defun ajv/ibuffer/use-default-filter ()
   (interactive)
   (ibuffer-switch-to-saved-filter-groups "Uncategorized"))
 
@@ -69,7 +69,7 @@ The hardcoded 3 may need to change if IBuffer config changes"
       (goto-line 3)))
 
 
-(defun ajv/human-readable-file-sizes-to-bytes (string)
+(defun ajv/ibuffer/human-readable-file-sizes-to-bytes (string)
   "Convert a human-readable file size into bytes."
   (interactive)
   (cond
@@ -84,7 +84,7 @@ The hardcoded 3 may need to change if IBuffer config changes"
    )
   )
 
-(defun ajv/bytes-to-human-readable-file-sizes (bytes)
+(defun ajv/ibuffer/bytes-to-human-readable-file-sizes (bytes)
   "Convert number of bytes to human-readable file size."
   (interactive)
   (cond
@@ -106,11 +106,11 @@ The hardcoded 3 may need to change if IBuffer config changes"
 	     (dolist (string column-strings)
 	       (setq total
 		     ;; like, ewww ...
-		     (+ (float (ajv/human-readable-file-sizes-to-bytes string))
+		     (+ (float (ajv/ibuffer/human-readable-file-sizes-to-bytes string))
 			total)))
-	     (ajv/bytes-to-human-readable-file-sizes total)))	 ;; :summarizer nil
+	     (ajv/ibuffer/bytes-to-human-readable-file-sizes total)))	 ;; :summarizer nil
 	 )
-  (ajv/bytes-to-human-readable-file-sizes (buffer-size)))
+  (ajv/ibuffer/bytes-to-human-readable-file-sizes (buffer-size)))
 
 ;; Modify the default ibuffer-formats
 (setq ibuffer-formats
@@ -127,7 +127,7 @@ The hardcoded 3 may need to change if IBuffer config changes"
 	      " " filename)))
 
 
-(defun ajv/ibuffer-collapse-all-filter-groups ()
+(defun ajv/ibuffer/collapse-all-filter-groups ()
   "Collapse all filter groups at once
 
 Taken from: https://acidwords.com/posts/2016-06-18-collapsing-all-filter-groups-in-ibuffer.html"
