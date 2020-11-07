@@ -61,3 +61,19 @@ modified from http://omniorthogonal.blogspot.in/2008/05/useful-emacs-dired-launc
     (dired-unmark-all-marks)
     (dired-flag-backup-files)
     (dired-do-flagged-delete)))
+
+(defun ajv/dired/go-to-beginning-of-buffer ()
+  "When in dired-mode, go first file instead of top of buffer.
+
+Taken from: http://whattheemacsd.com/setup-dired.el-02.html"
+  (interactive)
+  (beginning-of-buffer)
+  (dired-next-line 4))
+
+(defun ajv/dired/go-to-end-of-buffer ()
+  "When in dired-mode, go to last file instead of end of buffer.
+
+Taken from: http://whattheemacsd.com/setup-dired.el-02.html"
+  (interactive)
+  (end-of-buffer)
+  (dired-next-line -1))

@@ -326,7 +326,9 @@
     :bind  (:map dired-mode-map
 		 ("s". ajv/dired/sort-criteria)
 		 ("l" . ajv/dired/launch-file)
-		 ("C-c C-d C-b" . ajv/dired/delete-backup-files))
+		 ("C-c C-d C-b" . ajv/dired/delete-backup-files)
+		 ("M-<" . ajv/dired/go-to-beginning-of-buffer)
+		 ("M->" . ajv/dired/go-to-end-of-buffer))
     :hook ((dired-mode . ajv/dired/set-default-sorting)
 	   (dired-mode . ajv/dired/hide-details-omit-hidden-files)))
   )
