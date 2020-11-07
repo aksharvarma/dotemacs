@@ -68,7 +68,7 @@ modified from http://omniorthogonal.blogspot.in/2008/05/useful-emacs-dired-launc
 Taken from: http://whattheemacsd.com/setup-dired.el-02.html"
   (interactive)
   (beginning-of-buffer)
-  (dired-next-line 4))
+  (dired-next-line 3))
 
 (defun ajv/dired/go-to-end-of-buffer ()
   "When in dired-mode, go to last file instead of end of buffer.
