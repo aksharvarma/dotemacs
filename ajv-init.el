@@ -388,7 +388,7 @@
 (use-package org-bullets :hook ((org-mode . org-bullets-mode)))
 
 (use-package ajv-elfeed
-  :if (not (string-empty-p ajv/my-elfeed-org-file))
+  :if (not (string-empty-p ajv/sensitive/my-elfeed-org-file))
   :init (use-package elfeed
 	  :hook ((elfeed-search-mode . toggle-truncate-lines)))
   :config
@@ -486,7 +486,7 @@
 
 (use-package memento-mori
   :config
-  (setq memento-mori-birth-date ajv/my-birthdate)
+  (setq memento-mori-birth-date ajv/sensitive/my-birthdate)
   (memento-mori-mode))
 
 ;; To get org mode to latex for DnD5e LaTeX Template

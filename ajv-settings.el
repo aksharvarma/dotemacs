@@ -49,39 +49,39 @@
 ;; Variables defined in ajv-sensitive-settings.el
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defvar ajv/my-org-agenda-self-file nil
+(defvar ajv/sensitive/my-org-agenda-self-file nil
   "The org agenda file for \"self\"
  Set in ajv-sensitive-settings.el")
 
-(defvar ajv/my-org-agenda-admin-file nil
+(defvar ajv/sensitive/my-org-agenda-admin-file nil
   "The org agenda file for various administrative things.
  Set in ajv-sensitive-settings.el")
 
-(defvar ajv/my-org-agenda-work-file nil
+(defvar ajv/sensitive/my-org-agenda-work-file nil
   "The org agenda file for work related things.
  Set in ajv-sensitive-settings.el")
 
-(defvar ajv/my-org-agenda-research-file nil
+(defvar ajv/sensitive/my-org-agenda-research-file nil
   "The org agenda file for research projects
  Set in ajv-sensitive-settings.el")
 
-(defvar ajv/my-org-agenda-personal-file nil
+(defvar ajv/sensitive/my-org-agenda-personal-file nil
   "The org agenda file for personal projects.
  Set in ajv-sensitive-settings.el")
 
-(defvar ajv/my-elfeed-org-file nil
+(defvar ajv/sensitive/my-elfeed-org-file nil
   "The file from which my blog list is taken for elfeed
  Set in ajv-sensitive-settings.el")
 
-(defvar ajv/oeuvre-filename nil
+(defvar ajv/sensitive/oeuvre-filename nil
   "The file that contains the oeuvre list.
  Set in ajv-sensitive-settings.el")
 
-(defvar ajv/my-birthdate nil
+(defvar ajv/sensitive/my-birthdate nil
   "My birthdate in YYYY-MM-DD format for the memento-mori package.
  Set in ajv-sensitive-settings.el")
 
-;; (defvar ajv/my-quotes-filename nil
+;; (defvar ajv/sensitive/my-quotes-filename nil
 ;;   "The file that contains the quotes that ajv/quotes uses.
 ;;  Set in ajv-sensitive-settings.el")
 
@@ -93,12 +93,12 @@
 ;; Now to use them (after loading them.)
 ;;;;;;;;;;
 
-(setq ajv/my-org-agenda-files-dir user-emacs-directory)
+(setq ajv/sensitive/my-org-agenda-files-dir user-emacs-directory)
 
-(setq ajv/my-elfeed-org-file "")
-(setq ajv/oeuvre-filename "")
-(setq ajv/my-quotes-filename "")
-(setq ajv/my-birthdate "1970-01-01")	;Defaults to this.
+(setq ajv/sensitive/my-elfeed-org-file "")
+(setq ajv/sensitive/oeuvre-filename "")
+(setq ajv/sensitive/my-quotes-filename "")
+(setq ajv/sensitive/my-birthdate "1970-01-01")	;Defaults to this.
 
 
 (setq ajv/my-sensitive-settings-file-name (concat user-emacs-directory "site-lisp/ajv/ajv-sensitive-settings.el"))
@@ -107,8 +107,8 @@
     (load ajv/my-sensitive-settings-file-name)
   nil)
 
-(setq ajv/my-org-agenda-files (list ajv/my-org-agenda-files-dir))
+(setq ajv/my-org-agenda-files (list ajv/sensitive/my-org-agenda-files-dir))
 
-(setq ajv/my-elfeed-org-file-list (list ajv/my-elfeed-org-file))
+(setq ajv/my-elfeed-org-file-list (list ajv/sensitive/my-elfeed-org-file))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
