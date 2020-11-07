@@ -3,8 +3,8 @@
 (defun ajv/god/update-cursor ()
   (if (bound-and-true-p god-local-mode)
       (set-cursor-color "dark orange")
-    (cond ((ajv/using-dark-theme-p) (set-cursor-color "lime green"))
-	  ((ajv/using-light-theme-p) (set-cursor-color "black")))))
+    (cond ((ajv/theme/using-dark-theme-p) (set-cursor-color "lime green"))
+	  ((ajv/theme/using-light-theme-p) (set-cursor-color "black")))))
 
 (setq ajv/god/exempt-modes '(org-agenda-mode elfeed-search-mode notmuch-hello-mode notmuch-search-mode notmuch-show-mode notmuch-tree-mode))
 

@@ -426,7 +426,7 @@
 (use-package buffer-move :bind (("<f11>" . buf-move-left)
 				("<f12>" . buf-move-right)))
 
-(use-package ajv-visual
+(use-package ajv-theme
   :demand
   :config
   (load-theme ajv/prefered-light-theme-name t t)
