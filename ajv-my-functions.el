@@ -231,3 +231,14 @@ Version 2017-11-01"
 (defun ajv/bashmount ()
   (interactive)
   (term "/bin/bashmount"))
+
+(defun ajv/goto-line-with-feedback ()
+  "Show line numbers temporarily, while prompting for the line number input
+
+Taken from: http://whattheemacsd.com/key-bindings.el-01.html"
+  (interactive)
+  (unwind-protect
+      (progn
+        (linum-mode 1)
+        (goto-line (read-number "Goto line: ")))
+    (linum-mode -1)))

@@ -366,6 +366,7 @@
   (when window-system
     (global-set-key (kbd "C-x C-c") 'ajv/ask-before-closing))
   (advice-add 'revert-buffer :around #'yes-or-no-p->-y-or-n-p)
+  (global-set-key [remap goto-line] 'ajv/goto-line-with-feedback)
   :hook
   ((find-file . ajv/rename-symlink-buffer-with-truename)
    (emacs-startup . ajv/measure-loading-time)
