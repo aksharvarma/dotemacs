@@ -438,11 +438,11 @@
 (use-package ajv-play-music
   :commands ajv/play-this-music
   :bind
-  (("<XF86AudioPlay>" . ajv/play-pause-music)
-   ("<XF86AudioPause>" . ajv/stop-music)
-   ("<XF86AudioNext>" . ajv/play-next-music)
-   ("<XF86AudioPrev>" . ajv/play-previous-music)
-   ("<XF86Search>" . ajv/play-this-music))
+  (("<XF86AudioPlay>" . ajv/music/play-pause)
+   ("<XF86AudioPause>" . ajv/music/stop-playing)
+   ("<XF86AudioNext>" . ajv/music/play-next)
+   ("<XF86AudioPrev>" . ajv/music/play-previous)
+   ("<XF86Search>" . ajv/music/play-this))
   )
 
 
