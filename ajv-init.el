@@ -447,13 +447,6 @@
   (setq memento-mori-birth-date ajv/sensitive/my-birthdate)
   (memento-mori-mode))
 
-;; To get org mode to latex for DnD5e LaTeX Template
-(let ((default-directory (concat user-emacs-directory "site-lisp/emacs-org-dnd")))
-  (normal-top-level-add-to-load-path '("."))
-  (normal-top-level-add-subdirs-to-load-path))
-(setq org-dnd-use-package t)
-(require 'ox-dnd)
-
 ;; The article: You’re probably using the wrong dictionary
 ;; Link: http://jsomers.net/blog/dictionary
 ;; Getting this to work in Emacs via sdcv and sdcv-mode
