@@ -1,6 +1,6 @@
 (provide 'ajv-latex)
 
-(defun texcount ()
+(defun ajv/latex/count-words ()
   "Counts the number of words in the .tex file using the texcount command.
 
 Taken from jrv-auctex-config.el in the repo: https://github.com/jrvarma/dot-emacs/"

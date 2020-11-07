@@ -14,7 +14,7 @@ There will only be one (we assume that you'll only listen to one piece of music 
 (defun ajv/music/check-if-stopped ()
   "Start using this instead of a flag variable."
   (interactive)
-  (with-current-buffer ajv/music-buffer-name-with-asterisks
+  (with-current-buffer ajv/music/buffer-name-with-asterisks
     (string-equal (file-truename "~/") default-directory)))
 
 (defun ajv/music/check-if-created-buffer ()
@@ -30,7 +30,7 @@ There will only be one (we assume that you'll only listen to one piece of music 
    (message (with-output-to-string (where-is command-name)))))
 
 (defun ajv/music/create-buffer ()
-  "Create an ansi-term buffer with the name `ajv/music-buffer-name`"
+  "Create an ansi-term buffer with the name `ajv/music/buffer-name`"
   (interactive)
   (ansi-term "/bin/bash" ajv/music/buffer-name)
   (bury-buffer))
@@ -48,7 +48,7 @@ There will only be one (we assume that you'll only listen to one piece of music 
     (message "Music buffer not created. Nothing to do.")))
 
 (defun ajv/music/stop-playing ()
-  "Stop the music that is playing in ajv/music-buffer."
+  "Stop the music that is playing in ajv/music/buffer-name."
   (interactive)
   (if (ajv/music/check-if-created-buffer)
       (progn
@@ -69,22 +69,22 @@ There will only be one (we assume that you'll only listen to one piece of music 
       (bury-buffer))))
 
 (defun ajv/music/play-pause ()
-  "Toggle function to play/pause music playing in `ajv/music-buffer-name`"
+  "Toggle function to play/pause music playing in `ajv/music/buffer-name`"
   (interactive)
   (ajv/music/send-mpv-command " SPC "))
 
 (defun ajv/music/play-next ()
-  "Toggle function to play/pause music playing in `ajv/music-buffer-name`"
+  "Toggle function to play/pause music playing in `ajv/music/buffer-name`"
   (interactive)
   (ajv/music/send-mpv-command " > "))
 
 (defun ajv/music/play-previous ()
-  "Toggle function to play/pause music playing in `ajv/music-buffer-name`"
+  "Toggle function to play/pause music playing in `ajv/music/buffer-name`"
   (interactive)
   (ajv/music/send-mpv-command " < "))
 
 (defun ajv/music/play-song-in-loop ()
-  "Toggle function to play/pause music playing in `ajv/music-buffer-name`"
+  "Toggle function to play/pause music playing in `ajv/music/buffer-name`"
   (interactive)
   (ajv/music/send-mpv-command " L "))
 
@@ -95,7 +95,7 @@ This requires adhering to the syntax that edmacro uses, i.e. handling spaces usi
   (concat "\"" (replace-regexp-in-string " " " SPC " filename  t t) "\""))
 
 (defun ajv/music/go-to-folder-in-music-buffer (foldername)
-  "Go to the given folder in ajv/music-buffer"
+  "Go to the given folder in ajv/music/buffer-name"
   (interactive)
   (unless (ajv/music/check-if-created-buffer) (ajv/music/play-this))
   (progn

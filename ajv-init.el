@@ -405,7 +405,7 @@
 (use-package markdown-toc :demand)
 
 (use-package ajv-play-music
-  :commands ajv/play-this-music
+  :commands ajv/music/play-this
   :bind
   (("<XF86AudioPlay>" . ajv/music/play-pause)
    ("<XF86AudioPause>" . ajv/music/stop-playing)
