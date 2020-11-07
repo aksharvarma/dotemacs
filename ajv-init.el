@@ -266,16 +266,16 @@
     :bind (:map pdf-view-mode-map
 		;; ("q" . delete-frame)
 		("q" . image-kill-buffer)
-		("M-m" . ajv/pdf-view-toggle-modeline)
+		("M-m" . ajv/pdf-tools/toggle-modeline)
 		("M-i" . pdf-view-midnight-minor-mode))
     :config
     (setq pdf-view-resize-factor 1.05
 	  auto-revert-interval 0.1
 	  auto-revert-verbose nil)
     (when (featurep 'ido)
-      (advice-add #'ido-find-file :filter-return #'ajv/pdf-launch-file))
-    :hook ((pdf-view-mode . ajv/pdf-view-save-disable-modeline-format)
-	   (pdf-view-mode . ajv/pdf-view-disable-linum-mode)
+      (advice-add #'ido-find-file :filter-return #'ajv/pdf-tools/launch-file))
+    :hook ((pdf-view-mode . ajv/pdf-tools/save-disable-modeline-format)
+	   (pdf-view-mode . ajv/pdf-tools/disable-linum-mode)
 	   (pdf-view-mode . auto-revert-mode)
 	   (pdf-view-mode . pdf-misc-size-indication-minor-mode)))
   )
