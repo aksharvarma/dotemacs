@@ -393,7 +393,7 @@
     (elfeed-org)
     (setq rmh-elfeed-org-files ajv/my-elfeed-org-file-list)
     )
-  :hook ((after-init . ajv/kill-elfeed-log-buffer))
+  :hook ((after-init . ajv/elfeed/kill-log-buffer))
   )
 
 
