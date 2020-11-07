@@ -1,6 +1,6 @@
 (provide 'ajv-dired)
 
-(defun ajv/dired-sort-criteria (criteria)
+(defun ajv/dired/sort-criteria (criteria)
   "sort-dired by different criteria by Robert Gloeckner,
 later modified by Akshar Varma"
   (interactive
@@ -14,7 +14,7 @@ later modified by Akshar Varma"
 			      (match-string 1 criteria)))))
 
 
-(defun ajv/dired-hide-details-omit-hidden-files ()
+(defun ajv/dired/hide-details-omit-hidden-files ()
   "Hide details and omit hidden files in dired mode"
   (interactive)
   (when (eq major-mode 'dired-mode)
@@ -25,7 +25,7 @@ later modified by Akshar Varma"
       (setq dired-omit-files "^\\...+$")
       (dired-omit-mode 1))))
 
-(defun ajv/dired-set-default-sorting ()
+(defun ajv/dired/set-default-sorting ()
   "Set default sorting criteria for directories in ajv/dired-default-sorting-alist"
   (interactive)
   (when (eq major-mode 'dired-mode)
@@ -34,7 +34,7 @@ later modified by Akshar Varma"
     (if (assoc-default default-directory
 		       ajv/dired-default-sorting-alist
 		       'file-equal-p)
-	(ajv/dired-sort-criteria
+	(ajv/dired/sort-criteria
 	 (file-name-as-directory (assoc-default default-directory
 						ajv/dired-default-sorting-alist
 						'file-equal-p)))
@@ -45,7 +45,7 @@ later modified by Akshar Varma"
       nil)))
 
 
-(defun ajv/dired-launch-file ()
+(defun ajv/dired/launch-file ()
   "Launch system associated program on current file in dired buffer
 modified from http://omniorthogonal.blogspot.in/2008/05/useful-emacs-dired-launch-hack.html"
   (interactive)
@@ -53,7 +53,7 @@ modified from http://omniorthogonal.blogspot.in/2008/05/useful-emacs-dired-launc
     (let ((process-connection-type nil))
       (start-process "*launch*" nil "xdg-open" (dired-get-filename)))))
 
-(defun ajv/delete-backup-files ()
+(defun ajv/dired/delete-backup-files ()
   "Delete all backup files in the current dired folder"
   (interactive)
   (when (eq major-mode 'dired-mode)

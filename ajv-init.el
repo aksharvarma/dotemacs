@@ -324,11 +324,11 @@
   (load "dired-x")
   (use-package ajv-dired
     :bind  (:map dired-mode-map
-		 ("s". ajv/dired-sort-criteria)
-		 ("l" . ajv/dired-launch-file)
-		 ("C-c C-d C-b" . ajv/delete-backup-files))
-    :hook ((dired-mode . ajv/dired-set-default-sorting)
-	   (dired-mode . ajv/dired-hide-details-omit-hidden-files)))
+		 ("s". ajv/dired/sort-criteria)
+		 ("l" . ajv/dired/launch-file)
+		 ("C-c C-d C-b" . ajv/dired/delete-backup-files))
+    :hook ((dired-mode . ajv/dired/set-default-sorting)
+	   (dired-mode . ajv/dired/hide-details-omit-hidden-files)))
   )
 
 (use-package dired-rainbow :config (use-package ajv-dired-rainbow))
