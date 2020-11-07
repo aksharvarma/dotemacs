@@ -270,7 +270,9 @@
   (fringe-mode '(0 . nil))
   )
 
-(use-package keychain-environment :demand :config (keychain-refresh-environment))
+(use-package keychain-environment
+  :after magit
+  :config (keychain-refresh-environment))
 
 (use-package github-explorer :commands github-explorer)
 
