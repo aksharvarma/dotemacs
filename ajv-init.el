@@ -202,18 +202,32 @@
   :diminish "Py"
   :config
   (elpy-enable)
-  (setq python-shell-interpreter "ipython"
+  (setq elpy-rpc-python-command "python3"
+	python-shell-interpreter "ipython3"
         python-shell-interpreter-args "--TerminalInteractiveShell.simple_prompt=True"
+	elpy-autodoc-delay 0.1
 	elpy-syntax-check-command "pyflakes"
 	elpy-rpc-backend "jedi"
 	elpy-rpc-virtualenv-path 'current)
-  (use-package flycheck :demand
-    :config
-    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-    (add-hook 'elpy-mode-hook 'flycheck-mode))
-  ;; :bind (:map elpy-mode-map
-  ;; 	      ("<f5>" . elpy-shell-region-or-buffer))
+
+  ;; ;; If you want to use the Jupyter console instead of IPython
+  ;; ;; Not being used at the moment.
+  ;; (setq python-shell-interpreter "jupyter"
+  ;;       python-shell-interpreter-args "console --simple-prompt"
+  ;; 	python-shell-prompt-detect-failure-warning nil)
+  ;; (add-to-list 'python-shell-completion-native-disabled-interpreters "jupyter")
+
+  ;; Adjust elpy-modules, delete flymake because we'll use flycheck
+  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+  (add-to-list 'elpy-modules 'elpy-module-folding) ;add folding help
+  (add-to-list 'elpy-modules 'elpy-module-autodoc) ;auto update docs
   )
+
+(use-package flycheck :demand :after python
+  :hook ((elpy-mode . flycheck-mode)))
+
+(use-package py-autopep8
+  :hook ((elpy-mode . py-autopep8-enable-on-save)))
 
 (use-package move-text :config (move-text-default-bindings))
 
