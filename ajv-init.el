@@ -220,9 +220,11 @@
 (use-package iedit)
 
 (use-package rg
+  :commands (rg-menu)
   :bind
-  (:map rg-mode-map
-	("C-c C-s" . wgrep-save-all-buffers))
+  (("C-c s" . rg-menu)
+   :map rg-mode-map
+   ("C-c C-s" . wgrep-save-all-buffers))
   :config
   (rg-enable-menu)
   (setq rg-command-line-flags '("--pcre2")))
@@ -322,6 +324,7 @@
    ("<f8>". ajv/window-config)
    ("%" . ajv/match-paren)
    ("s-w" . ajv/kill-this-buffer)
+   ("s-W" . ajv/kill-other-buffer)
    ("s-o" . ajv/kill-other-buffer)
    ("C-z" . bury-buffer)
    ("s-<tab>" . other-window)
@@ -337,6 +340,7 @@
    ("C-M-r" . isearch-backward)
    ("C-M-j". ajv/join-to-next-line)
    ("M-j". ajv/join-to-previous-line)
+   ("M-+" . count-words)
    (:map help-mode-map
 	 ("q" . (lambda () (interactive) (ajv/kill-this-buffer) (other-window 1)))))
   :config
