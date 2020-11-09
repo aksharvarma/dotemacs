@@ -62,7 +62,7 @@
 
 
 (use-package yasnippet
-  :init (setq yas-snippet-dirs '(ajv/yasnippets-directory))
+  :init (setq yas-snippet-dirs '(ajv/settings/yasnippets-directory))
   :config
   (yas-global-mode 1)
   (yas-reload-all)
@@ -433,8 +433,8 @@
 (use-package ajv-theme
   :demand
   :config
-  (load-theme ajv/prefered-light-theme-name t t)
-  (load-theme ajv/prefered-dark-theme-name)
+  (load-theme ajv/settings/prefered-light-theme-name t t)
+  (load-theme ajv/settings/prefered-dark-theme-name)
 
   (setq-default fill-column most-positive-fixnum
 		visual-line-fringe-indicators '(nil right-curly-arrow)
@@ -442,7 +442,7 @@
   (column-number-mode t)
   (set-fringe-style '(0 . nil))
   (add-to-list 'default-frame-alist '(fullscreen . fullboth)) ;maximize all frames
-  (add-to-list 'default-frame-alist `(font . ,ajv/prefered-font-name))
+  (add-to-list 'default-frame-alist `(font . ,ajv/settings/prefered-font-name))
   :hook ((text-mode . turn-on-auto-fill))
   )
 

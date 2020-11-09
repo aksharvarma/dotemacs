@@ -17,12 +17,12 @@
 (load ajv/my-settings-file-name)
 ;; Load the custom-file which only has package-selected-packages
 ;; This will later be used to ensure that all of those have been installed.
-(setq custom-file (concat ajv/my-init-directory ajv/custom-file-name))
+(setq custom-file (concat ajv/settings/my-init-directory ajv/settings/custom-file-name))
 (load custom-file)
 
 ;;;This adds site-lisp and its subdirectories to the load path,
 ;;;so that .el files there, are visible while initialization.
-(let ((default-directory ajv/my-init-directory))
+(let ((default-directory ajv/settings/my-init-directory))
   (normal-top-level-add-to-load-path '("."))
   (normal-top-level-add-subdirs-to-load-path))
 

@@ -26,21 +26,21 @@ later modified by Akshar Varma"
       (dired-omit-mode 1))))
 
 (defun ajv/dired/set-default-sorting ()
-  "Set default sorting criteria for directories in ajv/dired-default-sorting-alist"
+  "Set default sorting criteria for directories in ajv/settings/dired-default-sorting-alist"
   (interactive)
   (when (eq major-mode 'dired-mode)
-    ;; If one of the directories in ajv/dired-default-sorting-alist,
+    ;; If one of the directories in ajv/settings/dired-default-sorting-alist,
     ;; then sort accordingly
     (if (assoc-default default-directory
-		       ajv/dired-default-sorting-alist
+		       ajv/settings/dired-default-sorting-alist
 		       'file-equal-p)
 	(ajv/dired/sort-criteria
 	 (file-name-as-directory (assoc-default default-directory
-						ajv/dired-default-sorting-alist
+						ajv/settings/dired-default-sorting-alist
 						'file-equal-p)))
       nil)
     ;; If symlink-folder, then don't display . and .. in dired
-    (if (file-equal-p default-directory ajv/symlink-folder)
+    (if (file-equal-p default-directory ajv/settings/symlink-folder)
 	(dired-sort-other "-A -l -L -h --group-directories-first --classify")
       nil)))
 

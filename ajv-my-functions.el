@@ -28,7 +28,7 @@ create it and write the initial message into it."
 
 (defun ajv/open-symlink-folder-in-dired ()
   (interactive)
-  (dired ajv/symlink-folder))
+  (dired ajv/settings/symlink-folder))
 
 (setq ajv/never-kill-buffer-list '("*scratch*" "*Messages*"))
 
@@ -101,7 +101,7 @@ Picked from: http://nileshk.com/2009/06/13/prompt-before-closing-emacs.html"
 (defun ajv/mypaths ()
   "Call ido-find-file after setting default-directory to be the symlink folder. Effectively mirrors the mypaths kind of behaviour."
   (interactive)
-  (let ((default-directory (file-truename ajv/symlink-folder)))
+  (let ((default-directory (file-truename ajv/settings/symlink-folder)))
     (ido-find-file))
   )
 

@@ -1,42 +1,42 @@
-(defvar ajv/my-init-directory nil
+(defvar ajv/settings/my-init-directory nil
   "The directory which contains my init files")
 
-(defvar ajv/symlink-folder nil
+(defvar ajv/settings/symlink-folder nil
   "The folder which contains all the symlinks to other places in my filesystem.")
 
-(defvar ajv/custom-file-name nil
+(defvar ajv/settings/custom-file-name nil
   "The file which contains all the settings that Customize adds. This should be empty except for the list of packages installed. Everything is moved into a separate file according to its category.")
 
-(defvar ajv/prefered-font-name nil
+(defvar ajv/settings/prefered-font-name nil
   "The preferred font.")
 
-(defvar ajv/prefered-dark-theme-name nil
+(defvar ajv/settings/prefered-dark-theme-name nil
   "The preferred dark theme.")
 
-(defvar ajv/prefered-light-theme-name nil
+(defvar ajv/settings/prefered-light-theme-name nil
   "The preferred light theme.")
 
-(setq ajv/my-init-directory (concat user-emacs-directory "site-lisp/ajv/")
-      ajv/symlink-folder "~/0/"
-      ajv/custom-file-name "ajv-customizations.el"
-      ajv/prefered-font-name "dejavu sans mono 11"
-      ajv/prefered-dark-theme-name 'deeper-blue
-      ajv/prefered-light-theme-name 'tsdh-light)
+(setq ajv/settings/my-init-directory (concat user-emacs-directory "site-lisp/ajv/")
+      ajv/settings/symlink-folder "~/0/"
+      ajv/settings/custom-file-name "ajv-customizations.el"
+      ajv/settings/prefered-font-name "dejavu sans mono 11"
+      ajv/settings/prefered-dark-theme-name 'deeper-blue
+      ajv/settings/prefered-light-theme-name 'tsdh-light)
 
-(defvar ajv/yasnippets-directory nil
+(defvar ajv/settings/yasnippets-directory nil
   "The folder which contains all my yasnippet snippets.")
 
-(setq ajv/yasnippets-directory (concat user-emacs-directory "site-lisp/ajv/snippets"))
+(setq ajv/settings/yasnippets-directory (concat user-emacs-directory "site-lisp/ajv/snippets"))
 
-(defvar ajv/dired-default-sorting-alist nil
+(defvar ajv/settings/dired-default-sorting-alist nil
   "The default sorting of various directories for dired.")
 
-(setq ajv/dired-default-sorting-alist
+(setq ajv/settings/dired-default-sorting-alist
       '(("~/bin/" . "(X)")
 	("~/Documents/" . "(X)")
         ("~/Downloads/" . "(t)")))
 
-(defface ajv/display-time-face
+(defface ajv/settings/display-time-face
   '((((type x w32 mac))
      ;; #060525 is the background colour of my default face.
      (:foreground "#99FF00" :background "#121212" :inherit bold))
@@ -101,13 +101,13 @@
 (setq ajv/sensitive/my-birthdate "1970-01-01")	;Defaults to this.
 
 
-(setq ajv/my-sensitive-settings-file-name (concat user-emacs-directory "site-lisp/ajv/ajv-sensitive-settings.el"))
+(setq ajv/settings/my-sensitive-settings-file-name (concat user-emacs-directory "site-lisp/ajv/ajv-sensitive-settings.el"))
 ;; Load the sensitive settings if they exist
-(if (file-exists-p ajv/my-sensitive-settings-file-name)
-    (load ajv/my-sensitive-settings-file-name)
+(if (file-exists-p ajv/settings/my-sensitive-settings-file-name)
+    (load ajv/settings/my-sensitive-settings-file-name)
   nil)
 
-(setq ajv/my-org-agenda-files (list ajv/sensitive/my-org-agenda-files-dir))
+(setq ajv/settings/my-org-agenda-files (list ajv/sensitive/my-org-agenda-files-dir))
 
 (setq ajv/my-elfeed-org-file-list (list ajv/sensitive/my-elfeed-org-file))
 

@@ -18,7 +18,7 @@
       org-agenda-dim-blocked-tasks t)
 
 (setq org-agenda-skip-scheduled-if-done t
-      org-agenda-files ajv/my-org-agenda-files
+      org-agenda-files ajv/settings/my-org-agenda-files
       org-habit-show-habits-only-for-today nil
       org-agenda-show-future-repeats 'next
       org-agenda-start-on-weekday nil
