@@ -78,8 +78,8 @@
    ("<f9>" . ibuffer)
    ("C-x C-S-b" . ibuffer-other-window)
    (:map ibuffer-mode-map
-	 ("<up>" . ibuffer-previous-line)
-	 ("<down>" . ibuffer-next-line)
+	 ("<up>" . ajv/ibuffer/previous-line)
+	 ("<down>" . ajv/ibuffer/next-line)
 	 ("M-<" . ajv/ibuffer/go-to-beginning-of-buffer)
 	 ("M->" . ajv/ibuffer/go-to-end-of-buffer)
 	 ("<" . ajv/ibuffer/go-to-beginning-of-buffer)

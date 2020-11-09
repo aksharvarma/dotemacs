@@ -52,7 +52,7 @@
 
 ;; The next two were picked from here:
 ;; Wraparound cursor movement: https://www.emacswiki.org/emacs/IbufferMode#toc14
-(defun ibuffer-previous-line ()
+(defun ajv/ibuffer/previous-line ()
   "While in ibuffer, previous line (bound to <down>/'p') at the top will wrap around to end of buffer
 The hardcoded 2 may need to change if IBuffer config changes"
   (interactive)
@@ -60,7 +60,7 @@ The hardcoded 2 may need to change if IBuffer config changes"
   (if (<= (line-number-at-pos) 2)
       (goto-line (- (count-lines (point-min) (point-max)) 2))))
 
-(defun ibuffer-next-line ()
+(defun ajv/ibuffer/next-line ()
   "While in ibuffer, next line (bound to <up>/'n') at the bottom will wrap around to beginnning of buffer.
 The hardcoded 3 may need to change if IBuffer config changes"
   (interactive)
