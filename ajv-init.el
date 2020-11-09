@@ -80,6 +80,8 @@
    (:map ibuffer-mode-map
 	 ("<up>" . ajv/ibuffer/previous-line)
 	 ("<down>" . ajv/ibuffer/next-line)
+	 ("s-f" . ajv/ibuffer/ido-find-file)
+	 ("s-F" . ajv/ibuffer/ido-find-file-other-window)
 	 ("M-<" . ajv/ibuffer/go-to-beginning-of-buffer)
 	 ("M->" . ajv/ibuffer/go-to-end-of-buffer)
 	 ("<" . ajv/ibuffer/go-to-beginning-of-buffer)

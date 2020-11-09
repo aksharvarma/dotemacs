@@ -151,3 +151,32 @@ Taken from: http://whattheemacsd.com/setup-dired.el-02.html"
   (interactive)
   (end-of-buffer)
   (dired-next-line -2))
+
+(defun ajv/ibuffer/ido-find-file (file &optional wildcards)
+  "Like `find-file', but default to the directory of the buffer at point.
+
+Idea from 'Use ido in ibuffer', from: https://www.emacswiki.org/emacs/InteractivelyDoThings#toc18"
+  (interactive
+   (let ((default-directory (let ((buf (ibuffer-current-buffer)))
+			      (if (buffer-live-p buf)
+				  (with-current-buffer buf
+				    default-directory)
+				default-directory))))
+     (list (ido-read-file-name "Find file: " default-directory)
+	   t)))
+  (find-file file wildcards))
+
+
+(defun ajv/ibuffer/ido-find-file-other-window (file &optional wildcards)
+  "Like `find-file', but default to the directory of the buffer at point.
+
+Idea from 'Use ido in ibuffer', from: https://www.emacswiki.org/emacs/InteractivelyDoThings#toc18"
+  (interactive
+   (let ((default-directory (let ((buf (ibuffer-current-buffer)))
+			      (if (buffer-live-p buf)
+				  (with-current-buffer buf
+				    default-directory)
+				default-directory))))
+     (list (ido-read-file-name "Find file: " default-directory)
+	   t)))
+  (find-file-other-window file wildcards))
