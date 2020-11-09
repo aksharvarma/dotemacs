@@ -52,6 +52,11 @@
 	ido-auto-merge-work-directories-length -1)
   (add-to-list 'ido-ignore-buffers "^.*\\.pdf$"))
 
+(use-package ido-completing-read+
+  :config
+  (ido-ubiquitous-mode)
+  ;; Increase ido-cr+-max-items to use ido in describe-(function|variable)
+  (setq ido-cr+-max-items 40000))
 
 (when (not (featurep 'ido))
   (fset 'ido-completing-read 'completing-read)
