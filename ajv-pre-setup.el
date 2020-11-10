@@ -1,8 +1,8 @@
 ;; Increase garbage collection threshold during startup and brings it back to reasonable values at the end.
 (setq gc-cons-threshold (* 500 1024 1024) ;500MB
       gc-cons-percentage 0.8)
-(add-hook 'emacs-startup-hook (lambda () (setq gc-cons-threshold (* 100 1024 1024)
-                                               gc-cons-percentage 0.1)))
+(add-hook 'after-init-hook (lambda () (setq gc-cons-threshold (* 100 1024 1024)
+					    gc-cons-percentage 0.1)))
 
 ;; Stop some visual elemnts very early on.
 ;; These are put here mainly for speeding up things
