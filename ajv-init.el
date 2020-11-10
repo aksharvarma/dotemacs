@@ -307,22 +307,24 @@
 (use-package dired :demand
   :delight dired-mode "Dired"
   :config
-  (setq dired-dwim-target t                     ;default copy to other window
-        dired-listing-switches "-a -l -L -h --group-directories-first --classify"
-	dired-recursive-copies 'always
-	wdired-use-dired-vertical-movement 'sometimes)
-  (put 'dired-find-alternate-file 'disabled nil) ;allow 'a' in dired
   (load "dired-x")
-  (use-package ajv-dired
+  (use-package ajv-dired :demand
     :bind  (:map dired-mode-map
 		 ("s". ajv/dired/sort-criteria)
 		 ("l" . ajv/dired/launch-file)
 		 ("C-c C-d C-b" . ajv/dired/delete-backup-files)
 		 ("W" . ajv/dired/copy-directory-name-as-kill)
+		 (")" . ajv/dired/toggle-symlink-dereferencing)
 		 ("M-<" . ajv/dired/go-to-beginning-of-buffer)
 		 ("M->" . ajv/dired/go-to-end-of-buffer))
     :hook ((dired-mode . ajv/dired/set-default-sorting)
 	   (dired-mode . ajv/dired/hide-details-omit-hidden-files)))
+
+  (setq dired-dwim-target t                     ;default copy to other window
+        dired-listing-switches ajv/dired/listing-switches-without-symlink
+	dired-recursive-copies 'always
+	wdired-use-dired-vertical-movement 'sometimes)
+  (put 'dired-find-alternate-file 'disabled nil) ;allow 'a' in dired
   )
 
 (use-package dired-rainbow :config (use-package ajv-dired-rainbow))
