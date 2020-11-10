@@ -32,7 +32,8 @@
   "The default sorting of various directories for dired.")
 
 (setq ajv/settings/dired-default-sorting-alist
-      '(("~/bin/" . "(X)")
+      `(("~/bin/" . "(X)")
+	(,(file-truename (concat ajv/settings/symlink-folder "my-bin/")) . "(X)")
 	("~/Documents/" . "(X)")
         ("~/Downloads/" . "(t)")))
 
