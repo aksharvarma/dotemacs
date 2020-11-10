@@ -29,6 +29,32 @@ later modified by Akshar Varma"
       (setq dired-omit-files "^\\...+$")
       (dired-omit-mode 1))))
 
+(defvar ajv/dired/listing-switches-without-symlink
+  "-alFh -L --group-directories-first --classify"
+  "The listings to use when we do not want to show symlinks")
+
+(defvar ajv/dired/listing-switches-with-symlink
+  "-alFh --group-directories-first --classify"
+  "The listings to use when we want to show symlinks")
+
+(defvar ajv/dired/symlink-in-listing-bool nil
+  "A boolean predicate which is t when symlinks are shown in dired, nil otherwise.")
+
+(defun ajv/dired/toggle-symlink-dereferencing ()
+  "When in dired mode, it toggles the dereferencing of symlinks via the -L flag"
+  (interactive)
+  (setq dired-hide-details-hide-symlink-targets (not ajv/dired/symlink-in-listing-bool)
+	ajv/dired/symlink-in-listing-bool (not ajv/dired/symlink-in-listing-bool))
+
+  ;; NOTE: We have already flipped the bool
+  ;; So the if then else block is actually flipped in the following.
+  (if ajv/dired/symlink-in-listing-bool
+      (dired default-directory (concat ajv/dired/listing-switches-with-symlink
+				       ajv/dired/current-sort-criteria))
+    (dired default-directory (concat ajv/dired/listing-switches-without-symlink
+				     ajv/dired/current-sort-criteria)))
+  )
+
 (defun ajv/dired/set-default-sorting ()
   "Set default sorting criteria for directories in ajv/settings/dired-default-sorting-alist"
   (interactive)
