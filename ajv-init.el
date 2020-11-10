@@ -318,6 +318,7 @@
 		 ("s". ajv/dired/sort-criteria)
 		 ("l" . ajv/dired/launch-file)
 		 ("C-c C-d C-b" . ajv/dired/delete-backup-files)
+		 ("W" . ajv/dired/copy-directory-name-as-kill)
 		 ("M-<" . ajv/dired/go-to-beginning-of-buffer)
 		 ("M->" . ajv/dired/go-to-end-of-buffer))
     :hook ((dired-mode . ajv/dired/set-default-sorting)

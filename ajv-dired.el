@@ -77,3 +77,9 @@ Taken from: http://whattheemacsd.com/setup-dired.el-02.html"
   (interactive)
   (end-of-buffer)
   (dired-next-line -1))
+
+(defun ajv/dired/copy-directory-name-as-kill ()
+  "When in dired-mode, copy the name of the directory from the first line in the buffer."
+  (interactive)
+  (save-excursion (beginning-of-buffer)
+		  (dired-copy-filename-as-kill)))
