@@ -1,5 +1,9 @@
 (provide 'ajv-dired)
 
+(defvar-local ajv/dired/current-sort-criteria " -n"
+  "The current sort criteria in use. Defaults to name.")
+;; (make-variable-buffer-local 'ajv/dired/current-sort-criteria)
+
 (defun ajv/dired/sort-criteria (criteria)
   "sort-dired by different criteria by Robert Gloeckner,
 later modified by Akshar Varma"
@@ -10,8 +14,8 @@ later modified by Akshar Varma"
              "")))
   (when (eq major-mode 'dired-mode)
     (string-match ".*(\\(.*\\))" criteria)
-    (dired-sort-other (concat dired-listing-switches " -"
-			      (match-string 1 criteria)))))
+    (setq ajv/dired/current-sort-criteria (concat " -" (match-string 1 criteria)))
+    (dired default-directory (concat dired-listing-switches ajv/dired/current-sort-criteria))))
 
 
 (defun ajv/dired/hide-details-omit-hidden-files ()
