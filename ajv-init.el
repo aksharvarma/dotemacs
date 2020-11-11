@@ -383,6 +383,24 @@
 
 (use-package org-bullets :hook ((org-mode . org-bullets-mode)))
 
+(use-package org-noter
+  :commands (org-noter)
+  :config
+  (setq org-noter-default-notes-file-names
+	`(,(file-truename (concat ajv/settings/symlink-folder
+				  "research/org-research-notes.org")))
+	org-noter-always-create-frame nil
+	org-noter-auto-save-last-location t
+	org-noter-kill-frame-at-session-end nil
+	org-noter-insert-note-no-questions t)
+  :bind ((:map org-noter-doc-mode-map
+	       ("M-p" . org-noter-sync-prev-note)
+	       ("M-n" . org-noter-sync-next-note)
+	       ("C-M-n" . org-noter-sync-next-page-or-chapter)
+	       ("C-M-p" . org-noter-sync-prev-page-or-chapter)
+	       ("M-." . org-noter-sync-current-note)
+	       ("C-M-." . org-noter-sync-current-page-or-chapter))))
+
 (use-package ajv-elfeed
   :if (not (string-empty-p ajv/sensitive/my-elfeed-org-file))
   :init (use-package elfeed
