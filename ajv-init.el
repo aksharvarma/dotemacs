@@ -243,6 +243,14 @@
   (rg-enable-menu)
   (setq rg-command-line-flags '("--pcre2")))
 
+
+(use-package browse-kill-ring :demand
+  :config
+  (browse-kill-ring-default-keybindings)
+  (setq browse-kill-ring-highlight-current-entry t
+	browse-kill-ring-highlight-inserted-item t))
+
+
 (use-package smex
   :bind (("M-x" . smex))
   :config (smex-initialize))
