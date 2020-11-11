@@ -505,6 +505,8 @@
 
 (use-package ajv-modeline)
 
+(use-package keycast :commands (keycast-mode))
+
 (use-package memento-mori
   :config
   (setq memento-mori-birth-date ajv/sensitive/my-birthdate)
