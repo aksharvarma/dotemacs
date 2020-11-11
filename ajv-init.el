@@ -250,6 +250,9 @@
   (setq browse-kill-ring-highlight-current-entry t
 	browse-kill-ring-highlight-inserted-item t))
 
+(use-package undo-tree :demand
+  :diminish
+  :config (global-undo-tree-mode))
 
 (use-package smex
   :bind (("M-x" . smex))
