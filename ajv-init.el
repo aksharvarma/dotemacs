@@ -301,7 +301,7 @@
 	magit-diff-refine-hunk t)
   )
 
-(use-package ajv-git-gutter-fringe-settings
+(use-package ajv-git-gutter-fringe
   :init (use-package git-gutter-fringe :delight git-gutter-mode)
   :config
   (global-git-gutter-mode t)

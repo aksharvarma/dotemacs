@@ -1,4 +1,4 @@
-(provide 'ajv-git-gutter-fringe-settings)
+(provide 'ajv-git-gutter-fringe)
 
 (fringe-helper-define 'git-gutter-fr:modified nil
   "..XXXX.."
