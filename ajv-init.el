@@ -488,6 +488,9 @@
 (use-package buffer-move :bind (("<f11>" . buf-move-left)
 				("<f12>" . buf-move-right)))
 
+(use-package ajv-scpaste
+  :commands (ajv/scpaste/paste-region-or-buffer))
+
 (use-package ajv-theme
   :demand
   :config
