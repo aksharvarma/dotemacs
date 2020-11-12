@@ -256,3 +256,9 @@ Taken: http://whattheemacsd.com/key-bindings.el-03.html"
 Taken: http://whattheemacsd.com/key-bindings.el-03.html"
   (interactive)
   (join-line))
+
+
+(defun ajv/open-website-in-tramp ()
+  "Open my website, location given by ajv/sensitive/website-tramp-foldername using TRAMP."
+  (interactive)
+  (find-file ajv/sensitive/website-tramp-foldername))

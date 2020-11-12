@@ -82,6 +82,10 @@
   "My birthdate in YYYY-MM-DD format for the memento-mori package.
  Set in ajv-sensitive-settings.el")
 
+(defvar ajv/sensitive/website-tramp-foldername nil
+  "The foldername given to tramp while accessing my website, in the form: \"/ssh:domain:/path/to/folder\"
+ Set in ajv-sensitive-settings.el")
+
 ;; (defvar ajv/sensitive/my-quotes-filename nil
 ;;   "The file that contains the quotes that ajv/quotes uses.
 ;;  Set in ajv-sensitive-settings.el")
