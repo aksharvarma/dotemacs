@@ -139,6 +139,9 @@
 	 ("M-]" . sp-unwrap-sexp))
   )
 
+(use-package highlight-numbers :diminish
+  :hook (prog-mode . highlight-numbers-mode))
+
 (use-package volatile-highlights
   :diminish
   :config (volatile-highlights-mode t))
