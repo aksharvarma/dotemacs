@@ -290,13 +290,13 @@
 
 
 (use-package magit
-  :bind (("<f2>" . magit-status))
+  :bind (("<f2>" . magit-status)
+	 (:map ido-common-completion-map
+	       ("<f2>" . ido-enter-magit-status)))
   :config
   (use-package ajv-magit :demand
     :bind (:map magit-status-mode-map
-		([remap magit-mode-bury-buffer] . ajv/magit/kill-buffers))
-    (:map ido-common-completion-map
-	  ("<f2>" . ido-enter-magit-status)))
+		([remap magit-mode-bury-buffer] . ajv/magit/kill-buffers)))
   (setq magit-completing-read-function 'magit-ido-completing-read
 	magit-diff-refine-hunk t)
   ;; TODO: At some point figure out if we can provide a better location
