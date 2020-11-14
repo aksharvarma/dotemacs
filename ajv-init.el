@@ -567,7 +567,18 @@
   :hook ((text-mode . turn-on-auto-fill))
   )
 
+(use-package fancy-battery
+  :config
+  (setq fancy-battery-show-percentage t)
+  (set-face-attribute 'fancy-battery-discharging nil
+		      :inherit '(bold)
+		      :foreground "LightSkyBlue"
+		      :background "gray10")
+  (fancy-battery-mode))
+
 (use-package ajv-modeline)
+
+
 
 (use-package keycast :commands (keycast-mode))
 
