@@ -35,7 +35,7 @@
 		 ("U" . ajv/notmuch/tree-toggle-unread))
 	   (:map notmuch-search-mode-map
 		 ("u" . ajv/notmuch/search-toggle-unread)
-		 ("U" . ajv/notmuch/show-toggle-unread)
+		 ("U" . ajv/notmuch/search-toggle-unread)
 		 ("g" . notmuch-poll-and-refresh-this-buffer))
 	   (:map notmuch-hello-mode-map
 		 ("g" . notmuch-poll-and-refresh-this-buffer)
