@@ -21,6 +21,8 @@
 ;; Start loading up other things
 ;; (use-package cl)
 
+;; TODO: change setq calls to be use-package :custom calls
+
 (use-package notmuch
   :commands notmuch notmuch-jump-search notmuch-search
   :config
@@ -243,6 +245,11 @@
   (rg-enable-menu)
   (setq rg-command-line-flags '("--pcre2")))
 
+(use-package anzu :demand
+  :config
+  (global-anzu-mode +1)
+  (global-set-key [remap query-replace] 'anzu-query-replace)
+  (global-set-key [remap query-replace-regexp] 'anzu-query-replace-regexp))
 
 (use-package browse-kill-ring :demand
   :config
