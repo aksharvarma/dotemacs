@@ -296,6 +296,7 @@
   )
 
 
+
 ;; Mode for .gitignore, .git/info/exclude, and git/ignore files.
 (use-package gitignore-mode)
 
@@ -319,6 +320,9 @@
   (transient-append-suffix 'magit-status-jump '(0 0 -1)
     '("c " "Commits" magit-jump-to-unpushed-to-upstream))
   )
+
+;; Use gitignore-templates-insert or gitignore-templates-new-file
+(use-package gitignore-templates)
 
 (use-package hl-todo :demand :config (global-hl-todo-mode))
 
