@@ -311,6 +311,8 @@
     '("c " "Commits" magit-jump-to-unpushed-to-upstream))
   )
 
+(use-package hl-todo :demand :config (global-hl-todo-mode))
+
 (use-package magit-todos :demand :after magit
   ;; TODO: remove these unbindings once magit-todos fixes it in version 1.6
   :bind ((:map magit-todos-item-section-map
