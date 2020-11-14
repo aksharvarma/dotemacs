@@ -299,7 +299,25 @@
 	  ("<f2>" . ido-enter-magit-status)))
   (setq magit-completing-read-function 'magit-ido-completing-read
 	magit-diff-refine-hunk t)
+  ;; TODO: At some point figure out if we can provide a better location
+  (transient-append-suffix 'magit-status-jump '(0 0 -1)
+    '("c " "Commits" magit-jump-to-unpushed-to-upstream))
   )
+
+(use-package magit-todos :demand :after magit
+  ;; TODO: remove these unbindings once magit-todos fixes it in version 1.6
+  :bind ((:map magit-todos-item-section-map
+	       ("jT" . nil)
+	       ("jl" . nil)
+	       ("j" . nil))
+	 (:map magit-todos-section-map
+	       ("jT" . nil)
+	       ("jl" . nil)
+	       ("j" . nil)))
+  :config
+  (magit-todos-mode)
+  (transient-append-suffix 'magit-status-jump '(0 0 -1)
+    '("t " "Todos" magit-todos-jump-to-todos)))
 
 (use-package ajv-git-gutter-fringe
   :init (use-package git-gutter-fringe :delight git-gutter-mode)
