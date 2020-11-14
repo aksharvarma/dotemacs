@@ -296,6 +296,15 @@
   )
 
 
+;; Mode for .gitignore, .git/info/exclude, and git/ignore files.
+(use-package gitignore-mode)
+
+;; Mode for .gitconfig, .git/config, git/config, and .gitmodules files.
+(use-package gitconfig-mode)
+
+;; Mode for .gitattributes, .git/info/attributes, and git/attributes files.
+(use-package gitattributes-mode)
+
 (use-package magit
   :bind (("<f2>" . magit-status)
 	 (:map ido-common-completion-map
