@@ -235,6 +235,11 @@
 
 (use-package iedit)
 
+(use-package hungry-delete :diminish
+  :config
+  (global-hungry-delete-mode)
+  (setq hungry-delete-join-reluctantly t))
+
 (use-package rg
   :commands (rg-menu)
   :bind
