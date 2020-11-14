@@ -32,16 +32,3 @@
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
-
-;; Misc diminish and delight settings
-(diminish 'auto-revert-mode "")
-(diminish 'auto-fill-mode "")
-(diminish 'subword-mode "")
-(diminish 'highlight-indentation-mode "")
-
-(delight 'TeX-latex-mode "LaTeX" :major)
-(diminish 'TeX-latex-mode "LaTeX")
-(delight 'tex-mode "LaTeX" :major)
-(diminish 'tex-mode "LaTeX")
-
-(delight 'emacs-lisp-mode ".el" :major)

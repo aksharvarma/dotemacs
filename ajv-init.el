@@ -79,7 +79,7 @@
 	       ("C-c y" . #'yas-expand)))
   )
 
-(use-package ajv-ibuffer
+(use-package ajv-ibuffer :delight ibuffer-mode "IBuf" "ibuffer"
   :bind
   (("C-x C-b" . ibuffer)
    ("<f9>" . ibuffer)
@@ -129,7 +129,7 @@
 
 (use-package smartparens-config
   :ensure smartparens
-  :delight smartparens-mode " ()" "smartparens"
+  :delight smartparens-mode "" "smartparens"
   :demand
   :config
   (show-smartparens-global-mode)
@@ -201,7 +201,7 @@
 (use-package python :defer 2
   :mode ("\\.py\\'" . python-mode)
   :commands python-mode
-  :diminish "Py"
+  :delight python-mode
   :config
   (elpy-enable)
   (setq elpy-rpc-python-command "python3"
@@ -225,7 +225,7 @@
   (add-to-list 'elpy-modules 'elpy-module-autodoc) ;auto update docs
   )
 
-(use-package flycheck :demand :after python
+(use-package flycheck :demand :after python :diminish
   :hook ((elpy-mode . flycheck-mode)))
 
 (use-package py-autopep8
@@ -245,7 +245,7 @@
   (rg-enable-menu)
   (setq rg-command-line-flags '("--pcre2")))
 
-(use-package anzu :demand
+(use-package anzu :demand :diminish
   :config
   (global-anzu-mode +1)
   (global-set-key [remap query-replace] 'anzu-query-replace)
@@ -493,6 +493,8 @@
 
   ;; Load some helpful functions
   (use-package ajv-latex :demand t)
+  ;; Don't show reftex highlight in modeline
+  (delight 'reftex-mode nil "reftex")
 
   :bind (:map LaTeX-mode-map
 	      ("<f5>" . TeX-command-run-all)
@@ -517,12 +519,22 @@
   )
 
 
-(use-package ajv-misc
-  :defer 1
+(use-package ajv-misc :demand
+  :config
+  ;; Misc diminish and delight settings
+  (delight '((highlight-indentation-mode nil "highlight-indentation")
+	     (emacs-lisp-mode ".el" :major)
+	     (markdown-mode "md" :major)
+	     (hs-minor-mode nil "hideshow")
+	     (subword-mode nil "subword")
+	     (auto-revert-mode nil "autorevert")
+	     (auto-fill-function "" t)))
   :hook ((before-save . time-stamp)
 	 (after-save . executable-make-buffer-file-executable-if-script-p)
-	 (prog-mode . hs-minor-mode)	;Enable hideshow-minor-mode
-	 (prog-mode . subword-mode))	;Allows moving through camelCasedWords
+	 ;; Enable hideshow-minor-mode
+	 (prog-mode . hs-minor-mode)
+	 ;; move through camelCasedWords
+	 (prog-mode . subword-mode))
   )
 
 (use-package buffer-move :bind (("<f11>" . buf-move-left)
