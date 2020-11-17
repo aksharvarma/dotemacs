@@ -275,24 +275,27 @@
 
 
 (use-package pdf-tools :defer 2 :magic ("%PDF" . pdf-view-mode) :pin manual
+  :bind (:map pdf-view-mode-map
+	      ("q" . image-kill-buffer)
+	      ("j" . pdf-view-next-line-or-next-page)
+	      ("k" . pdf-view-previous-line-or-previous-page)
+	      ("u" . pdf-view-scroll-down-or-previous-page)
+	      ("d" . pdf-view-scroll-up-or-next-page)
+	      ("M-i" . pdf-view-midnight-minor-mode))
   :config
   (pdf-tools-install)
   (use-package ajv-pdf :demand
     :bind (:map pdf-view-mode-map
-		;; ("q" . delete-frame)
-		("q" . image-kill-buffer)
-		("M-m" . ajv/pdf-tools/toggle-modeline)
-		("M-i" . pdf-view-midnight-minor-mode))
-    :config
-    (setq pdf-view-resize-factor 1.05
-	  auto-revert-interval 0.1
-	  auto-revert-verbose nil)
-    (when (featurep 'ido)
-      (advice-add #'ido-find-file :filter-return #'ajv/pdf-tools/launch-file))
-    :hook ((pdf-view-mode . ajv/pdf-tools/save-disable-modeline-format)
-	   (pdf-view-mode . ajv/pdf-tools/disable-linum-mode)
-	   (pdf-view-mode . auto-revert-mode)
-	   (pdf-view-mode . pdf-misc-size-indication-minor-mode)))
+		("M-m" . ajv/pdf-tools/toggle-modeline)))
+  (when (featurep 'ido)
+    (advice-add #'ido-find-file :filter-return #'ajv/pdf-tools/launch-file))
+  (setq pdf-view-resize-factor 1.05
+	auto-revert-interval 0.1
+	auto-revert-verbose nil)
+  :hook ((pdf-view-mode . ajv/pdf-tools/save-disable-modeline-format)
+	 (pdf-view-mode . ajv/pdf-tools/disable-linum-mode)
+	 (pdf-view-mode . auto-revert-mode)
+	 (pdf-view-mode . pdf-misc-size-indication-minor-mode))
   )
 
 (use-package pdf-view-restore
