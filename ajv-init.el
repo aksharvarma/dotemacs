@@ -453,6 +453,7 @@
 	`(,(file-truename (concat ajv/settings/symlink-folder
 				  "research/org-research-notes.org")))
 	org-noter-always-create-frame nil
+	org-noter-doc-split-fraction (cons 0.618 0.5)
 	org-noter-auto-save-last-location t
 	org-noter-kill-frame-at-session-end nil
 	org-noter-insert-note-no-questions t)
