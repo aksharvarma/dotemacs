@@ -421,6 +421,9 @@
    ("C-M-j". ajv/join-to-next-line)
    ("M-j". ajv/join-to-previous-line)
    ("M-+" . count-words)
+   ("M-u" . upcase-dwim)
+   ("M-l" . downcase-dwim)
+   ("M-c" . capitalize-dwim)
    (:map help-mode-map
 	 ("q" . (lambda () (interactive) (ajv/kill-this-buffer) (other-window 1)))))
   :config
