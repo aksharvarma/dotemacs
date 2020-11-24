@@ -63,10 +63,11 @@ There will only be one (we assume that you'll only listen to one piece of music 
   (if (or (not (ajv/music/check-if-created-buffer))
 	  (ajv/music/check-if-stopped))
       (ajv/music/play-this)
-    (progn
+    (save-excursion
       (switch-to-buffer (concat "*" ajv/music/buffer-name "*"))
       (execute-kbd-macro (read-kbd-macro str))
-      (bury-buffer))))
+      (bury-buffer)
+      (message (concat "Sent" str "to mpv")))))
 
 (defun ajv/music/play-pause ()
   "Toggle function to play/pause music playing in `ajv/music/buffer-name`"
