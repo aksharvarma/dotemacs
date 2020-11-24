@@ -11,6 +11,7 @@
       ;; consider changing to 'note so that you add a note when finishing a task
       ;; See org-log-note-headings for more ideas
       org-log-done 'time
+      org-highlight-latex-and-related '(native)
       org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "WAITING(w)"
 				    "ONGOING(o)" "MEETING(m)" "INACTIVE(i)"
 				    "|" "DONE(d)" "CANCELLED(c)"))
