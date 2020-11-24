@@ -11,7 +11,18 @@
       ;; consider changing to 'note so that you add a note when finishing a task
       ;; See org-log-note-headings for more ideas
       org-log-done 'time
-      org-todo-keywords '((sequence "TODO(t)" "IN-PROGRESS(i)" "|" "DONE(d)")))
+      org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "WAITING(w)"
+				    "ONGOING(o)" "MEETING(m)" "INACTIVE(i)"
+				    "|" "DONE(d)" "CANCELLED(c)"))
+      org-todo-keyword-faces
+      '(("TODO" . (:inherit bold :foreground "orange"))
+	("NEXT" . (:inherit bold :foreground "DeepSkyBlue"))
+	("WAITING" . (:inherit bold :foreground "firebrick"))
+	("ONGOING" . (:inherit bold-italic :foreground "yellow"))
+	("MEETING" . (:inherit bold :foreground "DarkGreen"))
+	("INACTIVE" . (:inherit bold :foreground "gray" ))
+	("CANCELLED" . shadow))
+      org-use-fast-todo-selection 'expert)
 
 (setq org-enforce-todo-dependencies t
       org-enforce-todo-checkbox-dependencies t
