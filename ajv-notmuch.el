@@ -21,6 +21,17 @@
 	(:name "flagged" :query "tag:flagged" :key "f" :search-type tree)
 	(:name "drafts" :query "tag:draft" :key "d" :search-type tree))))
 
+(defvar ajv/notmuch/timer-for-polling nil
+  "A timer that repeatedly polls notmuch to see if there are new emails")
+
+(defun ajv/notmuch/poll-quietly ()
+  "Call notmuch-poll but inhibit messages so that it doesn't pollute minibuffer. Used primarily in the timer that polls at regularl intervals automatically, without manual intervnetion."
+  (let ((inhibit-message t))
+    (notmuch-poll)))
+
+(setq ajv/notmuch/timer-for-polling
+      (run-at-time 0 300 'ajv/notmuch/poll-quietly))
+
 (defun ajv/notmuch/tree-toggle-unread ()
   "While in notmuch-tree-mode, toggle unread tag"
   (interactive)
