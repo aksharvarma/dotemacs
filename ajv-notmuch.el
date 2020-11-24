@@ -27,7 +27,8 @@
 (defun ajv/notmuch/poll-quietly ()
   "Call notmuch-poll but inhibit messages so that it doesn't pollute minibuffer. Used primarily in the timer that polls at regularl intervals automatically, without manual intervnetion."
   (let ((inhibit-message t))
-    (notmuch-poll)))
+    (with-current-buffer "*notmuch-hello*"
+      (notmuch-poll-and-refresh-this-buffer))))
 
 (setq ajv/notmuch/timer-for-polling
       (run-at-time 0 300 'ajv/notmuch/poll-quietly))
