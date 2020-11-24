@@ -393,6 +393,16 @@
 (use-package dired-rainbow :config (use-package ajv-dired-rainbow))
 (use-package dired-collapse :demand)
 
+(use-package dired-subtree :demand :after dired
+  :config
+  (setq dired-subtree-use-backgrounds nil)
+  :bind (:map dired-mode-map
+              ("<tab>" . dired-subtree-toggle)
+              ("<C-tab>" . dired-subtree-cycle)
+              ("<S-iso-lefttab>" . dired-subtree-remove)
+	      ("f" . dired-subtree-next-sibling)
+	      ("b" . dired-subtree-previous-sibling)))
+
 (use-package ajv-my-functions :demand
   :bind
   (("s-8" . ajv/switch-buffer-scratch)
