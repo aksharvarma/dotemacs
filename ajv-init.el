@@ -391,6 +391,7 @@
   )
 
 (use-package dired-rainbow :config (use-package ajv-dired-rainbow))
+(use-package dired-collapse :demand)
 
 (use-package ajv-my-functions :demand
   :bind
