@@ -453,6 +453,7 @@
   :demand
   :bind
   (("s-a" . org-agenda)
+   ("C-c C-g" . org-goto)		;because org-journal overrides this.
    ("<f10>" . (lambda () (interactive) (switch-to-buffer "*Org Agenda*"))))
   :config
   (setq org-modules '(ol-bbdb ol-bibtex ol-docview ol-gnus org-habit ol-info ol-irc ol-mhe ol-rmail ol-w3m))
@@ -478,6 +479,34 @@
 	       ("C-M-p" . org-noter-sync-prev-page-or-chapter)
 	       ("M-." . org-noter-sync-current-note)
 	       ("C-M-." . org-noter-sync-current-page-or-chapter))))
+
+(use-package org-journal :demand
+  :init
+  ;; Change default prefix key; needs to be set before loading org-journal
+  (setq org-journal-prefix-key "C-c j ")
+  :bind (:map org-mode-map ("C-c C-j" . org-journal-new-entry))
+  :config
+  (setq org-journal-file-type 'weekly
+	org-journal-dir (file-truename
+			 (concat ajv/settings/symlink-folder "journal/"))
+	org-journal-created-property-timestamp-format "%Y-%m-%d"
+	org-journal-date-format "%A, %d %B %Y"
+	org-journal-file-format "%Y-%m-%d.org"
+	org-journal-time-format "%H:%M "
+	org-journal-hide-entries-p nil)
+  (defun ajv/org-journal/insert-title ()
+    "Read a string from the minibuffer and then insert it as title of journal entry."
+    ;; (interactive "sString: ")
+    ;; Insert the text read in from the minibuffer
+    (org-set-startup-visibility)
+    (insert (read-string "Title: "))
+    (org-return)
+    (org-cycle))
+  :hook
+  ;; Do not open org journal mode files with visual line mode.
+  ((org-journal-mode . (lambda () (visual-line-mode -1)))
+   ;; After inserting the time stamp: Add a title, move to next line, indent
+   (org-journal-after-entry-create . ajv/org-journal/insert-title)))
 
 (use-package ajv-elfeed
   :if (not (string-empty-p ajv/sensitive/my-elfeed-org-file))
