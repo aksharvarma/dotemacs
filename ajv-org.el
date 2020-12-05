@@ -12,8 +12,8 @@
       ;; See org-log-note-headings for more ideas
       org-log-done 'time
       org-highlight-latex-and-related '(native)
-      org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "WAITING(w)"
-				    "ONGOING(o)" "MEETING(m)" "INACTIVE(i)"
+      org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "WAITING(w@)"
+				    "ONGOING(o!/!)" "MEETING(m)" "INACTIVE(i!/!)"
 				    "|" "DONE(d)" "CANCELLED(c)"))
       org-todo-keyword-faces
       '(("TODO" . (:inherit bold :foreground "orange"))
