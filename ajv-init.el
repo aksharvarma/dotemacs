@@ -369,7 +369,10 @@
 (use-package dired :demand
   :delight dired-mode "Dired"
   :config
-  (load "dired-x")
+  (use-package dired-x :demand
+    ;; Swap keybindings for dired-jump and dired-jump-other-window
+    :bind (("C-x C-j" . dired-jump)
+	   ("C-x M-j" . dired-jump-other-window)))
   (use-package ajv-dired :demand
     :bind  (:map dired-mode-map
 		 ("s". ajv/dired/sort-criteria)
