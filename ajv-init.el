@@ -456,7 +456,12 @@
    ("C-c C-g" . org-goto)		;because org-journal overrides this.
    ("<f10>" . (lambda () (interactive) (switch-to-buffer "*Org Agenda*"))))
   :config
-  (setq org-modules '(ol-bbdb ol-bibtex ol-docview ol-gnus org-habit ol-info ol-irc ol-mhe ol-rmail ol-w3m))
+  (setq org-modules '(ol-bbdb ol-bibtex ol-docview ol-gnus org-habit ol-info ol-irc ol-mhe ol-rmail ol-w3m org-tempo))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . nil)
+     (python . nil)
+     (latex . t)))
   )
 
 (use-package org-bullets :hook ((org-mode . org-bullets-mode)))
