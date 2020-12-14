@@ -571,6 +571,12 @@
 
 (use-package markdown-toc :demand)
 
+(use-package writeroom-mode :demand
+  :config
+  (setq writeroom-global-effects (writeroom-set-bottom-divider-width))
+  (setq writeroom-maximize-window nil)
+  (setq writeroom-local-effects '(visual-line-mode)))
+
 (use-package ajv-play-music
   :commands ajv/music/play-this
   :bind
