@@ -118,6 +118,7 @@
   :config (setq flyspell-issue-welcome-flag nil
 		flyspell-issue-message-flag nil
 		ispell-program-name "aspell")    ; use aspell instead of ispell
+  :bind ("<mouse-3>" . flyspell-correct-word)
   :hook ((markdown-mode text-mode LaTeX-mode org-mode) . flyspell-mode))
 
 (use-package expand-region
