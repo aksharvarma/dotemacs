@@ -36,6 +36,7 @@
       org-agenda-start-on-weekday nil
       org-agenda-start-day "-1d"
       org-agenda-start-with-clockreport-mode t
+      org-agenda-start-with-log-mode t
       ;; org-agenda-span 6
       )
 
