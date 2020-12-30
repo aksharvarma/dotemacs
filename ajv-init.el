@@ -601,6 +601,12 @@
   :bind (:map proced-mode-map
               ("/" . proced-narrow)))
 
+
+(use-package beginend :demand :diminish beginend-global-mode
+  :config
+  (dolist (mode beginend-modes) (diminish (cdr mode)))
+  (beginend-global-mode 1))
+
 (use-package ajv-misc :demand
   :config
   ;; Misc diminish and delight settings
