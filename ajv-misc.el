@@ -4,6 +4,9 @@
   ;; Copy-pasting to-from other programs when in display graphics
   (setq  select-enable-clipboard t        ;copy/paste into other programs
 	 interprogram-paste-function 'x-selection-value) ;from other progams
+  ;; Contents of clipboard (from outside) preserved before kills in emacs
+  ;; So M-y will get those clipboard entries.
+  (setq save-interprogram-paste-before-kill t)
   )
 
 (setq  next-line-add-newlines t
