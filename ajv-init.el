@@ -393,6 +393,7 @@
         dired-listing-switches ajv/dired/listing-switches-without-symlink
 	dired-recursive-copies 'always
 	wdired-use-dired-vertical-movement 'sometimes)
+  (setq dired-guess-shell-alist-user (list '("\\.pdf\\'" "evince")))
   (put 'dired-find-alternate-file 'disabled nil) ;allow 'a' in dired
   )
 
