@@ -243,6 +243,35 @@
 (use-package py-autopep8
   :hook ((elpy-mode . py-autopep8-enable-on-save)))
 
+(use-package flymake
+  :commands flymake-mode
+  :init
+  (setq flymake-suppress-zero-counters t)
+  (setq flymake-start-on-flymake-mode t)
+  (setq flymake-no-changes-timeout nil)
+  (setq flymake-start-on-save-buffer t)
+  (setq flymake-proc-compilation-prevents-syntax-check t)
+  :config
+  (defun ajv/flymake/run () (interactive)
+	 (flymake-mode 1) (flymake-start) (flymake-show-diagnostics-buffer))
+  (defun ajv/flymake/stop () (interactive)
+	 (flymake-stop-all-syntax-checks)
+	 (kill-buffer (flymake--diagnostics-buffer-name))
+	 (flymake-mode 0))
+  (defun ajv/flymake/next-line-and-show () (interactive)
+	 (forward-button 1 nil nil nil) (flymake-show-diagnostic (point)))
+  (defun ajv/flymake/previous-line-and-show () (interactive)
+	 (forward-button -1 nil nil nil) (flymake-show-diagnostic (point)))
+  :bind (:map flymake-diagnostics-buffer-mode-map
+	      ("n" . ajv/flymake/next-line-and-show)
+	      ("p" . ajv/flymake/previous-line-and-show))
+  :hook (flymake-diagnostics-buffer-mode . visual-line-mode))
+
+(use-package flymake-proselint :after flymake
+  :init
+  (dolist (mode '("markdown-mode" "text-mode"))
+    (add-hook (intern (concat mode "-hook")) #'flymake-proselint-setup)))
+
 (use-package move-text :config (move-text-default-bindings))
 
 (use-package iedit)
