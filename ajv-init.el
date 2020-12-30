@@ -588,6 +588,18 @@
    ("<XF86Search>" . ajv/music/play-this))
   )
 
+(use-package proced
+  :commands proced
+  :config
+  (setq proced-auto-update-flag t)
+  (setq proced-auto-update-interval 1)
+  (setq proced-descend t)
+  (setq proced-filter 'user))
+
+(use-package proced-narrow :diminish
+  :after proced
+  :bind (:map proced-mode-map
+              ("/" . proced-narrow)))
 
 (use-package ajv-misc :demand
   :config
