@@ -397,10 +397,15 @@
 	   (dired-mode . ajv/dired/hide-details-omit-hidden-files)
 	   (dired-mode . ajv/hl-line/enable)))
 
+  (use-package wdired
+    :config
+    (setq wdired-use-dired-vertical-movement 'sometimes)
+    (advice-add 'wdired-finish-edit :after #'ajv/hl-line/enable)
+    :hook (wdired-mode . ajv/hl-line/disable))
+
   (setq dired-dwim-target t                     ;default copy to other window
         dired-listing-switches ajv/dired/listing-switches-without-symlink
-	dired-recursive-copies 'always
-	wdired-use-dired-vertical-movement 'sometimes)
+	dired-recursive-copies 'always)
   (setq dired-guess-shell-alist-user (list '("\\.pdf\\'" "evince")))
   (put 'dired-find-alternate-file 'disabled nil) ;allow 'a' in dired
   )
