@@ -136,21 +136,21 @@ Taken from: https://acidwords.com/posts/2016-06-18-collapsing-all-filter-groups-
         (mapcar #'car (ibuffer-current-filter-groups-with-position)))
   (ibuffer-update nil t))
 
-(defun ajv/ibuffer/go-to-beginning-of-buffer ()
-  "When in dired-mode, go first file instead of top of buffer.
+;; (defun ajv/ibuffer/go-to-beginning-of-buffer ()
+;;   "When in dired-mode, go first file instead of top of buffer.
 
-Taken from: http://whattheemacsd.com/setup-dired.el-02.html"
-  (interactive)
-  (beginning-of-buffer)
-  (dired-next-line 2))
+;; Taken from: http://whattheemacsd.com/setup-dired.el-02.html"
+;;   (interactive)
+;;   (beginning-of-buffer)
+;;   (dired-next-line 2))
 
-(defun ajv/ibuffer/go-to-end-of-buffer ()
-  "When in dired-mode, go to last file instead of end of buffer.
+;; (defun ajv/ibuffer/go-to-end-of-buffer ()
+;;   "When in dired-mode, go to last file instead of end of buffer.
 
-Taken from: http://whattheemacsd.com/setup-dired.el-02.html"
-  (interactive)
-  (end-of-buffer)
-  (dired-next-line -2))
+;; Taken from: http://whattheemacsd.com/setup-dired.el-02.html"
+;;   (interactive)
+;;   (end-of-buffer)
+;;   (dired-next-line -2))
 
 (defun ajv/ibuffer/ido-find-file (file &optional wildcards)
   "Like `find-file', but default to the directory of the buffer at point.

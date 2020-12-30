@@ -89,10 +89,11 @@
 	 ("<down>" . ajv/ibuffer/next-line)
 	 ("s-f" . ajv/ibuffer/ido-find-file)
 	 ("s-F" . ajv/ibuffer/ido-find-file-other-window)
-	 ("M-<" . ajv/ibuffer/go-to-beginning-of-buffer)
-	 ("M->" . ajv/ibuffer/go-to-end-of-buffer)
-	 ("<" . ajv/ibuffer/go-to-beginning-of-buffer)
-	 (">" . ajv/ibuffer/go-to-end-of-buffer)))
+	 ;; ("M-<" . ajv/ibuffer/go-to-beginning-of-buffer)
+	 ;; ("M->" . ajv/ibuffer/go-to-end-of-buffer)
+	 ;; ("<" . ajv/ibuffer/go-to-beginning-of-buffer)
+	 ;; (">" . ajv/ibuffer/go-to-end-of-buffer)
+	 ))
   :config
   (use-package ibuffer-vc :demand)
   :hook
@@ -382,8 +383,9 @@
 		 ("W" . ajv/dired/copy-directory-name-as-kill)
 		 ("e" . dired-toggle-read-only) ;short binding for C-x C-q
 		 (")" . ajv/dired/toggle-symlink-dereferencing)
-		 ("M-<" . ajv/dired/go-to-beginning-of-buffer)
-		 ("M->" . ajv/dired/go-to-end-of-buffer))
+		 ;; ("M-<" . ajv/dired/go-to-beginning-of-buffer)
+		 ;; ("M->" . ajv/dired/go-to-end-of-buffer)
+		 )
     :hook ((dired-mode . ajv/dired/set-default-sorting)
 	   (dired-mode . ajv/dired/hide-details-omit-hidden-files)))
 

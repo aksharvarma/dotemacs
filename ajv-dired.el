@@ -92,21 +92,21 @@ modified from http://omniorthogonal.blogspot.in/2008/05/useful-emacs-dired-launc
     (dired-flag-backup-files)
     (dired-do-flagged-delete)))
 
-(defun ajv/dired/go-to-beginning-of-buffer ()
-  "When in dired-mode, go first file instead of top of buffer.
+;; (defun ajv/dired/go-to-beginning-of-buffer ()
+;;   "When in dired-mode, go first file instead of top of buffer.
 
-Taken from: http://whattheemacsd.com/setup-dired.el-02.html"
-  (interactive)
-  (beginning-of-buffer)
-  (dired-next-line 3))
+;; Taken from: http://whattheemacsd.com/setup-dired.el-02.html"
+;;   (interactive)
+;;   (beginning-of-buffer)
+;;   (dired-next-line 3))
 
-(defun ajv/dired/go-to-end-of-buffer ()
-  "When in dired-mode, go to last file instead of end of buffer.
+;; (defun ajv/dired/go-to-end-of-buffer ()
+;;   "When in dired-mode, go to last file instead of end of buffer.
 
-Taken from: http://whattheemacsd.com/setup-dired.el-02.html"
-  (interactive)
-  (end-of-buffer)
-  (dired-next-line -1))
+;; Taken from: http://whattheemacsd.com/setup-dired.el-02.html"
+;;   (interactive)
+;;   (end-of-buffer)
+;;   (dired-next-line -1))
 
 (defun ajv/dired/copy-directory-name-as-kill ()
   "When in dired-mode, copy the name of the directory from the first line in the buffer."
