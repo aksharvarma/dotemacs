@@ -240,8 +240,10 @@ Taken from: http://whattheemacsd.com/key-bindings.el-01.html"
   (unwind-protect
       (progn
         (linum-mode 1)
+	(ajv/hl-line/enable)
         (goto-line (read-number "Goto line: ")))
-    (linum-mode -1)))
+    (linum-mode -1)
+    (run-at-time "1 sec" nil 'ajv/hl-line/disable)))
 
 (defun ajv/join-to-next-line ()
   "Join the next line into this one.

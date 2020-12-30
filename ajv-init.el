@@ -79,6 +79,12 @@
 	       ("C-c y" . #'yas-expand)))
   )
 
+(use-package hl-line
+  :config
+  (setq hl-line-sticky-flag nil)
+  (defun ajv/hl-line/enable () (interactive) (hl-line-mode 1))
+  (defun ajv/hl-line/disable () (interactive) (hl-line-mode -1)))
+
 (use-package ajv-ibuffer :delight ibuffer-mode "IBuf" "ibuffer"
   :bind
   (("C-x C-b" . ibuffer)
@@ -100,6 +106,7 @@
   (;; (ibuffer-mode . ajv/ibuffer/group-by-vc)
    (ibuffer-mode . ajv/ibuffer/use-default-filter)
    (ibuffer-mode . ibuffer-auto-mode)
+   (ibuffer-mode . ajv/hl-line/enable)
    )
   )
 
@@ -387,7 +394,8 @@
 		 ;; ("M->" . ajv/dired/go-to-end-of-buffer)
 		 )
     :hook ((dired-mode . ajv/dired/set-default-sorting)
-	   (dired-mode . ajv/dired/hide-details-omit-hidden-files)))
+	   (dired-mode . ajv/dired/hide-details-omit-hidden-files)
+	   (dired-mode . ajv/hl-line/enable)))
 
   (setq dired-dwim-target t                     ;default copy to other window
         dired-listing-switches ajv/dired/listing-switches-without-symlink
@@ -610,6 +618,7 @@
   (dolist (mode beginend-modes) (diminish (cdr mode)))
   (beginend-global-mode 1))
 
+
 (use-package ajv-misc :demand
   :config
   ;; Misc diminish and delight settings
@@ -621,6 +630,7 @@
 	     (auto-revert-mode nil "autorevert")
 	     (auto-fill-function "" t)))
   :hook ((before-save . time-stamp)
+	 (package-menu-mode . ajv/hl-line/enable)
 	 (after-save . executable-make-buffer-file-executable-if-script-p)
 	 ;; Enable hideshow-minor-mode
 	 (prog-mode . hs-minor-mode)
