@@ -151,6 +151,9 @@
 (use-package highlight-numbers :diminish
   :hook (prog-mode . highlight-numbers-mode))
 
+(use-package rainbow-mode :diminish :commands rainbow-mode
+  :hook ((prog-mode . rainbow-mode)))
+
 (use-package volatile-highlights
   :diminish
   :config (volatile-highlights-mode t))
