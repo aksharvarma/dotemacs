@@ -21,7 +21,54 @@
 ;; Start loading up other things
 ;; (use-package cl)
 
-;; TODO: change setq calls to be use-package :custom calls
+;; TODO: change combined setq calls into separate calls
+;; TODO: set `use-package-hook-name-suffix' to nil to always type full hook names
+
+(use-package ajv-my-functions :demand
+  :bind
+  (("s-8" . ajv/switch-buffer-scratch)
+   ("s-*" . ajv/switch-buffer-scratch-other-window)
+   ("s-`" . ajv/open-home-in-dired)
+   ("s-~" . ajv/open-symlink-folder-in-dired)
+   ("s-p" . ajv/mypaths)
+   ("s-P" . ajv/mypaths-other-window)
+   ("C-c w c". ajv/window-config)
+   ("<f8>". ajv/window-config)
+   ("%" . ajv/match-paren)
+   ("s-w" . ajv/kill-this-buffer)
+   ("s-W" . ajv/kill-other-buffer)
+   ("s-o" . ajv/kill-other-buffer)
+   ("C-z" . bury-buffer)
+   ("s-<tab>" . other-window)
+   ("s-b" . ido-switch-buffer)
+   ("s-B" . ido-switch-buffer-other-window)
+   ("s-s" . save-buffer)
+   ("s-f" . ido-find-file)
+   ("s-F" . ido-find-file-other-window)
+   ("s-g" . keyboard-quit)
+   ("C-s" . isearch-forward-regexp)
+   ("C-r" . isearch-backward-regexp)
+   ("C-M-s" . isearch-forward)
+   ("C-M-r" . isearch-backward)
+   ("C-M-j". ajv/join-to-next-line)
+   ("M-j". ajv/join-to-previous-line)
+   ("M-+" . count-words)
+   ("M-u" . upcase-dwim)
+   ("M-l" . downcase-dwim)
+   ("M-c" . capitalize-dwim)
+   (:map help-mode-map
+	 ("q" . (lambda () (interactive) (ajv/kill-this-buffer) (other-window 1)))))
+  :config
+  (when window-system
+    (global-set-key (kbd "C-x C-c") 'ajv/ask-before-closing))
+  (advice-add 'revert-buffer :around #'yes-or-no-p->-y-or-n-p)
+  (global-set-key [remap goto-line] 'ajv/goto-line-with-feedback)
+  :hook
+  ((find-file . ajv/rename-symlink-buffer-with-truename)
+   (emacs-startup . ajv/measure-loading-time)
+   (before-save . ajv/delete-trailing-whitespace)
+   (emacs-startup . ajv/window-config))
+  )
 
 (use-package notmuch
   :commands notmuch notmuch-jump-search notmuch-search
@@ -459,52 +506,6 @@
               ("<S-iso-lefttab>" . dired-subtree-remove)
 	      ("f" . dired-subtree-next-sibling)
 	      ("b" . dired-subtree-previous-sibling)))
-
-(use-package ajv-my-functions :demand
-  :bind
-  (("s-8" . ajv/switch-buffer-scratch)
-   ("s-*" . ajv/switch-buffer-scratch-other-window)
-   ("s-`" . ajv/open-home-in-dired)
-   ("s-~" . ajv/open-symlink-folder-in-dired)
-   ("s-p" . ajv/mypaths)
-   ("s-P" . ajv/mypaths-other-window)
-   ("C-c w c". ajv/window-config)
-   ("<f8>". ajv/window-config)
-   ("%" . ajv/match-paren)
-   ("s-w" . ajv/kill-this-buffer)
-   ("s-W" . ajv/kill-other-buffer)
-   ("s-o" . ajv/kill-other-buffer)
-   ("C-z" . bury-buffer)
-   ("s-<tab>" . other-window)
-   ("s-b" . ido-switch-buffer)
-   ("s-B" . ido-switch-buffer-other-window)
-   ("s-s" . save-buffer)
-   ("s-f" . ido-find-file)
-   ("s-F" . ido-find-file-other-window)
-   ("s-g" . keyboard-quit)
-   ("C-s" . isearch-forward-regexp)
-   ("C-r" . isearch-backward-regexp)
-   ("C-M-s" . isearch-forward)
-   ("C-M-r" . isearch-backward)
-   ("C-M-j". ajv/join-to-next-line)
-   ("M-j". ajv/join-to-previous-line)
-   ("M-+" . count-words)
-   ("M-u" . upcase-dwim)
-   ("M-l" . downcase-dwim)
-   ("M-c" . capitalize-dwim)
-   (:map help-mode-map
-	 ("q" . (lambda () (interactive) (ajv/kill-this-buffer) (other-window 1)))))
-  :config
-  (when window-system
-    (global-set-key (kbd "C-x C-c") 'ajv/ask-before-closing))
-  (advice-add 'revert-buffer :around #'yes-or-no-p->-y-or-n-p)
-  (global-set-key [remap goto-line] 'ajv/goto-line-with-feedback)
-  :hook
-  ((find-file . ajv/rename-symlink-buffer-with-truename)
-   (emacs-startup . ajv/measure-loading-time)
-   (before-save . ajv/delete-trailing-whitespace)
-   (emacs-startup . ajv/window-config))
-  )
 
 (use-package ajv-org
   :demand
