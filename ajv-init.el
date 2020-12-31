@@ -13,7 +13,9 @@
 ;; Get use-package and its dependencies
 (require 'use-package)
 (setq use-package-verbose t
-      use-package-compute-statistics t)
+      use-package-compute-statistics t
+      ;; Use full hook names so that help commands get contextual awareness
+      use-package-hook-name-suffix nil)
 (use-package diminish)
 (use-package delight)
 (use-package bind-key)
@@ -22,7 +24,6 @@
 ;; (use-package cl)
 
 ;; TODO: change combined setq calls into separate calls
-;; TODO: set `use-package-hook-name-suffix' to nil to always type full hook names
 
 (use-package ajv-my-functions :demand
   :bind
@@ -64,10 +65,10 @@
   (advice-add 'revert-buffer :around #'yes-or-no-p->-y-or-n-p)
   (global-set-key [remap goto-line] 'ajv/goto-line-with-feedback)
   :hook
-  ((find-file . ajv/rename-symlink-buffer-with-truename)
-   (emacs-startup . ajv/measure-loading-time)
-   (before-save . ajv/delete-trailing-whitespace)
-   (emacs-startup . ajv/window-config))
+  ((find-file-hook . ajv/rename-symlink-buffer-with-truename)
+   (emacs-startup-hook . ajv/measure-loading-time)
+   (before-save-hook . ajv/delete-trailing-whitespace)
+   (emacs-startup-hook . ajv/window-config))
   )
 
 (use-package notmuch
@@ -87,7 +88,7 @@
 	   (:map notmuch-hello-mode-map
 		 ("g" . notmuch-poll-and-refresh-this-buffer)
 		 ("k" . ajv/notmuch/clear-searches)))
-    :hook (notmuch-hello-refresh . ajv/notmuch/set-initial-cursor-position))
+    :hook (notmuch-hello-refresh-hook . ajv/notmuch/set-initial-cursor-position))
   )
 
 (use-package ido :demand
@@ -155,9 +156,9 @@
   (use-package ibuffer-vc :demand)
   :hook
   (;; (ibuffer-mode . ajv/ibuffer/group-by-vc)
-   (ibuffer-mode . ajv/ibuffer/use-default-filter)
-   (ibuffer-mode . ibuffer-auto-mode)
-   (ibuffer-mode . ajv/hl-line/enable)
+   (ibuffer-mode-hook . ajv/ibuffer/use-default-filter)
+   (ibuffer-mode-hook . ibuffer-auto-mode)
+   (ibuffer-mode-hook . ajv/hl-line/enable)
    )
   )
 
@@ -178,7 +179,7 @@
 		flyspell-issue-message-flag nil
 		ispell-program-name "aspell")    ; use aspell instead of ispell
   :bind ("<mouse-3>" . flyspell-correct-word)
-  :hook ((markdown-mode text-mode LaTeX-mode org-mode) . flyspell-mode))
+  :hook ((markdown-mode-hook text-mode-hook LaTeX-mode-hook org-mode-hook) . flyspell-mode))
 
 (use-package expand-region
   :bind ("C-=" . er/expand-region))
@@ -200,10 +201,10 @@
   )
 
 (use-package highlight-numbers :diminish
-  :hook (prog-mode . highlight-numbers-mode))
+  :hook (prog-mode-hook . highlight-numbers-mode))
 
 (use-package rainbow-mode :diminish :commands rainbow-mode
-  :hook ((prog-mode . rainbow-mode)))
+  :hook ((prog-mode-hook . rainbow-mode)))
 
 (use-package volatile-highlights
   :diminish
@@ -218,9 +219,9 @@
 	       ("." . repeat)
 	       ("i" . god-mode-all)
 	       ("<escape>" . (lambda () (interactive) (god-mode-activate)))))
-  :hook ((god-mode-enabled . ajv/god/god-mode-has-priority)
-	 (god-mode-enabled . ajv/god/update-cursor)
-	 (god-mode-disabled . ajv/god/update-cursor))
+  :hook ((god-mode-enabled-hook . ajv/god/god-mode-has-priority)
+	 (god-mode-enabled-hook . ajv/god/update-cursor)
+	 (god-mode-disabled-hook . ajv/god/update-cursor))
   :config
   (use-package ajv-god
     :demand
@@ -293,10 +294,10 @@
   )
 
 (use-package flycheck :demand :after python :diminish
-  :hook ((elpy-mode . flycheck-mode)))
+  :hook ((elpy-mode-hook . flycheck-mode)))
 
 (use-package py-autopep8
-  :hook ((elpy-mode . py-autopep8-enable-on-save)))
+  :hook ((elpy-mode-hook . py-autopep8-enable-on-save)))
 
 (use-package flymake
   :commands flymake-mode
@@ -320,7 +321,7 @@
   :bind (:map flymake-diagnostics-buffer-mode-map
 	      ("n" . ajv/flymake/next-line-and-show)
 	      ("p" . ajv/flymake/previous-line-and-show))
-  :hook (flymake-diagnostics-buffer-mode . visual-line-mode))
+  :hook (flymake-diagnostics-buffer-mode-hook . visual-line-mode))
 
 (use-package flymake-proselint :after flymake
   :init
@@ -389,10 +390,10 @@
   (setq pdf-view-resize-factor 1.05
 	auto-revert-interval 0.1
 	auto-revert-verbose nil)
-  :hook ((pdf-view-mode . ajv/pdf-tools/save-disable-modeline-format)
-	 (pdf-view-mode . ajv/pdf-tools/disable-linum-mode)
-	 (pdf-view-mode . auto-revert-mode)
-	 (pdf-view-mode . pdf-misc-size-indication-minor-mode))
+  :hook ((pdf-view-mode-hook . ajv/pdf-tools/save-disable-modeline-format)
+	 (pdf-view-mode-hook . ajv/pdf-tools/disable-linum-mode)
+	 (pdf-view-mode-hook . auto-revert-mode)
+	 (pdf-view-mode-hook . pdf-misc-size-indication-minor-mode))
   )
 
 (use-package pdf-view-restore
@@ -400,7 +401,7 @@
   :config (setq pdf-view-restore-filename (concat user-emacs-directory ".pdf-view-restore")
 		use-file-base-name-flag nil)
   ;; :config (setq pdf-view-restore-filename "~/.emacs.d/.pdf-view-restore")
-  :hook (pdf-view-mode . pdf-view-restore-mode)
+  :hook (pdf-view-mode-hook . pdf-view-restore-mode)
   )
 
 
@@ -481,15 +482,15 @@
 		 ;; ("M-<" . ajv/dired/go-to-beginning-of-buffer)
 		 ;; ("M->" . ajv/dired/go-to-end-of-buffer)
 		 )
-    :hook ((dired-mode . ajv/dired/set-default-sorting)
-	   (dired-mode . ajv/dired/hide-details-omit-hidden-files)
-	   (dired-mode . ajv/hl-line/enable)))
+    :hook ((dired-mode-hook . ajv/dired/set-default-sorting)
+	   (dired-mode-hook . ajv/dired/hide-details-omit-hidden-files)
+	   (dired-mode-hook . ajv/hl-line/enable)))
 
   (use-package wdired
     :config
     (setq wdired-use-dired-vertical-movement 'sometimes)
     (advice-add 'wdired-finish-edit :after #'ajv/hl-line/enable)
-    :hook (wdired-mode . ajv/hl-line/disable))
+    :hook (wdired-mode-hook . ajv/hl-line/disable))
 
   (setq dired-dwim-target t                     ;default copy to other window
         dired-listing-switches ajv/dired/listing-switches-without-symlink
@@ -526,7 +527,7 @@
      (latex . t)))
   )
 
-(use-package org-bullets :hook ((org-mode . org-bullets-mode)))
+(use-package org-bullets :hook ((org-mode-hook . org-bullets-mode)))
 
 (use-package org-noter
   :commands (org-noter)
@@ -571,14 +572,14 @@
     (org-cycle))
   :hook
   ;; Do not open org journal mode files with visual line mode.
-  ((org-journal-mode . (lambda () (visual-line-mode -1)))
+  ((org-journal-mode-hook . (lambda () (visual-line-mode -1)))
    ;; After inserting the time stamp: Add a title, move to next line, indent
-   (org-journal-after-entry-create . ajv/org-journal/insert-title)))
+   (org-journal-after-entry-create-hook . ajv/org-journal/insert-title)))
 
 (use-package ajv-elfeed
   :if (not (string-empty-p ajv/sensitive/my-elfeed-org-file))
   :init (use-package elfeed
-	  :hook ((elfeed-search-mode . toggle-truncate-lines)))
+	  :hook ((elfeed-search-mode-hook . toggle-truncate-lines)))
   :config
   (use-package elfeed-org
     ;; http://pragmaticemacs.com/emacs/read-your-rss-feeds-in-emacs-with-elfeed
@@ -586,7 +587,7 @@
     (elfeed-org)
     (setq rmh-elfeed-org-files ajv/my-elfeed-org-file-list)
     )
-  :hook ((after-init . ajv/elfeed/kill-log-buffer))
+  :hook ((after-init-hook . ajv/elfeed/kill-log-buffer))
   )
 
 
@@ -624,8 +625,8 @@
 	      ;; Map dollar to self-insert-command to ensure that smartparens works.
 	      ;; As suggested here: https://github.com/Fuco1/smartparens/issues/834
 	      ("$" . self-insert-command))
-  :hook ((LaTeX-mode . turn-on-reftex)
-	 (LaTeX-mode . TeX-source-correlate-mode))
+  :hook ((LaTeX-mode-hook . turn-on-reftex)
+	 (LaTeX-mode-hook . TeX-source-correlate-mode))
   )
 
 (use-package markdown-toc :demand)
@@ -676,14 +677,14 @@
 	     (subword-mode nil "subword")
 	     (auto-revert-mode nil "autorevert")
 	     (auto-fill-function "" t)))
-  :hook ((before-save . time-stamp)
-	 (package-menu-mode . ajv/hl-line/enable)
-	 (text-mode . (lambda () (setq comment-start "# ")))
-	 (after-save . executable-make-buffer-file-executable-if-script-p)
+  :hook ((before-save-hook . time-stamp)
+	 (package-menu-mode-hook . ajv/hl-line/enable)
+	 (text-mode-hook . (lambda () (setq comment-start "# ")))
+	 (after-save-hook . executable-make-buffer-file-executable-if-script-p)
 	 ;; Enable hideshow-minor-mode
-	 (prog-mode . hs-minor-mode)
+	 (prog-mode-hook . hs-minor-mode)
 	 ;; move through camelCasedWords
-	 (prog-mode . subword-mode))
+	 (prog-mode-hook . subword-mode))
   )
 
 (use-package buffer-move :bind (("<f11>" . buf-move-left)
@@ -705,7 +706,7 @@
   (set-fringe-style '(0 . nil))
   (add-to-list 'default-frame-alist '(fullscreen . fullboth)) ;maximize all frames
   (add-to-list 'default-frame-alist `(font . ,ajv/settings/prefered-font-name))
-  :hook ((text-mode . turn-on-auto-fill))
+  :hook ((text-mode-hook . turn-on-auto-fill))
   )
 
 (use-package fancy-battery
