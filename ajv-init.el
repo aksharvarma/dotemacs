@@ -308,10 +308,14 @@
   :diminish
   :config (global-undo-tree-mode))
 
-(use-package smex
-  :bind (("M-x" . smex))
-  :config (smex-initialize))
+;; (use-package smex
+;;   :bind (("M-x" . smex))
+;;   :config (smex-initialize))
 
+(use-package amx :demand
+  :commands amx-mode
+  :config (amx-mode)
+  :bind (("M-x" . amx)))
 
 (use-package pdf-tools :defer 2 :magic ("%PDF" . pdf-view-mode) :pin manual
   :bind (:map pdf-view-mode-map
