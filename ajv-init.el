@@ -183,6 +183,7 @@
 
 (use-package which-key
   :diminish
+  :delight which-key-mode "" "which-key"
   :config
   (which-key-mode)
   (which-key-enable-god-mode-support)
@@ -665,6 +666,7 @@
 	     (auto-fill-function "" t)))
   :hook ((before-save . time-stamp)
 	 (package-menu-mode . ajv/hl-line/enable)
+	 (text-mode . (lambda () (setq comment-start "# ")))
 	 (after-save . executable-make-buffer-file-executable-if-script-p)
 	 ;; Enable hideshow-minor-mode
 	 (prog-mode . hs-minor-mode)
