@@ -129,8 +129,12 @@
 (use-package hl-line
   :config
   (setq hl-line-sticky-flag nil)
-  (defun ajv/hl-line/enable () (interactive) (hl-line-mode 1))
-  (defun ajv/hl-line/disable () (interactive) (hl-line-mode -1)))
+  (defun ajv/hl-line/set-face () (interactive)
+	 (set-face-attribute 'hl-line nil
+			     :foreground nil
+			     :background (color-darken-name
+					  (face-background 'default) 10)))
+  (ajv/make-enable-disable-defuns hl-line-mode hl-line 1 -1))
 
 (use-package ajv-ibuffer :delight ibuffer-mode "IBuf" "ibuffer"
   :bind

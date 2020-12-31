@@ -15,8 +15,17 @@ My prefered theme is a dark theme which doesn't work well in bright light. The E
   (cond
    ((ajv/theme/using-light-theme-p)
     (disable-theme ajv/settings/prefered-light-theme-name)
-    (enable-theme ajv/settings/prefered-dark-theme-name))
+    (enable-theme ajv/settings/prefered-dark-theme-name)
+    (ajv/theme/set-region-face t))
    ((ajv/theme/using-dark-theme-p)
     (disable-theme ajv/settings/prefered-dark-theme-name)
-    (enable-theme ajv/settings/prefered-light-theme-name))
-   (t (enable-theme ajv/settings/prefered-dark-theme-name))))
+    (enable-theme ajv/settings/prefered-light-theme-name)
+    (ajv/theme/set-region-face nil))
+   (t (enable-theme ajv/settings/prefered-dark-theme-name)))
+  (ajv/god/update-cursor)
+  (ajv/hl-line/set-face))
+
+(defun ajv/theme/set-region-face (background-is-dark) (interactive)
+       (if background-is-dark
+	   (set-face-background 'region "dark slate gray")
+	 (set-face-background 'region "light sky blue")))
