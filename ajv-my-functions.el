@@ -1,5 +1,30 @@
 (provide 'ajv-my-functions)
 
+(defmacro ajv/make-mode-defuns (full-mode-name defun-name &optional val)
+  "Create functions to enable/disable a given mode. This simply provides a wrapper around calls of the form `(foo-bar-mode 1)' or `(foo-bar-mode -1)'. Should make life easier for use in hooks."
+  ;; Create a function named ajv/defun-name
+  `(defun ,(intern defun-name) ()
+     ;; Documentation for the function
+     ,(concat "This function is simply a wrapper that calls `" (symbol-name full-mode-name) "` with argument " (number-to-string val))
+     (interactive)
+     ;; Call the function with argument val or 1.
+     (,full-mode-name (or ,val 1))))
+
+(defmacro ajv/make-enable-disable-defuns (full-mode-name defun-name &optional enable-val disable-val)
+  "Create functions to enable and disable a given mode. This simply provides a wrapper around calls of the form `(foo-bar-mode 1)' and `(foo-bar-mode -1)'. Should make life easier for use in hooks."
+  ;; Create an enable and a disable function
+  `(progn
+     (ajv/make-mode-defuns ,full-mode-name
+			   ,(concat "ajv/" (symbol-name defun-name) "/enable")
+			   ,(or enable-val 1))
+     (ajv/make-mode-defuns ,full-mode-name
+			   ,(concat "ajv/" (symbol-name defun-name) "/disable")
+			   ,(or disable-val -1))))
+
+;; Creates ajv/linum/enable and ajv/linum/disable
+(ajv/make-enable-disable-defuns linum-mode linum 1 -1)
+
+
 (defun ajv/switch-buffer-scratch ()
   "Switch to the scratch buffer. If the buffer doesn't exist,
 create it and write the initial message into it."
@@ -239,10 +264,10 @@ Taken from: http://whattheemacsd.com/key-bindings.el-01.html"
   (interactive)
   (unwind-protect
       (progn
-        (linum-mode 1)
+        (ajv/linum/enable)
 	(ajv/hl-line/enable)
         (goto-line (read-number "Goto line: ")))
-    (linum-mode -1)
+    (ajv/linum/disable)
     (run-at-time "1 sec" nil 'ajv/hl-line/disable)))
 
 (defun ajv/join-to-next-line ()
