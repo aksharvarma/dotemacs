@@ -19,9 +19,14 @@
 (setq ajv/settings/my-init-directory (concat user-emacs-directory "site-lisp/ajv/")
       ajv/settings/symlink-folder "~/0/"
       ajv/settings/custom-file-name "ajv-customizations.el"
-      ajv/settings/prefered-font-name "dejavu sans mono 11"
+      ;; ajv/settings/prefered-font-name "dejavu sans mono 11"
+      ;; ajv/settings/prefered-font-name "Fira Code 11"
+      ajv/settings/prefered-font-name "Source Code Pro 11"
       ajv/settings/prefered-dark-theme-name 'deeper-blue
       ajv/settings/prefered-light-theme-name 'tsdh-light)
+
+;; Adds emoji font support.
+(set-fontset-font t '(#x1f300 . #x1fad0) "Noto Color Emoji")
 
 (defvar ajv/settings/yasnippets-directory nil
   "The folder which contains all my yasnippet snippets.")
