@@ -574,7 +574,8 @@
   ;; Do not open org journal mode files with visual line mode.
   ((org-journal-mode-hook . (lambda () (visual-line-mode -1)))
    ;; After inserting the time stamp: Add a title, move to next line, indent
-   (org-journal-after-entry-create-hook . ajv/org-journal/insert-title)))
+   (org-journal-after-entry-create-hook . ajv/org-journal/insert-title)
+   (org-journal-mode-hook . (lambda () (if god-global-mode (god-mode-all) nil)))))
 
 (use-package ajv-elfeed
   :if (not (string-empty-p ajv/sensitive/my-elfeed-org-file))
