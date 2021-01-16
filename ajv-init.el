@@ -720,7 +720,21 @@
 
 (use-package ajv-modeline)
 
-
+(use-package 2048-game :commands 2048-game
+  :config
+  (setq *2048-default-victory-value* 32768)
+  (advice-add '2048-game
+	      :before #'(lambda ()
+			  (make-frame-command)
+			  (other-frame 1)))
+  (advice-add '2048-game
+	      :after #'(lambda ()
+			 (setq mode-line-format nil)
+			 (text-scale-increase 5.5)
+			 (set-window-margins nil (/ (- (window-total-width) 30) 3))))
+  :bind (:map 2048-mode-map
+	      ("q" . (lambda () (interactive) (ajv/kill-this-buffer) (delete-frame))))
+  )
 
 (use-package keycast :commands (keycast-mode))
 
