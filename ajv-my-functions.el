@@ -289,3 +289,8 @@ Taken: http://whattheemacsd.com/key-bindings.el-03.html"
   "Open my website, location given by ajv/sensitive/website-tramp-foldername using TRAMP."
   (interactive)
   (find-file ajv/sensitive/website-tramp-foldername))
+
+(defun ajv/remove-all-advice (sym)
+  "Remove all advices from symbol SYM."
+  (interactive "aFunction symbol: ")
+  (advice-mapc (lambda (advice _props) (advice-remove sym advice)) sym))
