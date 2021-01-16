@@ -478,6 +478,7 @@
 		 ("C-c C-d C-b" . ajv/dired/delete-backup-files)
 		 ("W" . ajv/dired/copy-directory-name-as-kill)
 		 ("e" . dired-toggle-read-only) ;short binding for C-x C-q
+		 ("q" . dired-toggle-read-only) ;consistency to god-mode binding
 		 (")" . ajv/dired/toggle-symlink-dereferencing)
 		 ;; ("M-<" . ajv/dired/go-to-beginning-of-buffer)
 		 ;; ("M->" . ajv/dired/go-to-end-of-buffer)
