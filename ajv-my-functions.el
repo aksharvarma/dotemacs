@@ -294,3 +294,15 @@ Taken: http://whattheemacsd.com/key-bindings.el-03.html"
   "Remove all advices from symbol SYM."
   (interactive "aFunction symbol: ")
   (advice-mapc (lambda (advice _props) (advice-remove sym advice)) sym))
+
+(defun ajv/clear-kill-ring ()
+  "Clear the whole kill-ring."
+  (interactive)
+  (progn (setq kill-ring nil) (garbage-collect)))
+
+(defun ajv/remove-last-kill-ring-item ()
+  "Clear the whole kill-ring."
+  (interactive)
+  (pop kill-ring))
+
+;; TODO: Make a function to change all - to SPC or vice versa
