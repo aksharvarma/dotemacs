@@ -77,7 +77,10 @@
   (use-package ajv-notmuch :demand
     :bind ((:map notmuch-show-mode-map
 		 ("u" . ajv/notmuch/show-toggle-unread)
-		 ("U" . ajv/notmuch/show-toggle-unread))
+		 ("U" . ajv/notmuch/show-toggle-unread)
+		 ("<" . w3m-previous-anchor)
+		 (">" . w3m-next-anchor)
+		 ("B" . ajv/notmuch/copy-link))
 	   (:map notmuch-tree-mode-map
 		 ("u" . ajv/notmuch/tree-toggle-unread)
 		 ("U" . ajv/notmuch/tree-toggle-unread))

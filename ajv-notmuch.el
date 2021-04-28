@@ -74,3 +74,15 @@
   (interactive)
   (setq notmuch-search-history nil)
   (notmuch-hello-update))
+
+
+(defun ajv/notmuch/copy-link ()
+  "Opens the current link or image or current page's uri or any url-like text under cursor in external browser."
+  ;; http://blog.binchen.org/posts/open-url-in-emacs-with-external-browser.html
+  (interactive)
+  (let ((url (or (w3m-anchor) (w3m-image))))
+    (if url
+	(progn
+	  (kill-new url)
+	  (message (concat "Copied url: " url)))
+      (message "No url like stuff detected"))))
