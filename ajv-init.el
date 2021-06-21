@@ -278,6 +278,12 @@
   :mode ("\\.py\\'" . python-mode)
   :commands python-mode
   :delight python-mode
+  :bind
+  ((:map elpy-mode-map
+	 ("s-c" . elpy-shell-send-region-or-buffer)
+	 ("s-C" . (lambda () (interactive)
+		    (let ((current-prefix-arg '-)) ;; emulate C-u
+		      (call-interactively 'elpy-shell-send-region-or-buffer))))))
   :config
   (elpy-enable)
   (setq elpy-rpc-python-command "python3")
