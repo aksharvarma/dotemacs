@@ -6,7 +6,9 @@
     (cond ((ajv/theme/using-dark-theme-p) (set-cursor-color "lime green"))
 	  ((ajv/theme/using-light-theme-p) (set-cursor-color "black")))))
 
-(setq ajv/god/exempt-modes '(org-agenda-mode elfeed-search-mode notmuch-hello-mode notmuch-search-mode notmuch-show-mode notmuch-tree-mode))
+(setq ajv/god/exempt-modes
+      '(org-agenda-mode elfeed-search-mode notmuch-hello-mode
+			notmuch-search-mode notmuch-show-mode notmuch-tree-mode))
 
 (defun ajv/god/insert-string-from-god-mode (string)
   "Read a string from the minibuffer and then insert it at point while in God mode.

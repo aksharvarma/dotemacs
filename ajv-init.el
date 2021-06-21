@@ -12,18 +12,16 @@
 ;; Everything after this point will be via use-package
 ;; Get use-package and its dependencies
 (require 'use-package)
-(setq use-package-verbose t
-      use-package-compute-statistics t
-      ;; Use full hook names so that help commands get contextual awareness
-      use-package-hook-name-suffix nil)
+(setq use-package-verbose t)
+(setq use-package-compute-statistics t)
+;; Use full hook names so that help commands get contextual awareness
+(setq use-package-hook-name-suffix nil)
 (use-package diminish)
 (use-package delight)
 (use-package bind-key)
 
 ;; Start loading up other things
 ;; (use-package cl)
-
-;; TODO: change combined setq calls into separate calls
 
 (use-package ajv-my-functions :demand
   :bind
@@ -101,8 +99,8 @@
   :config
   (ido-mode t)
   (ido-everywhere)
-  (setq ido-enable-flex-matching t
-	ido-auto-merge-work-directories-length -1)
+  (setq ido-enable-flex-matching t)
+  (setq ido-auto-merge-work-directories-length -1)
   (add-to-list 'ido-ignore-buffers "^.*\\.pdf$"))
 
 (use-package ido-completing-read+
@@ -168,9 +166,9 @@
 (use-package company
   ;; :bind (("S-<tab>" . company-complete))
   :config (global-company-mode)
-  (setq company-idle-delay 0.1
-	company-minimum-prefix-length 2
-	company-selection-wrap-around t))
+  (setq company-idle-delay 0.1)
+  (setq company-minimum-prefix-length 2)
+  (setq company-selection-wrap-around t))
 
 (use-package company-auctex
   :mode ("\\.tex\\'" . LaTeX-mode)
@@ -178,9 +176,9 @@
 
 
 (use-package flyspell :diminish ""
-  :config (setq flyspell-issue-welcome-flag nil
-		flyspell-issue-message-flag nil
-		ispell-program-name "aspell")    ; use aspell instead of ispell
+  :config (setq flyspell-issue-welcome-flag nil)
+  (setq flyspell-issue-message-flag nil)
+  (setq ispell-program-name "aspell")    ; use aspell instead of ispell
   :bind ("<mouse-3>" . flyspell-correct-word)
   :hook ((markdown-mode-hook text-mode-hook LaTeX-mode-hook org-mode-hook) . flyspell-mode))
 
@@ -264,8 +262,8 @@
   :bind (("C-M-1" . shell-pop))
   :config
   (setq shell-pop-shell-type (quote ("ansi-term" "*ansi-term*"
-                                     (lambda nil (ansi-term shell-pop-term-shell))))
-        shell-pop-term-shell "/bin/bash")
+                                     (lambda nil (ansi-term shell-pop-term-shell)))))
+  (setq shell-pop-term-shell "/bin/bash")
   ;; need to do this manually or not picked up by `shell-pop'
   (shell-pop--set-shell-type 'shell-pop-shell-type shell-pop-shell-type))
 
@@ -275,14 +273,13 @@
   :delight python-mode
   :config
   (elpy-enable)
-  (setq elpy-rpc-python-command "python3"
-	python-shell-interpreter "ipython3"
-        python-shell-interpreter-args "--TerminalInteractiveShell.simple_prompt=True"
-	elpy-autodoc-delay 0.1
-	elpy-syntax-check-command "pyflakes"
-	elpy-rpc-backend "jedi"
-	elpy-rpc-virtualenv-path 'current)
-
+  (setq elpy-rpc-python-command "python3")
+  (setq python-shell-interpreter "ipython3")
+  (setq python-shell-interpreter-args "--TerminalInteractiveShell.simple_prompt=True")
+  (setq elpy-autodoc-delay 0.1)
+  (setq elpy-syntax-check-command "pyflakes")
+  (setq elpy-rpc-backend "jedi")
+  (setq elpy-rpc-virtualenv-path 'current)
   ;; ;; If you want to use the Jupyter console instead of IPython
   ;; ;; Not being used at the moment.
   ;; (setq python-shell-interpreter "jupyter"
@@ -359,8 +356,8 @@
 (use-package browse-kill-ring :demand
   :config
   (browse-kill-ring-default-keybindings)
-  (setq browse-kill-ring-highlight-current-entry t
-	browse-kill-ring-highlight-inserted-item t))
+  (setq browse-kill-ring-highlight-current-entry t)
+  (setq browse-kill-ring-highlight-inserted-item t))
 
 (use-package undo-tree :demand
   :diminish
@@ -394,9 +391,9 @@
 		("M-m" . ajv/pdf-tools/toggle-modeline)))
   (when (featurep 'ido)
     (advice-add #'ido-find-file :filter-return #'ajv/pdf-tools/launch-file))
-  (setq pdf-view-resize-factor 1.05
-	auto-revert-interval 0.1
-	auto-revert-verbose nil)
+  (setq pdf-view-resize-factor 1.05)
+  (setq auto-revert-interval 0.1)
+  (setq auto-revert-verbose nil)
   :hook ((pdf-view-mode-hook . ajv/pdf-tools/save-disable-modeline-format)
 	 (pdf-view-mode-hook . ajv/pdf-tools/disable-linum-mode)
 	 (pdf-view-mode-hook . auto-revert-mode)
@@ -405,8 +402,9 @@
 
 (use-package pdf-view-restore
   :after pdf-tools
-  :config (setq pdf-view-restore-filename (concat user-emacs-directory ".pdf-view-restore")
-		use-file-base-name-flag nil)
+  :config
+  (setq pdf-view-restore-filename (concat user-emacs-directory ".pdf-view-restore"))
+  (setq use-file-base-name-flag nil)
   ;; :config (setq pdf-view-restore-filename "~/.emacs.d/.pdf-view-restore")
   :hook (pdf-view-mode-hook . pdf-view-restore-mode)
   )
@@ -430,8 +428,8 @@
   (use-package ajv-magit :demand
     :bind (:map magit-status-mode-map
 		([remap magit-mode-bury-buffer] . ajv/magit/kill-buffers)))
-  (setq magit-completing-read-function 'magit-ido-completing-read
-	magit-diff-refine-hunk t)
+  (setq magit-completing-read-function 'magit-ido-completing-read)
+  (setq magit-diff-refine-hunk t)
   ;; TODO: At some point figure out if we can provide a better location
   (transient-append-suffix 'magit-status-jump '(0 0 -1)
     '("c " "Commits" magit-jump-to-unpushed-to-upstream))
@@ -500,9 +498,9 @@
     (advice-add 'wdired-finish-edit :after #'ajv/hl-line/enable)
     :hook (wdired-mode-hook . ajv/hl-line/disable))
 
-  (setq dired-dwim-target t                     ;default copy to other window
-        dired-listing-switches ajv/dired/listing-switches-without-symlink
-	dired-recursive-copies 'always)
+  (setq dired-dwim-target t)                     ;default copy to other window
+  (setq dired-listing-switches ajv/dired/listing-switches-without-symlink)
+  (setq dired-recursive-copies 'always)
   (setq dired-guess-shell-alist-user (list '("\\.pdf\\'" "evince")))
   (put 'dired-find-alternate-file 'disabled nil) ;allow 'a' in dired
   )
@@ -527,7 +525,8 @@
    ("C-c C-g" . org-goto)		;because org-journal overrides this.
    ("<f10>" . (lambda () (interactive) (switch-to-buffer "*Org Agenda*"))))
   :config
-  (setq org-modules '(ol-bbdb ol-bibtex ol-docview ol-gnus org-habit ol-info ol-irc ol-mhe ol-rmail ol-w3m org-tempo))
+  (setq org-modules '(ol-bbdb ol-bibtex ol-docview ol-gnus org-habit ol-info ol-irc
+			      ol-mhe ol-rmail ol-w3m org-tempo))
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . nil)
@@ -542,12 +541,12 @@
   :config
   (setq org-noter-default-notes-file-names
 	`(,(file-truename (concat ajv/settings/symlink-folder
-				  "research/org-research-notes.org")))
-	org-noter-always-create-frame nil
-	org-noter-doc-split-fraction (cons 0.618 0.5)
-	org-noter-auto-save-last-location t
-	org-noter-kill-frame-at-session-end nil
-	org-noter-insert-note-no-questions t)
+				  "research/org-research-notes.org"))))
+  (setq org-noter-always-create-frame nil)
+  (setq org-noter-doc-split-fraction (cons 0.618 0.5))
+  (setq org-noter-auto-save-last-location t)
+  (setq org-noter-kill-frame-at-session-end nil)
+  (setq org-noter-insert-note-no-questions t)
   :bind ((:map org-noter-doc-mode-map
 	       ("M-p" . org-noter-sync-prev-note)
 	       ("M-n" . org-noter-sync-next-note)
@@ -562,14 +561,14 @@
   (setq org-journal-prefix-key "C-c j ")
   :bind (:map org-mode-map ("C-c C-j" . org-journal-new-entry))
   :config
-  (setq org-journal-file-type 'weekly
-	org-journal-dir (file-truename
-			 (concat ajv/settings/symlink-folder "journal/"))
-	org-journal-created-property-timestamp-format "%Y-%m-%d"
-	org-journal-date-format "%A, %d %B %Y"
-	org-journal-file-format "%Y-%m-%d.org"
-	org-journal-time-format "%H:%M "
-	org-journal-hide-entries-p nil)
+  (setq org-journal-file-type 'weekly)
+  (setq org-journal-dir (file-truename
+			 (concat ajv/settings/symlink-folder "journal/")))
+  (setq org-journal-created-property-timestamp-format "%Y-%m-%d")
+  (setq org-journal-date-format "%A, %d %B %Y")
+  (setq org-journal-file-format "%Y-%m-%d.org")
+  (setq org-journal-time-format "%H:%M ")
+  (setq org-journal-hide-entries-p nil)
   (defun ajv/org-journal/insert-title ()
     "Read a string from the minibuffer and then insert it as title of journal entry."
     ;; (interactive "sString: ")
@@ -594,8 +593,7 @@
     ;; http://pragmaticemacs.com/emacs/read-your-rss-feeds-in-emacs-with-elfeed
     :config
     (elfeed-org)
-    (setq rmh-elfeed-org-files ajv/my-elfeed-org-file-list)
-    )
+    (setq rmh-elfeed-org-files ajv/my-elfeed-org-file-list))
   :hook ((after-init-hook . ajv/elfeed/kill-log-buffer))
   )
 
@@ -606,15 +604,15 @@
   ;; The default enging to use to compile
   (setq-default TeX-engine 'xetex)
   ;; Various other default settings
-  (setq LaTeX-command "latex -shell-escape --synctex=1"
-	LaTeX-command-style '(("" "%(PDF)%(latex) -shell-escape %(file-line-error) %(extraopts) %S%(PDFout)"))
-	TeX-save-query nil                ;Don't ask before saving .tex files
-	;; To make AUCTeX read/update on changes to .bib files.
-	TeX-parse-self t ; Enable parse on load. [DISABLED]
-	TeX-auto-save t ; Enable parse on save. [DISABLED]
-	;; TeX-force-default-mode t
-	reftex-plug-into-AUCTeX t
-	reftex-ref-macro-prompt nil)
+  (setq LaTeX-command "latex -shell-escape --synctex=1")
+  (setq LaTeX-command-style '(("" "%(PDF)%(latex) -shell-escape %(file-line-error) %(extraopts) %S%(PDFout)")))
+  (setq TeX-save-query nil)                ;Don't ask before saving .tex files
+  ;; To make AUCTeX read/update on changes to .bib files.
+  (setq TeX-parse-self t) ; Enable parse on load. [DISABLED]
+  (setq TeX-auto-save t) ; Enable parse on save. [DISABLED]
+  ;; TeX-force-default-mode t
+  (setq reftex-plug-into-AUCTeX t)
+  (setq reftex-ref-macro-prompt nil)
 
   ;; What program to select when viewing output.
   (setq TeX-view-program-selection '(((output-dvi has-no-display-manager) "dvi2tty")
@@ -708,9 +706,9 @@
   (load-theme ajv/settings/prefered-light-theme-name t t)
   (load-theme ajv/settings/prefered-dark-theme-name)
 
-  (setq-default fill-column most-positive-fixnum
-		visual-line-fringe-indicators '(nil right-curly-arrow)
-		frame-title-format '("%b [%m]"))
+  (setq-default fill-column most-positive-fixnum)
+  (setq-default visual-line-fringe-indicators '(nil right-curly-arrow))
+  (setq-default frame-title-format '("%b [%m]"))
   (column-number-mode t)
   (set-fringe-style '(0 . nil))
   (add-to-list 'default-frame-alist '(fullscreen . fullboth)) ;maximize all frames

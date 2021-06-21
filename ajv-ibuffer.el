@@ -1,8 +1,8 @@
 (provide 'ajv-ibuffer)
 
-(setq ibuffer-show-empty-filter-groups nil
-      ibuffer-default-sorting-mode 'major-mode
-      ibuffer-expert t)
+(setq ibuffer-show-empty-filter-groups nil)
+(setq ibuffer-default-sorting-mode 'major-mode)
+(setq ibuffer-expert t)
 
 (setq ibuffer-saved-filter-groups
       (quote (("Uncategorized"

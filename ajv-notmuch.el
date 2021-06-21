@@ -1,10 +1,10 @@
 (provide 'ajv-notmuch)
 
-(setq notmuch-search-oldest-first nil
-      mm-text-html-renderer 'w3m
-      mm-default-directory "~/Downloads/"
-      mm-html-inhibit-images t
-      notmuch-multipart/alternative-discouraged '("text/plain" "text/html"))
+(setq notmuch-search-oldest-first nil)
+(setq mm-text-html-renderer 'w3m)
+(setq mm-default-directory "~/Downloads/")
+(setq mm-html-inhibit-images t)
+(setq notmuch-multipart/alternative-discouraged '("text/plain" "text/html"))
 
 (setq notmuch-saved-searches
       (quote
@@ -84,5 +84,5 @@
     (if url
 	(progn
 	  (kill-new url)
-	  (message (concat "Copied url: " url)))
+	  (message (concat "Copied url.")))
       (message "No url like stuff detected"))))

@@ -6,6 +6,6 @@
       '((propertize (concat " " 24-hours ":" minutes "")
 		    'face 'ajv/settings/display-time-face)))
 
-(setq display-time-24hr-format t       ;Use 24 hr format
-      display-time-day-and-date t)      ;Also show day and date
+(setq display-time-24hr-format t)       ;Use 24 hr format
+(setq display-time-day-and-date t)      ;Also show day and date
 (display-time-mode 1)                   ;Actually show the time

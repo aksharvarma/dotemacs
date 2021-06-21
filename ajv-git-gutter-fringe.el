@@ -14,5 +14,5 @@
 (set-face-foreground 'git-gutter-fr:added    "green")
 (set-face-foreground 'git-gutter-fr:deleted  "red")
 
-(setq git-gutter-fr:side 'right-fringe
-      git-gutter:update-interval 1)
+(setq git-gutter-fr:side 'right-fringe)
+(setq git-gutter:update-interval 1)
