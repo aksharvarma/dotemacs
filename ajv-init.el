@@ -677,7 +677,9 @@
   (setq proced-auto-update-flag t)
   (setq proced-auto-update-interval 1)
   (setq proced-descend t)
-  (setq proced-filter 'user))
+  (setq proced-filter 'user)
+  :bind (:map proced-mode-map
+	      ("q" . ajv/kill-this-buffer)))
 
 (use-package proced-narrow :diminish
   :after proced
