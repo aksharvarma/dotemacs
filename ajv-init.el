@@ -66,7 +66,8 @@
   ((find-file-hook . ajv/rename-symlink-buffer-with-truename)
    (emacs-startup-hook . ajv/measure-loading-time)
    (before-save-hook . ajv/delete-trailing-whitespace)
-   (emacs-startup-hook . ajv/window-config))
+   ;; (emacs-startup-hook . ajv/window-config)
+   )
   )
 
 (use-package notmuch
