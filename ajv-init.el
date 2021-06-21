@@ -312,6 +312,11 @@
 (use-package py-autopep8
   :hook ((elpy-mode-hook . py-autopep8-enable-on-save)))
 
+(use-package ein
+  :bind ((:map ein:notebook-mode-map ("s-s" . ein:notebook-save-notebook-command-km)))
+  :hook ((ein:markdown-mode-hook . ajv/company/disable)
+	 (ein:notebook-mode-hook . ajv/company/disable)))
+
 (use-package flymake
   :commands flymake-mode
   :init
