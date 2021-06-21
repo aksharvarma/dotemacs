@@ -267,6 +267,12 @@
   ;; need to do this manually or not picked up by `shell-pop'
   (shell-pop--set-shell-type 'shell-pop-shell-type shell-pop-shell-type))
 
+(ajv/make-enable-disable-defuns company-mode company 1 -1)
+(ajv/make-enable-disable-defuns yas/minor-mode yas/minor-mode 1 -1)
+(use-package json-mode :diminish
+  :hook ((json-mode-hook . ajv/company/disable)
+	 (json-mode-hook . ajv/yas/minor-mode/disable)))
+
 (use-package python :defer 2
   :mode ("\\.py\\'" . python-mode)
   :commands python-mode
