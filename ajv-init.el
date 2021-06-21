@@ -536,12 +536,11 @@
 	      ("f" . dired-subtree-next-sibling)
 	      ("b" . dired-subtree-previous-sibling)))
 
-(use-package ajv-org
-  :demand
+(use-package ajv-org :demand
   :bind
   (("s-a" . org-agenda)
    ("C-c C-g" . org-goto)		;because org-journal overrides this.
-   ("<f10>" . (lambda () (interactive) (switch-to-buffer "*Org Agenda*"))))
+   ("<f10>" . (lambda () (interactive) (delete-other-windows) (switch-to-buffer "*Org Agenda*"))))
   :config
   (setq org-modules '(ol-bbdb ol-bibtex ol-docview ol-gnus org-habit ol-info ol-irc
 			      ol-mhe ol-rmail ol-w3m org-tempo))
