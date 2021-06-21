@@ -687,7 +687,7 @@
               ("/" . proced-narrow)))
 
 
-(use-package beginend :demand :diminish beginend-global-mode
+(use-package beginend :demand :diminish beginend-global-mode ""
   :config
   (dolist (mode beginend-modes) (diminish (cdr mode)))
   (beginend-global-mode 1))
