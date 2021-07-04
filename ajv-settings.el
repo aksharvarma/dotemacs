@@ -51,6 +51,14 @@
      (:foreground "#99FF00" :background "#121212")))
   "Face used to display the time in the mode line. This particular face is used for better visibility")
 
+(defvar ajv/settings/primary-frame-reference nil
+  "Contains a reference to the primary frame of this Emacs instance. It is mainly used by ajv/create-my-window-config-in-primary-frame to choose which frame to use when creating the preferred window configuration.")
+
+(defvar ajv/settings/period-for-showing-window-config 30
+  "The idle time, in minutes, after which to automatically show my preferred window configuration. Used in the ajv/settings/timer-to-periodically-show-window-config timer.")
+
+(defvar ajv/settings/timer-to-periodically-show-window-config nil
+  "Contains a reference to a timer that periodically (period set in ajv/settings/period-for-showing-window-config) shows my preferred window config in the primary frame (found in ajv/settings/primary-frame-reference).")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Variables defined in ajv-sensitive-settings.el

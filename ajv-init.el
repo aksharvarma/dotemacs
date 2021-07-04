@@ -31,8 +31,8 @@
    ("s-~" . ajv/open-symlink-folder-in-dired)
    ("s-p" . ajv/mypaths)
    ("s-P" . ajv/mypaths-other-window)
-   ("C-c w c". ajv/window-config)
-   ("<f8>". ajv/window-config)
+   ("C-c w c". ajv/create-my-window-config)
+   ("<f8>". ajv/create-my-window-config)
    ("%" . ajv/match-paren)
    ("s-w" . ajv/kill-this-buffer)
    ("s-W" . ajv/kill-other-buffer)
@@ -62,11 +62,14 @@
     (global-set-key (kbd "C-x C-c") 'ajv/ask-before-closing))
   (advice-add 'revert-buffer :around #'yes-or-no-p->-y-or-n-p)
   (global-set-key [remap goto-line] 'ajv/goto-line-with-feedback)
+  (setq ajv/settings/timer-to-periodically-show-window-config
+	(run-with-idle-timer (* 60 ajv/settings/period-for-showing-window-config)
+			     t 'ajv/create-my-window-config-in-primary-frame))
   :hook
   ((find-file-hook . ajv/rename-symlink-buffer-with-truename)
    (emacs-startup-hook . ajv/measure-loading-time)
    (before-save-hook . ajv/delete-trailing-whitespace)
-   ;; (emacs-startup-hook . ajv/window-config)
+   ;; (emacs-startup-hook . ajv/create-my-window-config)
    )
   )
 

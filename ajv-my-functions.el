@@ -103,9 +103,11 @@ Picked from: http://nileshk.com/2009/06/13/prompt-before-closing-emacs.html"
                     (time-subtract after-init-time before-init-time)))
            gcs-done))
 
-(defun ajv/window-config ()
+(defun ajv/create-my-window-config ()
   "Sets windows according to my liking"
   (interactive)
+  (unless ajv/settings/primary-frame-reference
+    (setq ajv/settings/primary-frame-reference (selected-frame)))
   (delete-other-windows)
   (split-window-horizontally)
   (ibuffer)
@@ -114,14 +116,25 @@ Picked from: http://nileshk.com/2009/06/13/prompt-before-closing-emacs.html"
   (other-window 1)
   )
 
+(defun ajv/create-my-window-config-in-primary-frame (&optional force)
+  "Sets windows according to my liking"
+  (interactive)
+  (if force (ajv/create-my-window-config)
+    (progn
+      (unless ajv/settings/primary-frame-reference
+	(setq ajv/settings/primary-frame-reference (selected-frame)))
+      (select-frame ajv/settings/primary-frame-reference)
+      (ajv/create-my-window-config)))
+  )
+
 (defun ajv/reopen-file-with-sudo ()
   "Advises ido-find-file to reopen current buffer with sudo permission"
   (interactive)
   (find-alternate-file (concat "/sudo::" buffer-file-name)))
 
 (defun yes-or-no-p->-y-or-n-p (orig-fun &rest r)
-  (cl-letf (((symbol-function 'yes-or-no-p) #'y-or-n-p))
-    (apply orig-fun r)))
+(cl-letf (((symbol-function 'yes-or-no-p) #'y-or-n-p))
+  (apply orig-fun r)))
 
 (defun ajv/mypaths ()
   "Call ido-find-file after setting default-directory to be the symlink folder. Effectively mirrors the mypaths kind of behaviour."
