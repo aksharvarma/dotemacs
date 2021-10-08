@@ -95,6 +95,8 @@
 		 ("g" . notmuch-poll-and-refresh-this-buffer)
 		 ("k" . ajv/notmuch/clear-searches)))
     :hook (notmuch-hello-refresh-hook . ajv/notmuch/set-initial-cursor-position))
+  (setq ajv/notmuch/timer-for-polling
+	(run-at-time 0 10 'ajv/notmuch/poll-quietly))
   )
 
 (use-package ido :demand

@@ -54,7 +54,7 @@
 (defvar ajv/settings/primary-frame-reference nil
   "Contains a reference to the primary frame of this Emacs instance. It is mainly used by ajv/create-my-window-config-in-primary-frame to choose which frame to use when creating the preferred window configuration.")
 
-(defvar ajv/settings/period-for-showing-window-config 30
+(defvar ajv/settings/period-for-showing-window-config 15
   "The idle time, in minutes, after which to automatically show my preferred window configuration. Used in the ajv/settings/timer-to-periodically-show-window-config timer.")
 
 (defvar ajv/settings/timer-to-periodically-show-window-config nil
