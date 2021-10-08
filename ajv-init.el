@@ -55,6 +55,7 @@
    ("M-u" . upcase-dwim)
    ("M-l" . downcase-dwim)
    ("M-c" . capitalize-dwim)
+   ("C-+" . ajv/increase-frame-font)
    (:map help-mode-map
 	 ("q" . (lambda () (interactive) (ajv/kill-this-buffer) (other-window 1)))))
   :config

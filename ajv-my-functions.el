@@ -318,4 +318,12 @@ Taken: http://whattheemacsd.com/key-bindings.el-03.html"
   (interactive)
   (pop kill-ring))
 
+(defun ajv/increase-frame-font (decreasep)
+  (interactive "P")
+  (let ((old-face-attribute (face-attribute 'default :height)))
+    (if decreasep			;if prefix then decrease else increase
+	(set-face-attribute 'default nil :height (- old-face-attribute 10))
+      (set-face-attribute 'default nil :height (+ old-face-attribute 10)))))
+
+
 ;; TODO: Make a function to change all - to SPC or vice versa
