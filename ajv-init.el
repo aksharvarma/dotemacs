@@ -272,6 +272,23 @@
   ;; need to do this manually or not picked up by `shell-pop'
   (shell-pop--set-shell-type 'shell-pop-shell-type shell-pop-shell-type))
 
+
+(use-package indent-tools)
+
+(use-package highlight-indentation
+  :hook ((prog-mode-hook . highlight-indentation-mode)
+	 (prog-mode-hook . highlight-indentation-current-column-mode)))
+
+(use-package yaml-mode
+  :mode ("\\.yaml\\'" . yaml-mode)
+  :hook ((yaml-mode-hook . highlight-indentation-mode)
+	 (yaml-mode-hook . highlight-indentation-current-column-mode))
+  :bind ((:map yaml-mode-map
+	       ("C-m" . newline-and-indent)
+	       ("RET" . newline-and-indent)
+	       ("C-c >" . indent-tools-hydra/body))))
+
+
 (ajv/make-enable-disable-defuns company-mode company 1 -1)
 (ajv/make-enable-disable-defuns yas/minor-mode yas/minor-mode 1 -1)
 (use-package json-mode :diminish
@@ -287,7 +304,8 @@
 	 ("s-c" . elpy-shell-send-region-or-buffer)
 	 ("s-C" . (lambda () (interactive)
 		    (let ((current-prefix-arg '-)) ;; emulate C-u
-		      (call-interactively 'elpy-shell-send-region-or-buffer))))))
+		      (call-interactively 'elpy-shell-send-region-or-buffer))))
+	 ("C-c <" . indent-tools-hydra/body)))
   :config
   (elpy-enable)
   (setq elpy-rpc-python-command "python3")
@@ -498,6 +516,9 @@
     ;; Swap keybindings for dired-jump and dired-jump-other-window
     :bind (("C-x C-j" . dired-jump)
 	   ("C-x M-j" . dired-jump-other-window)))
+  (use-package dired-narrow
+    :bind (:map dired-mode-map
+		("/" . dired-narrow-regexp)))
   (use-package ajv-dired :demand
     :bind  (:map dired-mode-map
 		 ("s". ajv/dired/sort-criteria)
