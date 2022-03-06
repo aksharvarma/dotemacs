@@ -64,8 +64,9 @@
   (advice-add 'revert-buffer :around #'yes-or-no-p->-y-or-n-p)
   (global-set-key [remap goto-line] 'ajv/goto-line-with-feedback)
   (setq ajv/settings/timer-to-periodically-show-window-config
-	(run-with-idle-timer (* 60 ajv/settings/period-for-showing-window-config)
-			     t 'ajv/create-my-window-config-in-primary-frame))
+	(run-with-idle-timer ;; (* 60 ajv/settings/period-for-showing-window-config)
+	 ajv/settings/period-for-showing-window-config-in-seconds
+	 t 'ajv/create-my-window-config-in-primary-frame))
   :hook
   ((find-file-hook . ajv/rename-symlink-buffer-with-truename)
    (emacs-startup-hook . ajv/measure-loading-time)
@@ -74,9 +75,17 @@
    )
   )
 
+;; (remove-hook 'find-file-hook 'ajv/rename-symlink-buffer-with-truename)
+(add-hook 'find-file-hook 'ajv/rename-symlink-buffer-with-truename)
 (use-package notmuch
-  :commands notmuch notmuch-jump-search notmuch-search
+  :commands notmuch notmuch-jump-search notmuch-search ajv/notmuch/start-notmuch
   :config
+  ;; Arch linux's notmuch installation comes with emacs stuff.
+  ;; "Due to the dependency on the command line interface, the Notmuch Emacs interface version must be compatible with the Notmuch version. On Linux, the easiest way to ensure this is to use the package(s) in your distribution's package repository."
+  ;; https://notmuchmail.org/notmuch-emacs/
+  ;;
+  ;; The following lines ensures that we use that notmuch code.
+  (add-to-list 'load-path "/usr/share/emacs/site-lisp/")
   (use-package ajv-notmuch :demand
     :bind ((:map notmuch-show-mode-map
 		 ("u" . ajv/notmuch/show-toggle-unread)
@@ -93,10 +102,45 @@
 		 ("g" . notmuch-poll-and-refresh-this-buffer))
 	   (:map notmuch-hello-mode-map
 		 ("g" . notmuch-poll-and-refresh-this-buffer)
-		 ("k" . ajv/notmuch/clear-searches)))
+		 ("k" . ajv/notmuch/clear-searches)
+		 ("." . ajv/notmuch/set-initial-cursor-position)))
     :hook (notmuch-hello-refresh-hook . ajv/notmuch/set-initial-cursor-position))
-  (setq ajv/notmuch/timer-for-polling
-	(run-at-time 0 10 'ajv/notmuch/poll-quietly))
+  (setq ajv/notmuch/timer-to-periodically-update-notmuch
+	(run-at-time t ajv/notmuch/period-for-updating-notmuch-in-seconds
+		     'ajv/notmuch/poll-and-refresh-quietly))
+  (ajv/notmuch/alert-enable-mode-line-display)
+  )
+
+(use-package message
+  :after notmuch
+  ;; :commands
+  ;; message-forward-subject-fwd
+  :config
+  (setq message-citation-line-function
+        'message-insert-formatted-citation-line)
+  (setq message-citation-line-format
+        "On %a, %b %d %Y at %r, %f wrote:")
+  (setq message-make-forward-subject-function
+        #'message-forward-subject-fwd)
+  (setq message-auto-save-directory ajv/sensitive/message-auto-save-directory)
+  (setq message-send-mail-partially-limit nil)
+  (setq mail-specify-envelope-from t)
+  (setq message-sendmail-envelope-from 'header)
+  (setq mail-envelope-from 'header)
+  ;; The following line is so as to fix the `i-did-not-set--mail-host-address--so-tickle-me'
+  ;; text that shows up in buffers when notmuch visits emails
+  (setq mail-host-address (system-name))
+  (setq message-send-mail-function 'message-send-mail-with-sendmail)
+  (setq message-forward-as-mime t)
+  :hook
+  (message-sent-hook . ajv/notmuch/flush-msmtpq)
+  )
+
+
+(use-package sendmail
+  :after notmuch
+  :config
+  (setq sendmail-program "msmtpq")
   )
 
 (use-package ido :demand
@@ -155,25 +199,26 @@
 	 ("<down>" . ajv/ibuffer/next-line)
 	 ("s-f" . ajv/ibuffer/ido-find-file)
 	 ("s-F" . ajv/ibuffer/ido-find-file-other-window)
-	 ;; ("M-<" . ajv/ibuffer/go-to-beginning-of-buffer)
-	 ;; ("M->" . ajv/ibuffer/go-to-end-of-buffer)
-	 ;; ("<" . ajv/ibuffer/go-to-beginning-of-buffer)
-	 ;; (">" . ajv/ibuffer/go-to-end-of-buffer)
+	 ("H" . ajv/ibuffer/default-filter-folding)
 	 ))
   :config
   (use-package ibuffer-vc :demand)
+  (ajv/make-enable-disable-defuns ibuffer-auto-mode ibuffer-auto 1 -1)
   :hook
   (;; (ibuffer-mode . ajv/ibuffer/group-by-vc)
    (ibuffer-mode-hook . ajv/ibuffer/use-default-filter)
    (ibuffer-mode-hook . ibuffer-auto-mode)
    (ibuffer-mode-hook . ajv/hl-line/enable)
-   )
-  )
+   (ibuffer-mode-hook . ajv/ibuffer-auto/enable)))
 
 (use-package company
   ;; :bind (("S-<tab>" . company-complete))
   :config (global-company-mode)
-  (setq company-idle-delay 0.1)
+  (defun ajv/company-idle-delay ()
+    (if (eq major-mode
+	    'inferior-python-mode)
+	nil 0.1))
+  (setq company-idle-delay 'ajv/company-idle-delay)
   (setq company-minimum-prefix-length 2)
   (setq company-selection-wrap-around t))
 
@@ -297,6 +342,8 @@
   :hook ((json-mode-hook . ajv/company/disable)
 	 (json-mode-hook . ajv/yas/minor-mode/disable)))
 
+(use-package logview :demand)
+
 (use-package python :defer 2
   :mode ("\\.py\\'" . python-mode)
   :commands python-mode
@@ -310,25 +357,29 @@
 	 ("C-c <" . indent-tools-hydra/body)))
   :config
   (elpy-enable)
-  (setq elpy-rpc-python-command "python3")
-  (setq python-shell-interpreter "ipython3")
-  (setq python-shell-interpreter-args "--TerminalInteractiveShell.simple_prompt=True")
+  (setq elpy-rpc-python-command "python")
+  ;; (setq python-shell-interpreter "ipython")
+  ;; (setq python-shell-interpreter-args "-i --simple-prompt")
   (setq elpy-autodoc-delay 0.1)
   (setq elpy-syntax-check-command "pyflakes")
+  (setq elpy-rpc-large-buffer-size 65536)
   (setq elpy-rpc-backend "jedi")
   (setq elpy-rpc-virtualenv-path 'current)
-  ;; ;; If you want to use the Jupyter console instead of IPython
-  ;; ;; Not being used at the moment.
-  ;; (setq python-shell-interpreter "jupyter"
-  ;;       python-shell-interpreter-args "console --simple-prompt"
-  ;; 	python-shell-prompt-detect-failure-warning nil)
-  ;; (add-to-list 'python-shell-completion-native-disabled-interpreters "jupyter")
+  ;; (setq elpy-rpc-virtualenv-path 'system)
+  (setq elpy-shell-starting-directory 'current-directory)
+  ;; If you want to use the Jupyter console instead of IPython
+  ;; Not being used at the moment.
+  (setq python-shell-interpreter "jupyter")
+  (setq python-shell-interpreter-args "console --simple-prompt")
+  (setq python-shell-prompt-detect-failure-warning nil)
+  (add-to-list 'python-shell-completion-native-disabled-interpreters "jupyter")
 
   ;; Adjust elpy-modules, delete flymake because we'll use flycheck
   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
   (add-to-list 'elpy-modules 'elpy-module-folding) ;add folding help
   (add-to-list 'elpy-modules 'elpy-module-autodoc) ;auto update docs
-  )
+  (add-to-list 'dired-guess-shell-alist-user '("\\.py\\'" "python"))
+  :hook (elpy-mode-hook . (lambda () (elpy-shell-toggle-dedicated-shell 1))))
 
 (use-package flycheck :demand :after python :diminish
   :hook ((elpy-mode-hook . flycheck-mode)))
@@ -342,6 +393,8 @@
 	 (ein:notebook-mode-hook . ajv/company/disable)))
 
 (use-package flymake
+  ;; TODO: Change this to flycheck
+  ;; https://www.masteringemacs.org/article/spotlight-flycheck-a-flymake-replacement
   :commands flymake-mode
   :init
   (setq flymake-suppress-zero-counters t)
@@ -387,7 +440,7 @@
    ("C-c C-s" . wgrep-save-all-buffers))
   :config
   (rg-enable-menu)
-  (setq rg-command-line-flags '("--pcre2")))
+  (setq rg-command-line-flags '("--pcre2 --follow")))
 
 (use-package anzu :demand :diminish
   :config
@@ -452,6 +505,98 @@
   )
 
 
+(use-package nov
+  :demand
+  :bind
+  (:map nov-mode-map
+	("j" . nov-scroll-up)
+	("k" . nov-scroll-down)
+	("f" . nov-history-forward)
+	("b" . nov-history-back)
+	("M-m" . ajv/nov/toggle-modeline))
+  :config
+  (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+  (setq nov-text-width 80)
+  (defun ajv/nov/font-setup ()
+    (face-remap-add-relative 'variable-pitch :family "Liberation Sans"
+                             :height 1.25))
+
+  (defvar ajv/nov/mode-modeline-format)
+  (defun ajv/nov/save-disable-modeline-format ()
+    "Removes mode-line when in nov-mode. Use toggle function to show/hide."
+    (interactive)
+    (setq ajv/nov/mode-modeline-format mode-line-format)
+    (setq mode-line-format nil))
+
+  (defun ajv/nov/toggle-modeline ()
+    "Toggles displaying the mode-line when in nov-mode."
+    (interactive)
+    (if mode-line-format
+	(setq mode-line-format nil)
+      (setq mode-line-format ajv/nov/mode-modeline-format))
+    (force-mode-line-update 1)		;Needed to actually see the change
+    )
+
+  (defun ajv/nov/margin-and-width-adjustments ()
+    (let ((total (window-width))
+	  (left-margin (floor (/ (window-width) 4)))
+	  (text-width (floor (/ (window-width) 2))))
+      (when (eq major-mode "EPUB")
+	(setq nov-text-width text-width)
+	(set-window-margins nil left-margin))))
+
+  (defun ajv/nov/window-configuration-change-hook-fn ()
+    (ajv/nov/post-html-render-margin-adjustments)
+    (remove-hook 'window-configuration-change-hook
+		 'ajv/nov/window-configuration-change-hook-fn
+		 t))
+  (defun ajv/nov/post-html-render-margin-adjustments ()
+    (let ((total (window-width))
+	  (left-margin (floor (/ (window-width) 4)))
+	  (text-width (floor (/ (window-width) 2))))
+      (setq nov-text-width text-width)
+      (set-window-margins nil left-margin))
+    (add-hook 'window-configuration-change-hook
+              'ajv/nov/window-configuration-change-hook-fn
+              nil t))
+
+  (defun ajv/nov/dedicated-frame-on-mode-start ()
+    (interactive)
+    (let* ((buffername (buffer-name))
+	   (orig-margins (window-margins))
+	   (old-left-margins (if orig-margins
+				 (car orig-margins)
+			       0))
+	   (window-to-redisplay (selected-window)))
+      (bury-buffer)
+      (switch-to-buffer-other-frame (buffer-name))
+      ;; (make-frame-command)
+      (other-frame -1)
+      ;; (bury-buffer)
+      ;; (other-frame 1)
+      ;; (switch-to-buffer-other-frame (buffer-name))
+      ;; (other-frame -1)
+      (set-window-margins nil old-left-margins)
+      (force-window-update window-to-redisplay)
+      (redisplay)
+      (other-frame 1)
+      )
+    ;; (let ((orig-frame (selected-frame)))
+    ;;   (make-frame-command)
+    ;;   (switch-to-buffer-other-frame (buffer-name)))
+    )
+
+  ;; (lambda () (make-frame-command) (other-frame -1) (bury-buffer))
+
+  :hook (;; (change-major-mode-after-body-hook . ajv/nov/dedicated-frame-on-mode-start)
+	 (nov-mode-hook . ajv/nov/dedicated-frame-on-mode-start)
+	 (nov-mode-hook . ajv/nov/font-setup)
+	 (nov-mode-hook . ajv/nov/save-disable-modeline-format)
+	 (nov-post-html-render-hook . ajv/nov/post-html-render-margin-adjustments))
+  )
+
+(remove-hook 'nov-mode-hook 'ajv/nov/dedicated-frame-on-mode-start)
+(remove-hook 'nov-post-html-render-hook 'ajv/nov/post-html-render-margin-adjustments)
 
 ;; Mode for .gitignore, .git/info/exclude, and git/ignore files.
 (use-package gitignore-mode)
@@ -536,7 +681,9 @@
     :hook ((dired-mode-hook . ajv/dired/set-default-sorting)
 	   (dired-mode-hook . ajv/dired/hide-details-omit-hidden-files)
 	   (dired-mode-hook . ajv/hl-line/enable)))
-
+  (use-package dired-async
+    :config
+    (dired-async-mode 1))
   (use-package wdired
     :config
     (setq wdired-use-dired-vertical-movement 'sometimes)
@@ -546,7 +693,7 @@
   (setq dired-dwim-target t)                     ;default copy to other window
   (setq dired-listing-switches ajv/dired/listing-switches-without-symlink)
   (setq dired-recursive-copies 'always)
-  (setq dired-guess-shell-alist-user (list '("\\.pdf\\'" "evince")))
+  (add-to-list 'dired-guess-shell-alist-user '("\\.pdf\\'" "evince"))
   (put 'dired-find-alternate-file 'disabled nil) ;allow 'a' in dired
   )
 
@@ -567,15 +714,22 @@
   :bind
   (("s-a" . org-agenda)
    ("C-c C-g" . org-goto)		;because org-journal overrides this.
+   ("C-c l" . org-store-link)
+   ("C-c c" . org-capture)
    ("<f10>" . (lambda () (interactive) (delete-other-windows) (switch-to-buffer "*Org Agenda*"))))
   :config
   (setq org-modules '(ol-bbdb ol-bibtex ol-docview ol-gnus org-habit ol-info ol-irc
 			      ol-mhe ol-rmail ol-w3m org-tempo))
+  (setq org-default-notes-file (concat ajv/sensitive/my-org-agenda-files-dir "/refile.org"))
+
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . nil)
      (python . nil)
      (latex . t)))
+
+  ;; (advice-add 'org-agenda-to-appt :before #'ajv/org/remove-all-appts)
+  ;; :hook ((org-after-todo-state-change-hook . ajv/org/clock-in-if-state-ongoing))
   )
 
 (use-package org-bullets :hook ((org-mode-hook . org-bullets-mode)))
@@ -732,7 +886,8 @@
 	     (auto-fill-function "" t)))
   :hook ((before-save-hook . time-stamp)
 	 (package-menu-mode-hook . ajv/hl-line/enable)
-	 (text-mode-hook . (lambda () (setq comment-start "# ")))
+	 ;; (text-mode-hook . (lambda () (setq comment-start "# ")))
+	 ;; (remove-hook 'text-mode-hook '(lambda () (setq comment-start "# ")))
 	 (after-save-hook . executable-make-buffer-file-executable-if-script-p)
 	 ;; Enable hideshow-minor-mode
 	 (prog-mode-hook . hs-minor-mode)
@@ -754,7 +909,9 @@
 
   (setq-default fill-column most-positive-fixnum)
   (setq-default visual-line-fringe-indicators '(nil right-curly-arrow))
-  (setq-default frame-title-format '("%b [%m]"))
+  ;; The hostname part in `frame-title-format' taken from:
+  ;; https://blog.lambda.cx/posts/eamacs-improved-frame-title/
+  (setq-default frame-title-format '("%b @" (:eval (or (file-remote-p default-directory 'host) system-name)) " - Emacs"))
   (column-number-mode t)
   (set-fringe-style '(0 . nil))
   (add-to-list 'default-frame-alist '(fullscreen . fullboth)) ;maximize all frames
@@ -778,7 +935,7 @@
   (setq *2048-default-victory-value* 32768)
   (advice-add '2048-game
 	      :before #'(lambda ()
-			  (make-frame-command)
+			  (make-frame '((name . "2048")))
 			  (other-frame 1)))
   (advice-add '2048-game
 	      :after #'(lambda ()

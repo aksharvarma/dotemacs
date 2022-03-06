@@ -103,28 +103,35 @@ Picked from: http://nileshk.com/2009/06/13/prompt-before-closing-emacs.html"
                     (time-subtract after-init-time before-init-time)))
            gcs-done))
 
+(defun ajv/set-current-frame-as-primary-frame-reference ()
+  "Sets windows according to my liking"
+  (interactive)
+  (setq ajv/settings/primary-frame-reference (selected-frame)))
+
 (defun ajv/create-my-window-config ()
   "Sets windows according to my liking"
   (interactive)
-  (unless ajv/settings/primary-frame-reference
-    (setq ajv/settings/primary-frame-reference (selected-frame)))
+  (unless (and ajv/settings/primary-frame-reference
+	       (frame-live-p ajv/settings/primary-frame-reference))
+    (ajv/set-current-frame-as-primary-frame-reference))
   (delete-other-windows)
   (split-window-horizontally)
-  (ibuffer)
-  (other-window 1)
   (org-agenda-list)
+  (other-window 1)
+  (ibuffer)
   (other-window 1)
   )
 
 (defun ajv/create-my-window-config-in-primary-frame (&optional force)
-  "Sets windows according to my liking"
+  "Sets windows according to my liking but only if in the primary-frame"
   (interactive)
   (if force (ajv/create-my-window-config)
     (progn
       (unless ajv/settings/primary-frame-reference
 	(setq ajv/settings/primary-frame-reference (selected-frame)))
       (select-frame ajv/settings/primary-frame-reference)
-      (ajv/create-my-window-config)))
+      (unless (and (buffer-file-name) (string-equal (file-name-extension (buffer-file-name)) "pdf"))
+	(ajv/create-my-window-config))))
   )
 
 (defun ajv/reopen-file-with-sudo ()
@@ -259,16 +266,20 @@ Version 2017-11-01"
 (defun ajv/alsamixer ()
   "Runs the alsamixer program in an ansi-term"
   (interactive)
-  (ansi-term "alsamixer"))
+  (ansi-term "alsamixer")
+  (rename-buffer "* terminal alsamixer *"))
 
 
 (defun ajv/rename-symlink-buffer-with-truename ()
-  (interactive) (rename-buffer (file-name-nondirectory (file-truename (buffer-file-name))) t))
+  (interactive)
+  (when (buffer-file-name)
+    (rename-buffer (file-name-nondirectory (file-truename (buffer-file-name))) t)))
 
 
 (defun ajv/bashmount ()
   (interactive)
-  (term "/bin/bashmount"))
+  (term "/bin/bashmount")
+  (rename-buffer "* terminal bashmount *"))
 
 (defun ajv/goto-line-with-feedback ()
   "Show line numbers temporarily, while prompting for the line number input
@@ -325,5 +336,31 @@ Taken: http://whattheemacsd.com/key-bindings.el-03.html"
 	(set-face-attribute 'default nil :height (- old-face-attribute 10))
       (set-face-attribute 'default nil :height (+ old-face-attribute 10)))))
 
+(defun ajv/set-default-frame-font ()
+  (interactive)
+  (set-face-attribute 'default nil :height ajv/settings/default-frame-font-height-value))
+
+
+(defun ajv/frames/is-primary-frame-p (&optional frame)
+  (interactive)
+  (let ((chosen-frame (if frame frame (selected-frame))))
+    (if (eq chosen-frame ajv/settings/primary-frame-reference)
+	(message "IS Primary frame")
+      (message "NOT Primary frame"))))
+
+(defun ajv/frames/is-notmuch-frame-p (&optional frame)
+  (interactive)
+  (let ((chosen-frame (if frame frame (selected-frame))))
+    (if (eq chosen-frame ajv/settings/notmuch-frame-reference)
+	(message "IS Notmuch frame")
+      (message "NOT Notmuch frame"))))
+
+(defun ajv/frames/set-as-primary-frame ()
+  (interactive)
+  (setq ajv/settings/primary-frame-reference (selected-frame)))
+
+(defun ajv/frames/set-as-notmuch-frame ()
+  (interactive)
+  (setq ajv/settings/notmuch-frame-reference (selected-frame)))
 
 ;; TODO: Make a function to change all - to SPC or vice versa

@@ -21,7 +21,11 @@
 (setq ajv/settings/custom-file-name "ajv-customizations.el")
 ;; ajv/settings/prefered-font-name "dejavu sans mono 11"
 ;; ajv/settings/prefered-font-name "Fira Code 11"
-(setq ajv/settings/prefered-font-name "Source Code Pro 12")
+(setq ajv/settings/default-font-size 12)
+(setq ajv/settings/prefered-font-name
+      (concat "Source Code Pro " (int-to-string ajv/settings/default-font-size)))
+(setq ajv/settings/default-frame-font-height-value
+      (int-to-string (* 10 ajv/settings/default-font-size)))
 (setq ajv/settings/prefered-dark-theme-name 'deeper-blue)
 (setq ajv/settings/prefered-light-theme-name 'tsdh-light)
 
@@ -54,11 +58,15 @@
 (defvar ajv/settings/primary-frame-reference nil
   "Contains a reference to the primary frame of this Emacs instance. It is mainly used by ajv/create-my-window-config-in-primary-frame to choose which frame to use when creating the preferred window configuration.")
 
-(defvar ajv/settings/period-for-showing-window-config 15
-  "The idle time, in minutes, after which to automatically show my preferred window configuration. Used in the ajv/settings/timer-to-periodically-show-window-config timer.")
+(defvar ajv/settings/period-for-showing-window-config-in-seconds (* 60 10)
+  "The idle time, in seconds, after which to automatically show my preferred window configuration. Used in the ajv/settings/timer-to-periodically-show-window-config timer.")
 
 (defvar ajv/settings/timer-to-periodically-show-window-config nil
-  "Contains a reference to a timer that periodically (period set in ajv/settings/period-for-showing-window-config) shows my preferred window config in the primary frame (found in ajv/settings/primary-frame-reference).")
+  "Contains a reference to a timer that periodically (period set in ajv/settings/period-for-showing-window-config-in-seconds) shows my preferred window config in the primary frame (found in ajv/settings/primary-frame-reference).")
+
+(defvar ajv/settings/notmuch-frame-reference nil
+  "Contains a reference to the notmuch frame of this Emacs instance.")
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Variables defined in ajv-sensitive-settings.el
@@ -98,6 +106,14 @@
 
 (defvar ajv/sensitive/website-tramp-foldername nil
   "The foldername given to tramp while accessing my website, in the form: \"/ssh:domain:/path/to/folder\"
+ Set in ajv-sensitive-settings.el")
+
+(defvar ajv/sensitive/main-gmail-address nil
+  "The main gmail email address I use.
+ Set in ajv-sensitive-settings.el")
+
+(defvar ajv/sensitive/message-auto-save-directory nil
+  "The folder into which draft emails are saved.
  Set in ajv-sensitive-settings.el")
 
 ;; (defvar ajv/sensitive/my-quotes-filename nil

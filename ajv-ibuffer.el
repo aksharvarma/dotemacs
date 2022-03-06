@@ -3,42 +3,85 @@
 (setq ibuffer-show-empty-filter-groups nil)
 (setq ibuffer-default-sorting-mode 'major-mode)
 (setq ibuffer-expert t)
+(setq ibuffer-auto-mode 1)
 
 (setq ibuffer-saved-filter-groups
-      (quote (("Uncategorized"
-	       ("Emacs"
-		(or
-                 (name . "^\\*scratch\\*$")
-                 (name . "^\\*Messages\\*$")))
-	       ("Music"
-		(name . "^\\*ajv-mpv-buffer\\*$"))
-	       ("Org" ;; all org-related buffers
-		(or
-		 (mode . org-mode)
-		 (name . "^\\*Org Agenda\\*$")))
-	       ("Mail"
-		(or  ;; mail-related buffers
-		 (mode . message-mode)
-		 (mode . mail-mode)))
-	       ("Notmuch"
-		(or
-		 (mode . notmuch-search-mode)
-		 (mode . notmuch-hello-mode)
-		 (mode . notmuch-show-mode)))
-	       ("Dired"
-		(mode . dired-mode))
-	       ("LaTeX"
-		(mode . LaTeX-mode))
-	       ("PDFs"
-		(mode . pdf-view-mode))
-	       ("Programming"
-		(or
-                 (mode . ess-mode)
-                 (mode . python-mode)
-                 (mode . emacs-lisp-mode)))
-	       ("Internals"
-		(name . "^\\*.*\\*$"))
-	       ))))
+      `(("Uncategorized"
+	 ("Emacs"
+	  (or
+           (name . "^\\*scratch\\*$")
+           (name . "^\\*Messages\\*$")))
+	 ("Music"
+	  (name . "^\\*ajv-mpv-buffer\\*$"))
+	 ("Agenda" ;; all Org Agenda related buffers
+	  (or
+	   (and
+	    (directory . ,ajv/sensitive/my-org-agenda-files-dir)
+	    (mode . org-mode))
+	   (name . "^\\*Org Agenda\\*$")))
+	 ("Org" ;; all other org buffers
+	  (mode . org-mode))
+	 ("Mail"
+	  (or  ;; mail-related buffers
+	   (mode . message-mode)
+	   (mode . mail-mode)))
+	 ("Notmuch"
+	  (or
+	   (name . "*notmuch-pymsmtpq*")
+	   (mode . message-mode)
+	   (mode . mail-mode)
+	   (mode . notmuch-message-mode)
+	   (mode . notmuch-tree-mode)
+	   (mode . notmuch-search-mode)
+	   (mode . notmuch-hello-mode)
+	   (mode . notmuch-show-mode)))
+	 ("Dired"
+	  (mode . dired-mode))
+	 ("LaTeX"
+	  (mode . LaTeX-mode))
+	 ("PDFs"
+	  (mode . pdf-view-mode))
+	 ("Writing"
+	  (mode . markdown-mode))
+	 ("ELisp"
+          (mode . emacs-lisp-mode))
+	 ("Python"
+          (mode . python-mode))
+	 ("Programming"
+          (mode . prog-mode))
+	 ("Internals"
+	  (name . "^\\*.*\\*$"))
+	 )))
+
+(defun ajv/ibuffer/fold-filter-group (name)
+  "While in ibuffer, add a function to hide the filter group `name'."
+  (interactive)
+  (push name ibuffer-hidden-filter-groups)
+  (ibuffer-update nil t))
+
+(defun ajv/ibuffer/unfold-filter-group (name)
+  "While in ibuffer, add a function to hide the filter group `name'."
+  (interactive)
+  (setq ibuffer-hidden-filter-groups
+	(delete name ibuffer-hidden-filter-groups))
+  (ibuffer-update nil t))
+
+(defun ajv/ibuffer/toggle-filter-group (name)
+  "While in ibuffer, add a function to hide the filter group `name'."
+  (interactive)
+  (if (member name ibuffer-hidden-filter-groups)
+      (ajv/ibuffer/unfold-filter-group name)
+    (ajv/ibuffer/fold-filter-group name)))
+
+(defun ajv/ibuffer/default-filter-folding ()
+  "While in ibuffer, add a function to hide the Emacs files which is then used as a hook."
+  (interactive)
+  (with-current-buffer "*Ibuffer*"
+    (if ibuffer-hidden-filter-groups
+	(setq ibuffer-hidden-filter-groups nil)
+      (setq ibuffer-hidden-filter-groups (list "Emacs" "Agenda" "Music"))
+      )
+    (ibuffer-update nil t)))
 
 (defun ajv/ibuffer/group-by-vc ()
   (interactive)
