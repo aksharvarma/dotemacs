@@ -24,11 +24,17 @@
 (defun ajv/pdf-tools/toggle-modeline ()
   "Toggles displaying the mode-line when in pdf-view-mode."
   (interactive)
-  (if mode-line-format
-      (setq mode-line-format nil)
-    (setq mode-line-format ajv/pdf-tools/mode-modeline-format))
-  (force-mode-line-update 1)		;Needed to actually see the change
-  )
+  (hide-mode-line-mode 'toggle)
+  (force-mode-line-update 1))
+
+;; (defun ajv/pdf-tools/toggle-modeline ()
+;;   "Toggles displaying the mode-line when in pdf-view-mode."
+;;   (interactive)
+;;   (if mode-line-format
+;;       (setq mode-line-format nil)
+;;     (setq mode-line-format ajv/pdf-tools/mode-modeline-format))
+;;   (force-mode-line-update 1)		;Needed to actually see the change
+;;   )
 
 (defun ajv/pdf-tools/launch-file (returned-buffer)
   "Put an advice after find-file so that all PDFs are opened as a separate emacsclient (xdg-open) call."
