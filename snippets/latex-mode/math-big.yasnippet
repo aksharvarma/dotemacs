@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# contributor: Song Qiang <tsiangsung@gmail.com>
+# key: big
+# group: math
+# condition: (texmathp)
+# name: \bigl( ... \bigr)
+# --
+\\${1:$$(yas/choose-value '("big" "Big" "bigg" "Bigg"))}l${2:$$(yas/choose-value '("(" "[" "{" "|"))} $0  \\$1r${2:$(cdr (assoc yas-text '(("(" . ")") ("[" . "]") ("{" . "}") ("|" . "|"))))}

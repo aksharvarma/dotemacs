@@ -1,0 +1,50 @@
+# -*- mode: snippet -*-
+# contributor: Akshar Varma
+# key: presentation-slides
+# group: skeleton
+# name: \documentclass{beamer} ...
+# --
+\documentclass[
+% handout,
+% draft,
+aspectratio=169,
+dvipsnames,
+9pt
+]{beamer}
+
+\usepackage[
+title={${1:Presentation Title$(xah/title-case-string yas-text)}},
+subtitle={${2:Subtitle}},
+presenter={${3:Presenter}},
+institute={${4:Institute}},
+date={\today},
+reference={`(file-name-sans-extension (file-name-base (buffer-file-name)))`}
+% math-preamble=false,
+% tikz=false,
+% tables=false,
+% overlay=false,
+% graphicspath={{./images}{./diagrams}{./files}},
+]{presentation-slides}
+
+\begin{document}
+
+\begin{frame}
+{${5:Frame Title}}
+$0
+\end{frame}
+
+
+\disableProgressBar
+\appendix
+\section{Appendix and extra slides}
+\begin{frame}\sectionpage\end{frame}
+
+\ifstrempty{\referencefilename}{}{
+\begin{frame}[allowframebreaks]{References and further reading}
+  \nocite{*}
+  % \bibliographystyle{unsrt}
+  % \footnotesize{\bibliography{`(file-name-sans-extension (file-name-base (buffer-file-name)))`}}
+  \footnotesize{\printbibliography}
+\end{frame}
+
+\end{document}

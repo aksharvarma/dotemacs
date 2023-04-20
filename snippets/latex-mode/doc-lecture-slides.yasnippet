@@ -1,0 +1,46 @@
+# -*- mode: snippet -*-
+# contributor: Akshar Varma
+# key: lecture-slides
+# group: skeleton
+# name: \documentclass{beamer} ...
+# --
+\documentclass[%handout,
+aspectratio=169,
+dvipsnames,
+9pt
+]{beamer}
+
+\usepackage[
+title={${1:Lecture Title$(xah/title-case-string yas-text)}},
+num={${2:Number}},
+date={\today},
+% math-preamble=false,
+% tikz=false,
+% tables=false,
+% overlay=false,
+% graphicspath={{./images}{./diagrams}{./files}},
+]{lecture-slides}
+
+% DO NOT EDIT
+% These are fixed values that should not be changed during this course.
+\pgfkeys{lecture slides,
+instructor={${3:Instructor}},
+course={${4:Course}},
+}
+
+% References
+\usepackage[backend=bibtex,sorting=none]{biblatex}
+\addbibresource{`(file-name-sans-extension (file-name-base (buffer-file-name)))`.bib}
+
+\begin{document}
+
+\section{$5}
+\begin{frame}{${5:Frame Title}}
+$0
+\end{frame}
+
+\section{Summary}
+\begin{frame}{Summary}
+\end{frame}
+
+\end{document}
