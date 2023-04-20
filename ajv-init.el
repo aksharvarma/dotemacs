@@ -782,7 +782,165 @@
    ;; After inserting the time stamp: Add a title, move to next line, indent
    (org-journal-after-entry-create-hook . ajv/org-journal/insert-title)))
 
+(use-package org-super-agenda :demand
+  :config
+  (org-super-agenda-mode)
+  (setq org-super-agenda-groups
+	'((:name "Habits"
+		 :habit t
+		 :order 100)
+	  (:name "To Refile"
+		 :auto-property "REFILE"
+		 :order 0)
+	  ;;
+	  (:name "Done today"
+                 :log closed)
+          (:name "Clocked today"
+		 :log clock)
+	  ;;
+	  (:name "Overdue"
+		 :deadline past
+		 :order 1)
+	  (:name "Due today"
+		 :and (:deadline today :not (:log closed) :not (:todo "DONE"))
+		 :order 2)
+	  ;;
+	  (:name "Quick Tasks"
+                 :and (:effort< "0:05" :date today :not (:todo "DONE"))
+		 :order 6)
+	  (:name "Medium length Tasks"
+                 :and (:effort< "0:31" :date today :not (:todo "DONE"))
+		 :order 7)
+	  (:name "Long Tasks"
+                 :and (:effort> "0:30" :date today :not (:todo "DONE"))
+		 :order 8)
+	  ;;
+	  (:name "Scheduled today"
+		 :and (:scheduled today)
+		 :order 4)
+	  (:name "Leftover"
+		 :and (:scheduled past :not (:log closed))
+		 :order 3)
+	  ;;
+	  (:discard (:time-grid t))
+	  (:todo "WAITING" :order 99)
+	  (:name "Upcoming Deadlines"
+		 :deadline future
+		 :scheduled future
+		 :order 80)
+	  (:anything t
+		     :order 99)))
+  :bind (:map org-super-agenda-header-map
+	      ("C-<tab>" . org-agenda-forward-block)
+	      ("C-<S-iso-lefttab>" . org-agenda-backward-block)))
+
+(use-package origami :after org-super-agenda
+  :bind (:map org-super-agenda-header-map
+	      ("C-." . origami-toggle-node))
+  :config
+  (defvar ajv/org-super-agenda/auto-hide-groups
+    '("Upcoming Deadlines"))
+
+  (defun ajv/org-super-agenda/origami-fold-default ()
+    "Fold certain groups by default in Org Super Agenda buffer."
+    (interactive)
+    ;; (forward-line 3)
+    ;; (cl-loop do (origami-forward-toggle-node (current-buffer) (point))
+    ;;          while (origami-forward-fold-same-level (current-buffer) (point)))
+    (--each ajv/org-super-agenda/auto-hide-groups
+      (goto-char (point-min))
+      (when (re-search-forward (rx-to-string `(seq " " ,it)) nil t)
+        (origami-toggle-node (current-buffer) (point)))))
+  :hook ((org-agenda-mode-hook . origami-mode)
+	 (org-agenda-finalize-hook . ajv/org-super-agenda/origami-fold-default)))
+
+(use-package ajv-org-roam :demand
+  :straight nil
+  :init
+  (use-package org-roam :diminish)
+  (setq-default org-roam-directory ajv/sensitive/my-org-roam-directory)
+  ;; :custom (setq-defaultorg-roam-completion-everywhere t)
+  :bind (("C-c k b" . org-roam-buffer-toggle)
+	 ("C-c k f" . org-roam-node-find)
+	 ("C-c k l" . org-roam-node-insert)
+	 ("C-c k c" . org-roam-capture)
+	 ("C-c k i" . org-id-get-create)
+	 ("C-c k a" . org-roam-alias-add)
+	 ("C-c k t" . org-roam-tag-add)
+	 ("C-c k x" . ajv/org-roam/close-everything)
+	 :map org-mode-map
+	 ("C-M-i" . completion-at-point))
+  :config
+  (org-roam-setup)
+  (org-roam-db-autosync-mode)
+  (setq org-roam-node-display-template
+	(concat "${type:15} ${title:*} " (propertize "${tags:10}" 'face 'org-tag))))
+
+(use-package org-roam-ui :diminish :delight ""
+  :config
+  (defun ajv/org-roam/ui-start ()
+    (interactive)
+    (org-roam-ui-mode)
+    (org-roam-ui-follow-mode)
+    (message "http://localhost:35901/")
+    (kill-new "http://localhost:35901/"))
+  (defun ajv/org-roam/ui-stop ()
+    (interactive)
+    (org-roam-ui-follow-mode 0)
+    (org-roam-ui-mode 0))
+  (setq org-roam-ui-open-on-start nil)
+  (diminish 'org-roam-ui-follow-mode)
+  (ajv/org-roam/ui-start))
+
+(use-package deft :diminish :delight
+  :bind (("C-c k d" . deft)
+	 (:map deft-mode-map
+	       ("C-n" . forward-button)
+	       ("C-p" . backward-button)))
+  :commands (deft)
+  :config
+  (setq deft-directory "~/0/orkmasy")
+  (setq deft-extensions '("org"))
+  (setq deft-recursive t)
+  ;; (setq deft-strip-title-regexp "\\(?:^%+\\|^#\\+TITLE: *\\|^[#* ]+\\|-\\*-[[:alpha:]]+-\\*-\\|^Title:[	 ]*\\|#+$\\)")
+
+  ;; I want title picked from non-first line.
+  ;; So I essentially disable deft's automatic calling (identity function)
+  (setq deft-parse-title-function 'concat)
+  ;; I adjust the title strip function to my needs
+  (setq deft-strip-title-regexp ":PROPERTIES:\n\\(.+\n\\)+:END:\n")
+  ;; This requires that it doesn't try to show me the template files
+  ;; which have a different format.
+  (setq deft-ignore-file-regexp "templates/.*")
+  ;; Then I rewrite their function to do what I want.
+  (defun deft-parse-title (file contents)
+    (if deft-use-filename-as-title
+	(deft-base-filename file)
+      ;; (substring (nth 3 (split-string contents "\n" nil nil)) 8 nil)
+      (let ((string
+	     (nth 0
+		  (split-string
+		   (deft-chomp
+		     (replace-regexp-in-string
+		      deft-strip-title-regexp
+		      "" contents))
+		   "\n"))))
+	(substring string 8 nil))))
+  ;; (setq deft-org-mode-title-prefix t)
+  ;; Finally, I want to ensure that any line that doesn't start with # or - is ignored.
+  (setq deft-strip-summary-regexp "\\([-#:].*\n\\)+")
+  ;; This also requires overwriting their function
+  (defun deft-parse-summary (contents title)
+    (let ((case-fold-search nil))
+      (replace-regexp-in-string deft-strip-summary-regexp " " contents)))
+  )
+
+(use-package org-tree-slide :custom (org-image-actual-width nil))
+
+(use-package org-present)
+
 (use-package ajv-elfeed
+  :straight nil
   :if (not (string-empty-p ajv/sensitive/my-elfeed-org-file))
   :init (use-package elfeed
 	  :hook ((elfeed-search-mode-hook . toggle-truncate-lines)))
@@ -792,17 +950,22 @@
     :config
     (elfeed-org)
     (setq rmh-elfeed-org-files ajv/my-elfeed-org-file-list))
-  :hook ((after-init-hook . ajv/elfeed/kill-log-buffer))
-  )
+  :hook ((after-init-hook . ajv/elfeed/kill-log-buffer)))
 
 
-(use-package latex :ensure auctex
+(use-package org-drill)
+(use-package org-drill-table)
+
+;; (use-package org-modern :config (global-org-modern-mode))
+
+(use-package latex ;; :ensure auctex
+  :straight auctex
   :mode ("\\.tex\\'" . LaTeX-mode)
   :config
   ;; The default enging to use to compile
   (setq-default TeX-engine 'xetex)
   ;; Various other default settings
-  (setq LaTeX-command "latex -shell-escape --synctex=1")
+  (setq LaTeX-command "latex -shell-escape --synctex=1 -interaction=batchmode")
   (setq LaTeX-command-style '(("" "%(PDF)%(latex) -shell-escape %(file-line-error) %(extraopts) %S%(PDFout)")))
   (setq TeX-save-query nil)                ;Don't ask before saving .tex files
   ;; To make AUCTeX read/update on changes to .bib files.
