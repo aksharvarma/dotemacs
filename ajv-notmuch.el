@@ -48,16 +48,17 @@
 (defun ajv/notmuch/poll-and-refresh-quietly ()
   "Show (by creating if needed) the notmuch hello buffer"
   (interactive)
-  (unless ajv/settings/notmuch-frame-reference
-    (setq ajv/settings/notmuch-frame-reference (selected-frame)))
-  (select-frame ajv/settings/notmuch-frame-reference)
-  (unless (get-buffer "*notmuch-hello*") ;create buffer (unless it exists)
-    (notmuch))
-  (with-current-buffer "*notmuch-hello*" ;poll and refresh notmuch
-    (let ((inhibit-message t))
-      (notmuch-poll-and-refresh-this-buffer)
-      (ajv/notmuch/alert-update-mail-count-mode-line)
-      (ajv/notmuch/set-initial-cursor-position))))
+  (when (and ajv/settings/notmuch-frame-reference
+	     (frame-live-p ajv/settings/notmuch-frame-reference)
+	     (get-buffer "*notmuch-hello*"))
+    (select-frame ajv/settings/notmuch-frame-reference)
+    ;; (unless (get-buffer "*notmuch-hello*") ;create buffer (unless it exists)
+    ;;   (notmuch))
+    (with-current-buffer "*notmuch-hello*" ;poll and refresh notmuch
+      (let ((inhibit-message t))
+	(notmuch-poll-and-refresh-this-buffer)
+	(ajv/notmuch/alert-update-mail-count-mode-line)
+	(ajv/notmuch/set-initial-cursor-position)))))
 
 (defun ajv/notmuch/tree-toggle-unread ()
   "While in notmuch-tree-mode, toggle unread tag"
