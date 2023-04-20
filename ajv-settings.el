@@ -1,3 +1,5 @@
+(setq user-full-name "Akshar Varma")
+
 (defvar ajv/settings/my-init-directory nil
   "The directory which contains my init files")
 
@@ -16,6 +18,9 @@
 (defvar ajv/settings/prefered-light-theme-name nil
   "The preferred light theme.")
 
+(defvar ajv/settings/currently-enabled-theme-name nil
+  "The currently enabled theme.")
+
 (setq ajv/settings/my-init-directory (concat user-emacs-directory "site-lisp/ajv/"))
 (setq ajv/settings/symlink-folder "~/0/")
 (setq ajv/settings/custom-file-name "ajv-customizations.el")
@@ -25,12 +30,39 @@
 (setq ajv/settings/prefered-font-name
       (concat "Source Code Pro " (int-to-string ajv/settings/default-font-size)))
 (setq ajv/settings/default-frame-font-height-value
-      (int-to-string (* 10 ajv/settings/default-font-size)))
-(setq ajv/settings/prefered-dark-theme-name 'deeper-blue)
-(setq ajv/settings/prefered-light-theme-name 'tsdh-light)
+      (* 10 ajv/settings/default-font-size))
+;; (setq ajv/settings/prefered-dark-theme-name 'deeper-blue)
+;; (setq ajv/settings/prefered-light-theme-name 'adwaita)
+;;
+;; (setq ajv/settings/prefered-dark-theme-name 'doom-monokai-pro)
+;; (setq ajv/settings/prefered-light-theme-name 'doom-nord-light)
+;;
+;; (setq ajv/settings/prefered-dark-theme-name 'monokai)
+;; (setq ajv/settings/prefered-light-theme-name 'adwaita)
+;;
+;; (setq ajv/settings/prefered-dark-theme-name 'solarized-dark)
+;; (setq ajv/settings/prefered-light-theme-name 'solarized-light)
+;;
+;; (setq ajv/settings/prefered-dark-theme-name 'gruvbox-dark-medium)
+;; (setq ajv/settings/prefered-light-theme-name 'gruvbox-light-hard)
+;;
+(setq ajv/settings/prefered-dark-theme-name 'monokai-pro)
+(setq ajv/settings/prefered-light-theme-name 'modus-operandi)
+
+(defvar ajv/settings/cursor-color-inside-god "orange"
+  "The color of the cursor when one is inside god mode.")
+
+(defvar ajv/settings/cursor-color-outside-god "lime green"
+  "The color of the cursor when one is outside god mode.")
+
+(defvar ajv/settings/scratch-buffer-name "*scratch*")
 
 ;; Adds emoji font support.
-(set-fontset-font t '(#x1f300 . #x1fad0) "Noto Color Emoji")
+;; Pre Emacs 27
+;; (set-fontset-font t '(#x1f300 . #x1fad0) "Noto Color Emoji")
+;; Emacs 28 onward:
+(set-fontset-font t 'emoji '("Noto Color Emoji" . "iso10646-1") nil 'prepend)
+;; Actually, emacs might automatically pick out Noto Color Emoji.
 
 (defvar ajv/settings/yasnippets-directory nil
   "The folder which contains all my yasnippet snippets.")
@@ -50,9 +82,11 @@
 (defface ajv/settings/display-time-face
   '((((type x w32 mac))
      ;; #060525 is the background colour of my default face.
-     (:foreground "#99FF00" :background "#121212" :inherit bold))
+     ;; #121212 is gray7 in list-colors-display
+     ;; #7fff00 is chartreuse in list-colors-display
+     (:foreground "#7fFF00" :background "#121212" :inherit bold))
     (((type tty))
-     (:foreground "#99FF00" :background "#121212")))
+     (:foreground "#7fFF00" :background "#121212")))
   "Face used to display the time in the mode line. This particular face is used for better visibility")
 
 (defvar ajv/settings/primary-frame-reference nil
@@ -71,6 +105,14 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Variables defined in ajv-sensitive-settings.el
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defvar ajv/sensitive/my-org-agenda-files-dir nil
+  "The org agenda files directory
+ Set in ajv-sensitive-settings.el")
+
+(defvar ajv/sensitive/my-org-roam-directory nil
+  "The org roam directory
+ Set in ajv-sensitive-settings.el")
 
 (defvar ajv/sensitive/my-org-agenda-self-file nil
   "The org agenda file for \"self\"

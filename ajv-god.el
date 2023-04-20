@@ -1,10 +1,13 @@
 (provide 'ajv-god)
 
+;; (defvar avj/god/cursor-color-outside-god "lime green"
+;;   "The color of the cursor when one is outside god mode.")
+
 (defun ajv/god/update-cursor ()
+  (interactive)
   (if (bound-and-true-p god-local-mode)
-      (set-cursor-color "dark orange")
-    (cond ((ajv/theme/using-dark-theme-p) (set-cursor-color "lime green"))
-	  ((ajv/theme/using-light-theme-p) (set-cursor-color "black")))))
+      (set-cursor-color ajv/settings/cursor-color-inside-god)
+    (set-cursor-color ajv/settings/cursor-color-outside-god)))
 
 (setq ajv/god/exempt-modes
       '(org-agenda-mode elfeed-search-mode notmuch-hello-mode

@@ -34,7 +34,7 @@
 (setq dired-rainbow-list-of-log (list "log"))
 (setq dired-rainbow-list-of-shell (list "awk" "bash" "bat" "sed" "sh" "zsh" "vim"))
 (setq dired-rainbow-list-of-interpreted
-      (list "py" "ipynb" "rb" "pl" "t" "msql" "mysql" "pgsql" "sql"
+      (list "py" "ipynb" "rb" "spi" "pl" "t" "msql" "mysql" "pgsql" "sql"
 	    "r" "clj" "cljs" "scala" "js"))
 (setq dired-rainbow-list-of-compiled
       (list "asm" "cl" "lisp" "el" "c" "h" "c++" "h++" "hpp" "hxx" "m"
