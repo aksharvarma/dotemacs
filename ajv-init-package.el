@@ -6,13 +6,10 @@
 ;; emacs -Q -l ~/.emacs.d/site-lisp/profile-dotemacs.el -f profile-dotemacs
 
 ;; Increase garbage collection, prevent some visual elements early on
-(load (concat user-emacs-directory "site-lisp/ajv/ajv-pre-setup-common.el"))
-
 ;; Then setup package archives, initialize and install uninstalled packages
 ;; (load (concat user-emacs-directory "site-lisp/ajv/ajv-pre-setup-package.el"))
+(load (concat user-emacs-directory "site-lisp/ajv/ajv-pre-setup-package.el"))
 
-;; Use straight for helm
-(load (concat user-emacs-directory "site-lisp/ajv/ajv-pre-setup-straight.el"))
 
 ;; The package manager stuff has been done in pre-setup.
 ;; Now it is just use-package macros throughout.
@@ -22,15 +19,14 @@
 ;; Use full hook names so that help commands get contextual awareness
 (setq use-package-hook-name-suffix nil)
 (use-package diminish)
-(straight-use-package 'delight)
+;; (straight-use-package 'delight)
 (use-package delight)
 (use-package bind-key)
 
 ;; Start loading up other things
 ;; (use-package cl)
 
-(use-package ajv-my-functions :demand
-  :straight nil
+(use-package ajv-my-functions :demand :straight nil
   :bind
   (("s-8" . ajv/switch-buffer-scratch)
    ("s-*" . ajv/switch-buffer-scratch-other-window)
@@ -38,8 +34,6 @@
    ("s-~" . ajv/open-symlink-folder-in-dired)
    ("s-p" . ajv/mypaths)
    ("s-P" . ajv/mypaths-other-window)
-   ;; ("s-0" . ajv/mypaths)
-   ;; ("s-)" . ajv/mypaths-other-window)
    ("C-c w c". ajv/create-my-window-config)
    ("C-c w w". ajv/show-weekly-plan-table)
    ("<f8>". ajv/create-my-window-config)
@@ -85,8 +79,7 @@
    (before-save-hook . ajv/delete-trailing-whitespace)
    (org-mode-hook . (lambda () (add-hook 'after-save-hook 'ajv/auto-tangle-emacs-config)))))
 
-(use-package notmuch
-  :straight nil
+(use-package notmuch :straight nil
   :commands notmuch notmuch-jump-search notmuch-search ajv/notmuch/start-notmuch
   :config
   ;; Arch linux's notmuch installation comes with emacs stuff.
@@ -95,8 +88,7 @@
   ;;
   ;; The following lines ensures that we use that notmuch code.
   (add-to-list 'load-path "/usr/share/emacs/site-lisp/")
-  (use-package ajv-notmuch :demand
-    :straight nil
+  (use-package ajv-notmuch :demand :straight nil
     :commands ajv/notmuch/start-notmuch
     :bind ((:map notmuch-show-mode-map
 		 ("u" . ajv/notmuch/show-toggle-unread)
@@ -121,8 +113,7 @@
 		     'ajv/notmuch/poll-and-refresh-quietly))
   (ajv/notmuch/alert-enable-mode-line-display))
 
-(use-package message :after notmuch
-  :straight (:type built-in)
+(use-package message :straight (:type built-in) :after notmuch
   ;; :commands message-forward-subject-fwd
   :config
   (setq message-citation-line-function
@@ -187,33 +178,29 @@
 ;;   (fset 'ido-switch-buffer-other-window 'switch-to-buffer-other-window))
 
 
-(use-package helm-mode :diminish " ⎈" :demand
-  :straight helm
+(use-package helm-mode :diminish " ⎈" :demand :straight helm
   :config
   ;; (use-package helm-config :demand)
   ;; (require 'helm-config)
-  ;; (setq helm-move-to-line-cycle-in-source nil)
-  ;; (add-to-list 'helm-boring-file-regexp-list ".*~$")
-
   (setq helm-split-window-inside-p t)
-  (setq completion-styles '(partial-completion basic))
+  ;; (setq helm-move-to-line-cycle-in-source nil)
+  (setq helm-mode-fuzzy-match t)
+  ;; (add-to-list 'helm-boring-file-regexp-list ".*~$")
   (helm-mode 1)
   :bind (("C-c h" . helm-command-prefix)
-	 ([remap switch-to-buffer] . helm-buffers-list)
-	 ("M-o" . helm-occur)
-	 ([remap find-file] . helm-find-files)
-	 ([remap occur] . helm-occur)
-	 ([remap dabbrev-expand] . helm-dabbrev)
 	 ([remap execute-extended-command] . helm-M-x)
+	 ([remap find-file] . helm-find-files)
+	 ([remap switch-to-buffer] . helm-buffers-list)
+	 ([remap occur] . helm-occur)
+	 ("M-o" . helm-occur)
+	 ([remap dabbrev-expand] . helm-dabbrev)
 	 ([remap apropos-command] . helm-apropos)))
-
 
 (use-package yasnippet
   :init (setq yas-snippet-dirs '(ajv/settings/yasnippets-directory))
   :config
   (yas-global-mode 1)
   (yas-reload-all)
-  (setq yas-wrap-around-region t)
   (setq yas-prompt-functions
 	'(yas-maybe-ido-prompt yas-completing-prompt yas-dropdown-prompt yas-no-prompt))
   :bind ((:map yas-minor-mode-map
@@ -229,15 +216,10 @@
 					  (face-background 'default) 10)))
   (ajv/make-enable-disable-defuns hl-line-mode hl-line 1 -1))
 
-(use-package ajv-ibuffer :demand
-  :straight nil
+(use-package ajv-ibuffer :demand :straight nil
   :init
-  (use-package ibuffer :demand
-	       :straight (:type built-in)
-	       )
-  (use-package ibuf-ext :demand
-	       :straight (:type built-in)
-	       )
+  (use-package ibuffer :straight (:type built-in) :demand)
+  (use-package ibuf-ext :straight (:type built-in) :demand)
   :delight ibuffer-mode "IBuf" "ibuffer"
   :bind
   (("C-x C-b" . ibuffer)
@@ -279,52 +261,12 @@
   (setq company-dabbrev-downcase nil)
   (setq company-idle-delay 'ajv/company-idle-delay)
   (setq company-minimum-prefix-length 3)
-  (setq company-selection-wrap-around t)
-
-
-  ;; (add-hook 'company-mode-hook (lambda ()
-  ;; 				 (substitute-key-definition 'company-complete-common
-  ;; 							    'company-yasnippet-or-completion
-  ;; 							    company-active-map)))
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-  ;; From here. Dated 2015, tested 2023. Based on PR accepted into spacemacs
-  ;; https://stackoverflow.com/a/28510968.
-  ;; Add yasnippet support for all company backends
-  ;; https://github.com/syl20bnr/spacemacs/pull/179
-  (defvar company-mode/enable-yas t
-    "Enable yasnippet for all backends.")
-
-  (defun company-mode/backend-with-yas (backends)
-    (if (or (not company-mode/enable-yas) (and (listp backends) (member 'company-yasnippet backends)))
-	backends
-      (append (if (consp backends) backends (list backends))
-              '(:with company-yasnippet))))
-
-  (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
-
-  ;; From here. Dated 2015, tested 2023. API use confirmed by author of yasnippet
-  ;; https://stackoverflow.com/a/28510968
-  ;; Try yas-expand and on failure to company-completion
-  (defun company-yasnippet-or-completion ()
-    (interactive)
-    (let ((yas-fallback-behavior nil))
-      (unless (yas-expand)
-	(call-interactively #'company-complete-common))))
-
-  ;; (add-hook 'company-mode-hook (lambda ()
-  ;; 				 (substitute-key-definition 'company-complete-common
-  ;; 							    'company-yasnippet-or-completion
-  ;; 							    company-active-map)))
-  :bind ((:map company-active-map)
-	 ([remap company-complete-common] . company-yasnippet-or-completion))
-  )
+  (setq company-selection-wrap-around t))
 
 (use-package company-auctex
   :after company
   :mode ("\\.tex\\'" . LaTeX-mode)
   :config (company-auctex-init))
-
 
 
 (use-package flyspell :diminish ""
@@ -333,7 +275,6 @@
   (setq flyspell-issue-welcome-flag nil)
   (setq flyspell-issue-message-flag nil)
   (setq ispell-program-name "aspell")    ; use aspell instead of ispell
-  (unbind-key "C-;" flyspell-mode-map)
   :bind (("<mouse-3>" . flyspell-correct-word)
 	 :map flyspell-mode-map
 	 (("C-M-i" . nil)
@@ -347,8 +288,7 @@
 (use-package ialign :demand)
 
 
-(use-package smartparens-config :demand
-  :straight smartparens
+(use-package smartparens-config :straight smartparens :demand
   :delight smartparens-mode "" "smartparens"
   :config
   (show-smartparens-global-mode)
@@ -379,8 +319,7 @@
 	 (god-mode-enabled-hook . ajv/god/update-cursor)
 	 (god-mode-disabled-hook . ajv/god/update-cursor))
   :config
-  (use-package ajv-god :demand
-    :straight nil
+  (use-package ajv-god :straight nil :demand
     :bind ((:map god-local-mode-map
 		 ("q" . ajv/god/insert-string-from-god-mode)))
     :config
@@ -388,8 +327,7 @@
 	  (append ajv/god/exempt-modes god-exempt-major-modes))
     (ajv/god/update-cursor)))
 
-(use-package god-mode-isearch :after (god-mode)
-  :straight god-mode
+(use-package god-mode-isearch :straight god-mode :after (god-mode)
   :bind ((:map isearch-mode-map ("<escape>" . god-mode-isearch-activate))
 	 (:map god-mode-isearch-map ("<escape>" . god-mode-isearch-disable))))
 
@@ -445,54 +383,34 @@
 
 (use-package logview :demand)
 
-(use-package python
-  :straight elpy
+;; (use-package haskell-mode)
+
+(use-package python :straight elpy
   :mode ("\\.py\\'" . python-mode)
   ;; :interpreter ("python" . python-mode)
   :commands python-mode
   :delight python-mode
+  :init
+  ;; (advice-remove 'elpenable 'python-mode)
+  (advice-add 'python-mode :before 'elpy-enable)
+  (elpy-enable)
+  :bind
+  ((:map elpy-mode-map
+	 ("s-c" . elpy-shell-send-region-or-buffer)
+	 ("s-C" . (lambda () (interactive)
+		    (let ((current-prefix-arg '-)) ;; emulate C-u
+		      (call-interactively 'elpy-shell-send-region-or-buffer))))
+	 ("C-c <" . indent-tools-hydra/body)))
   :config
-  (use-package elpy
-    :commands elpy-enable
-    :init (advice-add 'python-mode :before 'elpy-enable)
-    :bind
-    ((:map elpy-mode-map
-	   ("s-c" . elpy-shell-send-region-or-buffer)
-	   ("s-C" . (lambda () (interactive)
-		      (let ((current-prefix-arg '-)) ;; emulate C-u
-			(call-interactively 'elpy-shell-send-region-or-buffer))))
-	   ("C-c <" . indent-tools-hydra/body)))
-    :config
-    (setq elpy-rpc-python-command "python")
-    ;; (setq python-shell-interpreter "ipython")
-    ;; (setq python-shell-interpreter-args "-i --simple-prompt")
-    (setq elpy-autodoc-delay 0.1)
-    (setq elpy-syntax-check-command "pyflakes")
-    (setq elpy-rpc-large-buffer-size 65536)
-    (setq elpy-rpc-backend "jedi")
-    (setq elpy-rpc-virtualenv-path 'current)
-    ;; (setq elpy-rpc-virtualenv-path 'system)
-    (setq elpy-shell-starting-directory 'current-directory)
-    ;; If you want to use the Jupyter console instead of IPython
-    ;; Not being used at the moment.
-    (setq python-shell-interpreter "jupyter")
-    (setq python-shell-interpreter-args "console --simple-prompt")
-    (setq python-shell-prompt-detect-failure-warning nil)
-    (add-to-list 'python-shell-completion-native-disabled-interpreters "jupyter")
-
-    ;; Adjust elpy-modules, delete flymake because we'll use flycheck
-    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-    (add-to-list 'elpy-modules 'elpy-module-folding) ;add folding help
-    (add-to-list 'elpy-modules 'elpy-module-autodoc) ;auto update docs
-    :hook ((elpy-mode-hook . (lambda () (elpy-shell-toggle-dedicated-shell 1)))))
-
+  ;; (elpy-enable)				;This is done as an advice now.
+  ;;
+  ;;
   ;; This function is required so that Jupyter properly handles interactive plotting.
   ;; Otherwise it defaults to inline plotting which doesn't work as well in Emacs.
   ;; This is added as a hook to
-  ;; (defun elpy-shell--use-interactive-plots-in-jupyter ()
-  ;;   "Make sure we use an interactive backend with Jupyter"
-  ;;   )
-
+  (defun elpy-shell--use-interactive-plots-in-jupyter ()
+    "Make sure we use an interactive backend with Jupyter"
+    )
   ;; (defun elpy-shell--use-interactive-plots-in-jupyter ()
   ;;   "Make sure we use an interactive backend with Jupyter"
   ;;   (when (not (null (string-match "jupyter" python-shell-interpreter)))
@@ -501,8 +419,29 @@
   ;; 	process)))
   ;; (add-hook 'python-shell-first-prompt-hook 'elpy-shell--use-interactive-plots-in-jupyter t)
 
-  ;; :hook ((python-shell-first-prompt-hook . elpy-shell--use-interactive-plots-in-jupyter))
-  )
+  (setq elpy-rpc-python-command "python")
+  ;; (setq python-shell-interpreter "ipython")
+  ;; (setq python-shell-interpreter-args "-i --simple-prompt")
+  (setq elpy-autodoc-delay 0.1)
+  (setq elpy-syntax-check-command "pyflakes")
+  (setq elpy-rpc-large-buffer-size 65536)
+  (setq elpy-rpc-backend "jedi")
+  (setq elpy-rpc-virtualenv-path 'current)
+  ;; (setq elpy-rpc-virtualenv-path 'system)
+  (setq elpy-shell-starting-directory 'current-directory)
+  ;; If you want to use the Jupyter console instead of IPython
+  ;; Not being used at the moment.
+  (setq python-shell-interpreter "jupyter")
+  (setq python-shell-interpreter-args "console --simple-prompt")
+  (setq python-shell-prompt-detect-failure-warning nil)
+  (add-to-list 'python-shell-completion-native-disabled-interpreters "jupyter")
+
+  ;; Adjust elpy-modules, delete flymake because we'll use flycheck
+  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+  (add-to-list 'elpy-modules 'elpy-module-folding) ;add folding help
+  (add-to-list 'elpy-modules 'elpy-module-autodoc) ;auto update docs
+  :hook ((elpy-mode-hook . (lambda () (elpy-shell-toggle-dedicated-shell 1)))
+	 (python-shell-first-prompt-hook . elpy-shell--use-interactive-plots-in-jupyter)))
 
 (use-package flycheck :demand :after python :diminish
   :hook ((elpy-mode-hook . flycheck-mode)))
@@ -517,19 +456,17 @@
 	 (ein:notebook-mode-hook . ajv/company/disable)))
 
 (use-package haskell-mode
-  :mode "\\.hs\\'"
   :bind ((:map haskell-mode-map
 	       ("M-." . haskell-mode-jump-to-def-or-tag)))
   :config
-  ;; (require 'haskell-interactive-mode)
-  ;; (require 'haskell-process)
+  (require 'haskell-interactive-mode)
+  (require 'haskell-process)
   (setq haskell-process-path-ghci "/home/akshar/.ghcup/bin/ghci")
   (setq haskell-process-path-cabal "/home/akshar/.ghcup/bin/cabal")
   (setq haskell-process-type 'auto)
   (setq haskell-stylish-on-save t)
   (setq haskell-tags-on-save t)
-  :hook (;; (haskell-mode-hook . haskell-interactive-mode)
-	 (haskell-mode-hook . haskell-indentation-mode)
+  :hook ((haskell-mode-hook . interactive-haskell-mode)
 	 (haskell-mode-hook . (lambda ()
 				(set (make-local-variable 'company-backends)
 				     (append '((company-capf company-dabbrev-code))
@@ -568,8 +505,7 @@
 ;;     (add-hook (intern (concat mode "-hook")) #'flymake-proselint-setup)))
 
 
-(use-package ajv-sonic-pi
-  :straight nil
+(use-package ajv-sonic-pi :straight nil
   :commands (ajv/sonic-pi/filename-extension-spi-p ajv/sonic-pi/initialize-mode)
   :init
   ;; Because use-package's :magic keyword doesn't yet allow use of match functions
@@ -578,14 +514,14 @@
   :config
   (setq sonic-pi-path "/usr/lib/sonic-pi/server/bin/")
   (setq sonic-pi-server-bin "sonic-pi-server.rb")
-  (add-to-list 'company-backends '(ajv/sonic-pi/company-backend))
+  (add-to-list 'company-backends 'ajv/sonic-pi/company-backend)
   :bind
   ((:map sonic-pi-mode-map
 	 ("C-c C-l" . sonic-pi-send-live-loop)
 	 ("C-c C-c" . sonic-pi-send-buffer)
 	 ("C-c C-k" . sonic-pi-stop-all))))
 
-;; (use-package tidal)
+(use-package tidal)
 
 
 (use-package move-text :config (move-text-default-bindings))
@@ -640,8 +576,7 @@
 	      ("M-i" . pdf-view-midnight-minor-mode))
   :config
   (pdf-tools-install)
-  (use-package ajv-pdf :demand
-    :straight nil
+  (use-package ajv-pdf :demand :straight nil
     :bind (:map pdf-view-mode-map
 		("M-m" . ajv/pdf-tools/toggle-modeline)))
   (when (featurep 'ido)
@@ -653,9 +588,9 @@
 	 (pdf-view-mode-hook . ajv/pdf-tools/save-disable-modeline-format)
 	 (pdf-view-mode-hook . ajv/pdf-tools/disable-linum-mode)
 	 (pdf-view-mode-hook . auto-revert-mode)
-	 (pdf-view-mode-hook . (lambda () (if git-gutter-mode (git-gutter-mode -1) nil)))
 	 (pdf-view-mode-hook . pdf-misc-size-indication-minor-mode))
   )
+
 
 ;; This is NOT needed anymore since some 2022 May update.
 ;; If normal pdf-tools-intall when doing epdfinfo needs reinstall throws a poppler error,
@@ -685,29 +620,24 @@
   :config
   (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
   (setq nov-text-width 80)
-  (use-package ajv-nov :demand
-	       :straight nil
-	       )
+  (use-package ajv-nov :demand :straight nil)
   :hook (;; (change-major-mode-after-body-hook . ajv/nov/dedicated-frame-on-mode-start)
 	 (nov-mode-hook . ajv/nov/dedicated-frame-on-mode-start)
 	 (nov-mode-hook . ajv/nov/font-setup)
 	 (nov-mode-hook . ajv/nov/save-disable-modeline-format)
 	 (nov-post-html-render-hook . ajv/nov/post-html-render-margin-adjustments)))
 
+;; (remove-hook 'nov-mode-hook 'ajv/nov/dedicated-frame-on-mode-start)
+;; (remove-hook 'nov-post-html-render-hook 'ajv/nov/post-html-render-margin-adjustments)
+
 ;; Mode for .gitignore, .git/info/exclude, and git/ignore files.
-(use-package gitignore-mode
-	     :straight git-modes
-	     )
+(use-package gitignore-mode :straight git-modes)
 
 ;; Mode for .gitconfig, .git/config, git/config, and .gitmodules files.
-(use-package gitconfig-mode
-	     :straight git-modes
-	     )
+(use-package gitconfig-mode :straight git-modes)
 
 ;; Mode for .gitattributes, .git/info/attributes, and git/attributes files.
-(use-package gitattributes-mode
-	     :straight git-modes
-	     )
+(use-package gitattributes-mode :straight git-modes)
 
 (use-package magit
   :bind (("<f2>" . magit-status)
@@ -750,11 +680,9 @@ Taken from: http://manuel-uberti.github.io/emacs/2018/02/17/magit-bury-buffer/"
   (transient-append-suffix 'magit-status-jump '(0 0 -1)
     '("t " "Todos" magit-todos-jump-to-todos)))
 
-(use-package ajv-git-gutter-fringe
-  :straight nil
+(use-package ajv-git-gutter-fringe :straight nil
   :init (use-package git-gutter-fringe :delight git-gutter-mode)
   :config
-  (setq git-gutter:disabled-modes '(pdf-view-mode))
   (global-git-gutter-mode t)
   (fringe-mode '(0 . nil)))
 
@@ -763,16 +691,14 @@ Taken from: http://manuel-uberti.github.io/emacs/2018/02/17/magit-bury-buffer/"
 (use-package github-explorer :commands github-explorer)
 
 
-(use-package dired :demand :delight dired-mode "Dired"
-  :straight nil
+(use-package dired :demand :straight nil :delight dired-mode "Dired"
   :config
   (setq dired-dwim-target t)                     ;default copy to other window
   (setq dired-recursive-copies 'always)
   ;;allow 'a' in dired
   (put 'dired-find-alternate-file 'disabled nil))
 
-(use-package dired-x :after dired :demand
-  :straight (:type built-in)
+(use-package dired-x :after dired :demand :straight (:type built-in)
   ;; Swap keybindings for dired-jump and dired-jump-other-window
   :bind (("C-x C-j" . dired-jump)
 	 ("C-x M-j" . dired-jump-other-window))
@@ -784,8 +710,7 @@ Taken from: http://manuel-uberti.github.io/emacs/2018/02/17/magit-bury-buffer/"
 (use-package dired-narrow :after dired
   :bind (:map dired-mode-map ("/" . dired-narrow-regexp)))
 
-(use-package ajv-dired :demand :after dired
-  :straight nil
+(use-package ajv-dired :demand :after dired :straight nil
   :bind  (:map dired-mode-map
 	       ("s". ajv/dired/sort-criteria)
 	       ("l" . ajv/dired/launch-file)
@@ -812,11 +737,7 @@ Taken from: http://manuel-uberti.github.io/emacs/2018/02/17/magit-bury-buffer/"
   (advice-add 'wdired-finish-edit :after #'ajv/hl-line/enable)
   :hook (wdired-mode-hook . ajv/hl-line/disable))
 
-(use-package dired-rainbow :after dired
-  :config (use-package ajv-dired-rainbow
-		       :straight nil
-		       ))
-
+(use-package dired-rainbow :after dired :config (use-package ajv-dired-rainbow :straight nil))
 (use-package dired-collapse :demand :after dired)
 
 (use-package dired-subtree :demand :after dired
@@ -829,29 +750,13 @@ Taken from: http://manuel-uberti.github.io/emacs/2018/02/17/magit-bury-buffer/"
 	      ("f" . dired-subtree-next-sibling)
 	      ("b" . dired-subtree-previous-sibling)))
 
-;; (use-package projectile
-;;   :init (projectile-mode +1)
-;;   :config
-;;   (use-package helm-projectile)
-;;   (helm-projectile-on)
-;;   (setq projectile-project-search-path '(("~/0/source/" . 1) ("~/0/research/" . 2)))
-;;   (setq projectile-sort-order 'recently-active)
-;;   (setq projectile-switch-project-action #'projectile-dired)
-;;   :bind (:map projectile-mode-map
-;; 	      ("s-p" . projectile-command-map)
-;; 	      ("C-c p" . projectile-command-map)))
-
 (use-package make-it-so :config (mis-config-default))
 
-(use-package ajv-org :demand
-  :straight nil
+(use-package ajv-org :straight nil :demand
   :init
-  (use-package org
-	       :straight (:type built-in)
-	       )
+  (use-package org :straight (:type built-in))
   (use-package ol-notmuch
-	       :straight (:type git :host github :repo "emacsmirror/ol-notmuch")
-	       )
+    :straight (:type git :host github :repo "emacsmirror/ol-notmuch"))
   :bind
   (("C-c a" . org-agenda)
    ("s-a" . org-agenda-list)
@@ -888,9 +793,7 @@ Taken from: http://manuel-uberti.github.io/emacs/2018/02/17/magit-bury-buffer/"
   ;; :hook ((org-agenda-mode-hook . ajv/org-agenda/truncation))
   )
 
-(use-package org-tempo
-  :straight nil
-  )
+(use-package org-tempo :straight nil)
 
 (use-package org-bullets :hook ((org-mode-hook . org-bullets-mode)))
 
@@ -1014,8 +917,7 @@ Taken from: http://manuel-uberti.github.io/emacs/2018/02/17/magit-bury-buffer/"
   :hook ((org-agenda-mode-hook . origami-mode)
 	 (org-agenda-finalize-hook . ajv/org-super-agenda/origami-fold-default)))
 
-(use-package ajv-org-roam :demand
-  :straight nil
+(use-package ajv-org-roam :straight nil :demand
   :init
   (use-package org-roam :diminish)
   (setq-default org-roam-directory ajv/sensitive/my-org-roam-directory)
@@ -1052,55 +954,11 @@ Taken from: http://manuel-uberti.github.io/emacs/2018/02/17/magit-bury-buffer/"
   (diminish 'org-roam-ui-follow-mode)
   (ajv/org-roam/ui-start))
 
-(use-package deft :diminish :delight
-  :bind (("C-c k d" . deft)
-	 (:map deft-mode-map
-	       ("C-n" . forward-button)
-	       ("C-p" . backward-button)))
-  :commands (deft)
-  :config
-  (setq deft-directory "~/0/orkmasy")
-  (setq deft-extensions '("org"))
-  (setq deft-recursive t)
-  ;; (setq deft-strip-title-regexp "\\(?:^%+\\|^#\\+TITLE: *\\|^[#* ]+\\|-\\*-[[:alpha:]]+-\\*-\\|^Title:[	 ]*\\|#+$\\)")
-
-  ;; I want title picked from non-first line.
-  ;; So I essentially disable deft's automatic calling (identity function)
-  (setq deft-parse-title-function 'concat)
-  ;; I adjust the title strip function to my needs
-  (setq deft-strip-title-regexp ":PROPERTIES:\n\\(.+\n\\)+:END:\n")
-  ;; This requires that it doesn't try to show me the template files
-  ;; which have a different format.
-  (setq deft-ignore-file-regexp "templates/.*")
-  ;; Then I rewrite their function to do what I want.
-  (defun deft-parse-title (file contents)
-    (if deft-use-filename-as-title
-	(deft-base-filename file)
-      ;; (substring (nth 3 (split-string contents "\n" nil nil)) 8 nil)
-      (let ((string
-	     (nth 0
-		  (split-string
-		   (deft-chomp
-		     (replace-regexp-in-string
-		      deft-strip-title-regexp
-		      "" contents))
-		   "\n"))))
-	(substring string 8 nil))))
-  ;; (setq deft-org-mode-title-prefix t)
-  ;; Finally, I want to ensure that any line that doesn't start with # or - is ignored.
-  (setq deft-strip-summary-regexp "\\([-#:].*\n\\)+")
-  ;; This also requires overwriting their function
-  (defun deft-parse-summary (contents title)
-    (let ((case-fold-search nil))
-      (replace-regexp-in-string deft-strip-summary-regexp " " contents)))
-  )
-
 (use-package org-tree-slide :custom (org-image-actual-width nil))
 
 (use-package org-present)
 
-(use-package ajv-elfeed
-  :straight nil
+(use-package ajv-elfeed :straight nil
   :if (not (string-empty-p ajv/sensitive/my-elfeed-org-file))
   :init (use-package elfeed
 	  :hook ((elfeed-search-mode-hook . toggle-truncate-lines)))
@@ -1125,7 +983,7 @@ Taken from: http://manuel-uberti.github.io/emacs/2018/02/17/magit-bury-buffer/"
   ;; The default enging to use to compile
   (setq-default TeX-engine 'xetex)
   ;; Various other default settings
-  (setq LaTeX-command "latex -shell-escape --synctex=1 -interaction=batchmode")
+  (setq LaTeX-command "latex -shell-escape --synctex=1")
   (setq LaTeX-command-style '(("" "%(PDF)%(latex) -shell-escape %(file-line-error) %(extraopts) %S%(PDFout)")))
   (setq TeX-save-query nil)                ;Don't ask before saving .tex files
   ;; To make AUCTeX read/update on changes to .bib files.
@@ -1143,17 +1001,14 @@ Taken from: http://manuel-uberti.github.io/emacs/2018/02/17/magit-bury-buffer/"
 				     (output-html "xdg-open")))
 
   ;; Load some helpful functions
-  (use-package ajv-latex :demand t
-    :straight nil
+  (use-package ajv-latex :demand t :straight nil
     :config
-    (use-package reftex-ref
-      :config
-      ;; Don't show reftex highlight in modeline
-      (delight 'reftex-mode nil "reftex")
-      (setq reftex-ref-style-default-list '("Cleveref")))
+    (use-package reftex-ref)
     :bind (:map reftex-mode-map
 		("C-c )" . ajv/latex/reftex-reference-cleveref-wrapper)))
-
+  ;; Don't show reftex highlight in modeline
+  (delight 'reftex-mode nil "reftex")
+  (setq reftex-ref-style-default-list '("Cleveref"))
 
   :bind ((:map LaTeX-mode-map
 	       ("<f5>" . TeX-command-run-all)
@@ -1185,48 +1040,12 @@ Taken from: http://manuel-uberti.github.io/emacs/2018/02/17/magit-bury-buffer/"
   (setq writeroom-maximize-window nil)
   (setq writeroom-local-effects '(visual-line-mode)))
 
-(use-package ajv-play-music
-  :straight nil
-  :commands ajv/music/play-this
+(use-package ajv-play-music :straight nil :commands ajv/music/play-this
   :bind (("<XF86AudioPlay>" . ajv/music/play-pause)
 	 ("<XF86AudioPause>" . ajv/music/stop-playing)
 	 ("<XF86AudioNext>" . ajv/music/play-next)
 	 ("<XF86AudioPrev>" . ajv/music/play-previous)
 	 ("<XF86Search>" . ajv/music/play-this)))
-
-;; emms
-(use-package emms :diminish :delight
-  :config
-  (emms-all)
-  (setq emms-player-list '(emms-player-mpv))
-  (setq emms-info-functions '(emms-info-tinytag))
-  (setq emms-source-file-default-directory "~/0/music/")
-  ;; (setq emms-source-playlist-default-format nil)
-  (setq emms-playlist-default-major-mode 'emms-playlist-mode)
-  (defun ajv/emms/show-format-function (track)
-    (if (emms-track-type 'file)
-	((file-name-base track))
-      ("Playing: non-file")))
-  (setq emms-track-description-function 'ajv/emms/show-format-function)
-  (setq emms-show-format "%s")
-  (setq emms-player-mpv-parameters '("--quiet" "--realy-quiet" "--force-window=no" "--no-audio-display"))
-  (setq emms-tag-editor-tagfile-functions
-	'(("mp3" "eyeD3"
-	   ((info-artist . "--artist")
-	    (info-title . "--title")
-	    (info-album . "--album")
-	    (info-tracknumber . "--track")
-	    (info-year . "--release-year")
-	    (info-genre . "--genre")
-	    (info-note . "--comment")
-	    (info-albumartist . "--album-artist")
-	    (info-composer . "--comment")
-	    (info-performer . "--comment")
-	    (info-date . "--comment")))
-	  ("ogg" . emms-tag-editor-tag-ogg)
-	  ("flac" . emms-tag-editor-tag-flac)
-	  ("opus" . emms-tag-tracktag-file)))
-  )
 
 (use-package proced
   :commands proced
@@ -1250,8 +1069,7 @@ Taken from: http://manuel-uberti.github.io/emacs/2018/02/17/magit-bury-buffer/"
   (beginend-global-mode 1))
 
 
-(use-package ajv-misc :demand
-  :straight nil
+(use-package ajv-misc :demand :straight nil
   :config
   ;; Misc diminish and delight settings
   (delight '((highlight-indentation-mode nil "highlight-indentation")
@@ -1274,14 +1092,12 @@ Taken from: http://manuel-uberti.github.io/emacs/2018/02/17/magit-bury-buffer/"
 
 (use-package buffer-move :bind (("<f11>" . buf-move-left) ("<f12>" . buf-move-right)))
 
-(use-package ajv-scpaste
-  :straight nil
-  :commands (ajv/scpaste/paste-region-or-buffer))
+(use-package ajv-scpaste :straight nil :commands (ajv/scpaste/paste-region-or-buffer))
 
 (use-package monokai-pro-theme)
 
 (use-package doom-modeline
-  :config (doom-modeline-mode 1)
+  :init (doom-modeline-mode 1)
   (setq doom-modeline-bar-width 3)
   (setq doom-modeline-hud nil)
   (setq doom-modeline-display-misc-in-all-mode-lines t)
@@ -1298,8 +1114,7 @@ Taken from: http://manuel-uberti.github.io/emacs/2018/02/17/magit-bury-buffer/"
   (display-time-mode 1)
   (setq mode-line-compact 'long))
 
-(use-package ajv-theme :demand
-  :straight nil
+(use-package ajv-theme :straight nil :demand
   :config
   (setq custom-theme-allow-multiple-selections t)
 
@@ -1390,9 +1205,7 @@ Taken from: http://manuel-uberti.github.io/emacs/2018/02/17/magit-bury-buffer/"
 ;; http://mbork.pl/2017-01-14_I'm_now_using_the_right_dictionary
 ;; Source for some other dictionaries in the stardict format
 ;; http://download.huzheng.org/bigdict/
-(use-package sdcv-mode
-  :straight nil
-  )
+(use-package sdcv-mode :straight nil)
 
 (when use-package-compute-statistics
   (use-package-report)

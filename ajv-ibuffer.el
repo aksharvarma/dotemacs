@@ -9,18 +9,37 @@
       `(("Uncategorized"
 	 ("Emacs"
 	  (or
-           (name . "^\\*scratch\\*$")
+	   (name . "^\\*scratch.+$")
+	   (name . "^\\*Python\\[\\*scratch\\*\\[python\\]\\]\\*$")
            (name . "^\\*Messages\\*$")))
-	 ("Music"
-	  (name . "^\\*ajv-mpv-buffer\\*$"))
+	 ;; Not needed since we made this permanently hidden
+	 ;; from the list of buffers
+	 ;; ("Helm"  (mode . helm-major-mode))
 	 ("Agenda" ;; all Org Agenda related buffers
 	  (or
 	   (and
 	    (directory . ,ajv/sensitive/my-org-agenda-files-dir)
 	    (mode . org-mode))
-	   (name . "^\\*Org Agenda\\*$")))
-	 ("Org" ;; all other org buffers
-	  (mode . org-mode))
+	   (name . "^\\*Org Agenda\\*$")
+	   (name . "^oeuvre-list.org$")))
+	 ("Music"
+	  (or
+	   (name . "^\\*ajv-mpv-buffer\\*$")
+	   (mode . emms-browser-mode)))
+	 ("Magit"
+	  (or
+	   (mode . magit-mode)
+	   (mode . magit-status-mode)
+	   (mode . magit-process-mode)
+	   (mode . magit-revision-mode)
+	   (mode . magit-log-mode)
+	   (mode . magit-diff-mode)
+	   (mode . git-rebase-mode)
+	   (filename . "^.*\\.git/COMMIT_EDITMSG$")))
+	 ("orkmasy" ;; all Org Roam related buffers
+	  (and
+	   (directory . ,ajv/sensitive/my-org-roam-directory)
+	   (mode . org-mode)))
 	 ("Mail"
 	  (or  ;; mail-related buffers
 	   (mode . message-mode)
@@ -35,23 +54,26 @@
 	   (mode . notmuch-search-mode)
 	   (mode . notmuch-hello-mode)
 	   (mode . notmuch-show-mode)))
-	 ("Dired"
-	  (mode . dired-mode))
+	 ("Help" (mode . help-mode))
+	 ("Internals" (name . "^\\*.*\\*$"))
+	 ("Org" (mode . org-mode))	;all other org buffers
+	 ("Dired" (mode . dired-mode))
 	 ("LaTeX"
-	  (mode . LaTeX-mode))
-	 ("PDFs"
-	  (mode . pdf-view-mode))
-	 ("Writing"
-	  (mode . markdown-mode))
-	 ("ELisp"
-          (mode . emacs-lisp-mode))
-	 ("Python"
-          (mode . python-mode))
-	 ("Programming"
-          (mode . prog-mode))
-	 ("Internals"
-	  (name . "^\\*.*\\*$"))
-	 )))
+	  (or
+	   (mode . tex-mode)
+	   (mode . latex-mode)
+	   (mode . LaTeX-mode)
+	   (mode . TeX-source-correlate-mode)
+	   (name . ".*.synctex.gz$")))
+	 ("PDFs/EPUBs"
+	  (or
+	   (mode . pdf-view-mode)
+	   (mode . nov-mode)
+	   (name . "*nov unzip*")))
+	 ("Writing" (mode . markdown-mode))
+	 ("ELisp" (mode . emacs-lisp-mode))
+	 ("Python" (mode . python-mode))
+	 ("Programming" (mode . prog-mode)))))
 
 (defun ajv/ibuffer/fold-filter-group (name)
   "While in ibuffer, add a function to hide the filter group `name'."
@@ -79,15 +101,15 @@
   (with-current-buffer "*Ibuffer*"
     (if ibuffer-hidden-filter-groups
 	(setq ibuffer-hidden-filter-groups nil)
-      (setq ibuffer-hidden-filter-groups (list "Emacs" "Agenda" "Music"))
+      (setq ibuffer-hidden-filter-groups (list "Emacs" "Helm" "Internals" "Music" "Agenda" "orkmasy" "Magit" "Help" "Notmuch"))
       )
     (ibuffer-update nil t)))
 
-(defun ajv/ibuffer/group-by-vc ()
-  (interactive)
-  (ibuffer-vc-set-filter-groups-by-vc-root)
-  (unless (eq ibuffer-sorting-mode 'alphabetic)
-    (ibuffer-do-sort-by-alphabetic)))
+;; (defun ajv/ibuffer/group-by-vc ()
+;;   (interactive)
+;;   (ibuffer-vc-set-filter-groups-by-vc-root)
+;;   (unless (eq ibuffer-sorting-mode 'alphabetic)
+;;     (ibuffer-do-sort-by-alphabetic)))
 
 (defun ajv/ibuffer/use-default-filter ()
   (interactive)
@@ -195,7 +217,7 @@ Taken from: https://acidwords.com/posts/2016-06-18-collapsing-all-filter-groups-
 ;;   (end-of-buffer)
 ;;   (dired-next-line -2))
 
-(defun ajv/ibuffer/ido-find-file (file &optional wildcards)
+(defun ajv/ibuffer/find-file (file &optional wildcards)
   "Like `find-file', but default to the directory of the buffer at point.
 
 Idea from 'Use ido in ibuffer', from: https://www.emacswiki.org/emacs/InteractivelyDoThings#toc18"
@@ -205,12 +227,12 @@ Idea from 'Use ido in ibuffer', from: https://www.emacswiki.org/emacs/Interactiv
 				  (with-current-buffer buf
 				    default-directory)
 				default-directory))))
-     (list (ido-read-file-name "Find file: " default-directory)
+     (list (read-file-name "Find file: " default-directory)
 	   t)))
   (find-file file wildcards))
 
 
-(defun ajv/ibuffer/ido-find-file-other-window (file &optional wildcards)
+(defun ajv/ibuffer/find-file-other-window (file &optional wildcards)
   "Like `find-file', but default to the directory of the buffer at point.
 
 Idea from 'Use ido in ibuffer', from: https://www.emacswiki.org/emacs/InteractivelyDoThings#toc18"
@@ -220,6 +242,6 @@ Idea from 'Use ido in ibuffer', from: https://www.emacswiki.org/emacs/Interactiv
 				  (with-current-buffer buf
 				    default-directory)
 				default-directory))))
-     (list (ido-read-file-name "Find file: " default-directory)
+     (list (read-file-name "Find file: " default-directory)
 	   t)))
   (find-file-other-window file wildcards))

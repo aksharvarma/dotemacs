@@ -25,18 +25,31 @@
 (ajv/make-enable-disable-defuns linum-mode linum 1 -1)
 
 
+(defun ajv/setup-scratch-buffer ()
+  "Setup the scratch buffer according to my tastes. If the buffer doesn't exist,
+          create it and write the initial message into it."
+  (interactive)
+  (let ((scratch-buffer
+	 (or (get-buffer ajv/settings/scratch-buffer-name)
+	     (get-buffer (concat ajv/settings/scratch-buffer-name "[emacs-lisp]"))
+	     (get-buffer (concat ajv/settings/scratch-buffer-name "[python]")))))
+    (unless scratch-buffer
+      (setq scratch-buffer (get-buffer-create ajv/settings/scratch-buffer-name))
+      (with-current-buffer scratch-buffer
+        (funcall initial-major-mode)
+        (insert initial-scratch-message)
+        (setq-local org-confirm-babel-evaluate nil)
+        ;; (org-babel-execute-buffer)
+	))))
+
 (defun ajv/switch-buffer-scratch ()
   "Switch to the scratch buffer. If the buffer doesn't exist,
-create it and write the initial message into it."
+          create it and write the initial message into it."
   (interactive)
-  (let* ((scratch-buffer-name "*scratch*")
-         (scratch-buffer (get-buffer scratch-buffer-name)))
-    (unless scratch-buffer
-      (setq scratch-buffer (get-buffer-create scratch-buffer-name))
-      (with-current-buffer scratch-buffer
-        (lisp-interaction-mode)
-        (insert initial-scratch-message)))
-    (switch-to-buffer scratch-buffer)))
+  (ajv/setup-scratch-buffer)
+  (switch-to-buffer (or (get-buffer ajv/settings/scratch-buffer-name)
+			(get-buffer (concat ajv/settings/scratch-buffer-name "[emacs-lisp]"))
+			(get-buffer (concat ajv/settings/scratch-buffer-name "[python]")))))
 
 (defun ajv/switch-buffer-scratch-other-window ()
   "Switch to the scratch buffer. If the buffer doesn't exist,
@@ -44,8 +57,19 @@ create it and write the initial message into it."
   (interactive)
   (other-window 1)
   (ajv/switch-buffer-scratch)
-  (other-window 1)
+  ;; (other-window 1)
   )
+
+(defun ajv/show-weekly-plan-table ()
+  "Switch to the self.org file; close other windows, expand on the weekly plan table."
+  (interactive)
+  (switch-to-buffer "self.org")
+  (goto-char (org-find-exact-headline-in-buffer "Weekly Plan"))
+  ;; (org-narrow-to-subtree)
+  (outline-show-subtree)
+  (delete-other-windows)
+  )
+
 
 (defun ajv/open-home-in-dired ()
   (interactive)
@@ -55,7 +79,8 @@ create it and write the initial message into it."
   (interactive)
   (dired ajv/settings/symlink-folder))
 
-(setq ajv/never-kill-buffer-list '("*scratch*" "*Messages*"))
+(setq ajv/never-kill-buffer-list
+      '("*scratch*" "*scratch*[emacs-lisp]" "*scratch*[python]" "*Messages*"))
 
 (defun ajv/kill-this-buffer ()
   "Reliably kill the current buffer. 'kill-this-buffer' is unreliable unless called from the menu-bar. See: http://pragmaticemacs.com/emacs/dont-kill-buffer-kill-this-buffer-instead/
@@ -117,9 +142,10 @@ Picked from: http://nileshk.com/2009/06/13/prompt-before-closing-emacs.html"
   (delete-other-windows)
   (split-window-horizontally)
   (org-agenda-list)
-  (other-window 1)
-  (ibuffer)
-  (other-window 1)
+  ;; (other-window 1)
+  (ibuffer t nil nil t nil)
+  ;; (ajv/ibuffer/default-filter-folding)
+  ;; (other-window 1)
   )
 
 (defun ajv/create-my-window-config-in-primary-frame (&optional force)
@@ -140,15 +166,41 @@ Picked from: http://nileshk.com/2009/06/13/prompt-before-closing-emacs.html"
   (find-alternate-file (concat "/sudo::" buffer-file-name)))
 
 (defun yes-or-no-p->-y-or-n-p (orig-fun &rest r)
-(cl-letf (((symbol-function 'yes-or-no-p) #'y-or-n-p))
-  (apply orig-fun r)))
+  (cl-letf (((symbol-function 'yes-or-no-p) #'y-or-n-p))
+    (apply orig-fun r)))
 
-(defun ajv/mypaths ()
+(defun ajv/ido-mypaths ()
   "Call ido-find-file after setting default-directory to be the symlink folder. Effectively mirrors the mypaths kind of behaviour."
   (interactive)
   (let ((default-directory (file-truename ajv/settings/symlink-folder)))
     (ido-find-file))
   )
+
+(defun ajv/helm-mypath-helper (fname)
+  (interactive)
+  (let ((full-fname (concat (file-truename ajv/settings/symlink-folder) fname)))
+    (if (file-directory-p full-fname)
+	(helm-find-files-1 (concat full-fname "/"))
+      (find-file-at-point full-fname))))
+
+;; (defun ajv/helm-mypath-magit-helper (fname)
+;;   (interactive)
+;;   (magit-status fname))
+
+(defun ajv/helm-mypaths ()
+  "Call ido-find-file after setting default-directory to be the symlink folder. Effectively mirrors the mypaths kind of behaviour."
+  (interactive)
+  (let (default-directory (file-truename ajv/settings/symlink-folder))
+    (helm
+     :sources
+     (helm-build-sync-source "Mypaths"
+       :candidates (directory-files (file-truename ajv/settings/symlink-folder))
+       :action (helm-make-actions "Enter" 'ajv/helm-mypath-helper))
+     :buffer "*helm mypaths*")))
+
+(defun ajv/mypaths ()
+  (interactive)
+  (ajv/helm-mypaths))
 
 (defun ajv/mypaths-other-window ()
   "Call ido-find-file after setting default-directory to be the symlink folder. Effectively mirrors the mypaths kind of behaviour."
@@ -364,3 +416,69 @@ Taken: http://whattheemacsd.com/key-bindings.el-03.html"
   (setq ajv/settings/notmuch-frame-reference (selected-frame)))
 
 ;; TODO: Make a function to change all - to SPC or vice versa
+
+(defun ajv/clear-image-cache ()
+  (interactive)
+  (clear-image-cache t))
+
+
+;; (defun ajv/find-file ()
+;;   (interactive)
+;;   (when (not (featurep 'ido))
+;;     (find-file)))
+
+;; (defun ajv/find-file-other-window ()
+;;   (interactive)
+;;   (when (not (featurep 'ido))
+;;     (find-file-other-window)))
+
+;; (defun ajv/switch-buffer ()
+;;   (interactive)
+;;   (when (not (featurep 'ido))
+;;     (switch-to-buffer)))
+
+;; (defun ajv/find-file ()
+;;   (interactive)
+;;   (when (not (featurep 'ido))
+;;     (switch-to-buffer-other-window)))
+;; (fset 'ido-completing-read 'completing-read)
+;; (fset 'ido-find-file 'find-file)
+;; (fset 'ido-switch-buffer 'switch-to-buffer)
+;; (fset 'ido-switch-buffer-other-window 'switch-to-buffer-other-window)
+
+
+(defun ajv/auto-tangle-emacs-config ()
+  (when (string-equal
+	 (buffer-file-name)
+	 (file-truename
+	  (expand-file-name "~/0/.dotfiles/emacs-configuration.org")))
+    (let ((org-confirm-babel-evaluate nil))
+      (org-babel-tangle))))
+
+
+(defun ajv/toggle-mouse-avoidance-mode ()
+  (interactive)
+  (if mouse-avoidance-mode
+      (mouse-avoidance-mode 'none)
+    (mouse-avoidance-mode 'banish)))
+
+
+(defun ajv/space-to-hyphen ()
+  (interactive)
+  (when (use-region-p)
+    (subst-char-in-region (region-beginning) (region-end) ?  ?-)))
+
+(defun ajv/hyphen-to-space ()
+  (interactive)
+  (when (use-region-p)
+    (subst-char-in-region (region-beginning) (region-end) ?- ? )))
+
+
+;; James Dyer's indexing init file with occur
+;; Allows going to each section
+;; since the sections are delimited using
+;; -> sectionname
+(defun ajv/occur/index ()
+  (interactive)
+  (beginning-of-buffer)
+  (occur ";;[[:space:]]->"))
