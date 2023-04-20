@@ -69,20 +69,42 @@ There will only be one (we assume that you'll only listen to one piece of music 
       (bury-buffer)
       (message (concat "Sent" str "to mpv")))))
 
-(defun ajv/music/play-pause ()
-  "Toggle function to play/pause music playing in `ajv/music/buffer-name`"
+(defun ajv/music/switch-to-mine ()
   (interactive)
-  (ajv/music/send-mpv-command " SPC "))
+  (defun ajv/music/play-pause ()
+    "Toggle function to play/pause music playing in `ajv/music/buffer-name`"
+    (interactive)
+    (ajv/music/send-mpv-command " SPC "))
 
-(defun ajv/music/play-next ()
-  "Toggle function to play/pause music playing in `ajv/music/buffer-name`"
-  (interactive)
-  (ajv/music/send-mpv-command " > "))
+  (defun ajv/music/play-next ()
+    "Toggle function to play/pause music playing in `ajv/music/buffer-name`"
+    (interactive)
+    (ajv/music/send-mpv-command " > "))
 
-(defun ajv/music/play-previous ()
-  "Toggle function to play/pause music playing in `ajv/music/buffer-name`"
+  (defun ajv/music/play-previous ()
+    "Toggle function to play/pause music playing in `ajv/music/buffer-name`"
+    (interactive)
+    (ajv/music/send-mpv-command " < "))
+  )
+
+(defun ajv/music/switch-to-emms ()
   (interactive)
-  (ajv/music/send-mpv-command " < "))
+  (defun ajv/music/play-pause ()
+    "Toggle function to play/pause music playing in `ajv/music/buffer-name`"
+    (interactive)
+    (emms-pause))
+
+  (defun ajv/music/play-next ()
+    "Toggle function to play/pause music playing in `ajv/music/buffer-name`"
+    (interactive)
+    (emms-next))
+
+  (defun ajv/music/play-previous ()
+    "Toggle function to play/pause music playing in `ajv/music/buffer-name`"
+    (interactive)
+    (emms-previous))
+  )
+
 
 (defun ajv/music/play-song-in-loop ()
   "Toggle function to play/pause music playing in `ajv/music/buffer-name`"
@@ -119,11 +141,12 @@ This requires adhering to the syntax that edmacro uses, i.e. handling spaces usi
   "Search for a folder (using ido) and then play music from that folder."
   (interactive)
   (unless (ajv/music/check-if-created-buffer) (ajv/music/create-buffer))
-  (with-current-buffer (let ((default-directory (file-truename "~/0/music/")))
-			 (ido-dired))
-    (goto-char (point-min))
-    (setq chosen-foldername (dired-copy-filename-as-kill))
+  (with-current-buffer (helm-find-files-1 (file-truename "~/0/music/"))
+    ;; (let ((default-directory (file-truename "~/0/music/")))
+    ;; 	(ido-dired))
+    ;; (goto-char (point-min))
+    (setq chosen-foldername (ajv/dired/copy-directory-name-as-kill))
     (ajv/kill-this-buffer)
-    (setq shuffle-flag (ido-completing-read "Set shuffle flag:" '("" "--shuffle"))))
+    (setq shuffle-flag (completing-read "Set shuffle flag:" '(" " "--shuffle"))))
   (ajv/music/stop-playing)
   (ajv/music/play-from-given-folder chosen-foldername shuffle-flag))

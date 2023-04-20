@@ -1006,13 +1006,46 @@
   (setq writeroom-local-effects '(visual-line-mode)))
 
 (use-package ajv-play-music
+  :straight nil
   :commands ajv/music/play-this
-  :bind
-  (("<XF86AudioPlay>" . ajv/music/play-pause)
-   ("<XF86AudioPause>" . ajv/music/stop-playing)
-   ("<XF86AudioNext>" . ajv/music/play-next)
-   ("<XF86AudioPrev>" . ajv/music/play-previous)
-   ("<XF86Search>" . ajv/music/play-this))
+  :bind (("<XF86AudioPlay>" . ajv/music/play-pause)
+	 ("<XF86AudioPause>" . ajv/music/stop-playing)
+	 ("<XF86AudioNext>" . ajv/music/play-next)
+	 ("<XF86AudioPrev>" . ajv/music/play-previous)
+	 ("<XF86Search>" . ajv/music/play-this)))
+
+;; emms
+(use-package emms :diminish :delight
+  :config
+  (emms-all)
+  (setq emms-player-list '(emms-player-mpv))
+  (setq emms-info-functions '(emms-info-tinytag))
+  (setq emms-source-file-default-directory "~/0/music/")
+  ;; (setq emms-source-playlist-default-format nil)
+  (setq emms-playlist-default-major-mode 'emms-playlist-mode)
+  (defun ajv/emms/show-format-function (track)
+    (if (emms-track-type 'file)
+	((file-name-base track))
+      ("Playing: non-file")))
+  (setq emms-track-description-function 'ajv/emms/show-format-function)
+  (setq emms-show-format "%s")
+  (setq emms-player-mpv-parameters '("--quiet" "--realy-quiet" "--force-window=no" "--no-audio-display"))
+  (setq emms-tag-editor-tagfile-functions
+	'(("mp3" "eyeD3"
+	   ((info-artist . "--artist")
+	    (info-title . "--title")
+	    (info-album . "--album")
+	    (info-tracknumber . "--track")
+	    (info-year . "--release-year")
+	    (info-genre . "--genre")
+	    (info-note . "--comment")
+	    (info-albumartist . "--album-artist")
+	    (info-composer . "--comment")
+	    (info-performer . "--comment")
+	    (info-date . "--comment")))
+	  ("ogg" . emms-tag-editor-tag-ogg)
+	  ("flac" . emms-tag-editor-tag-flac)
+	  ("opus" . emms-tag-tracktag-file)))
   )
 
 (use-package proced
