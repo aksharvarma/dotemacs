@@ -220,6 +220,16 @@
   :bind ((:map yas-minor-mode-map
 	       ("C-c y" . #'yas-expand))))
 
+(use-package auto-yasnippet :diminish :delight
+  :config (setq aya-case-fold t))
+
+
+
+(use-package tiny :delight :diminish
+  :bind ("C-M-;" . tiny-expand))
+
+
+
 (use-package hl-line
   :config
   (setq hl-line-sticky-flag nil)
