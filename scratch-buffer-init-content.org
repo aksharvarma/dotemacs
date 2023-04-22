@@ -1,0 +1,12 @@
+#+title: Scratch Buffer
+
+*Elisp*
+#+begin_src emacs-lisp :session scratch-elisp
+  (progn (+ 1 2))
+#+end_src
+
+*Python*
+#+begin_src python :session scratch-python
+import numpy as np
+print(np.random.randn())
+#+end_src
