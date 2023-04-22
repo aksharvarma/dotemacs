@@ -82,8 +82,9 @@
   :hook
   ((find-file-hook . ajv/rename-symlink-buffer-with-truename)
    (emacs-startup-hook . ajv/measure-loading-time)
-   (before-save-hook . ajv/delete-trailing-whitespace)
+   ;; (before-save-hook . ajv/delete-trailing-whitespace)
    (org-mode-hook . (lambda () (add-hook 'after-save-hook 'ajv/auto-tangle-emacs-config)))))
+
 
 (use-package notmuch
   :straight nil
@@ -596,6 +597,16 @@
   :config
   (global-hungry-delete-mode)
   (setq hungry-delete-join-reluctantly t))
+
+(use-package ws-butler :diminish :delight :config (ws-butler-global-mode))
+
+(use-package dumb-jump :diminish :delight
+  :config
+  (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
+  (setq dumb-jump-prefer-searcher 'rg)
+  :hook (xref-backend-functions . dumb-jump-xref-activate))
+
+
 
 (use-package rg :commands (rg-menu)
   :bind (("C-c s" . rg-menu)
